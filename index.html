@@ -775,11 +775,15 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       </div>
       <div class="term install-box">
         <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">install</span><button class="copy-btn" id="copyBtn" type="button">copy</button></div>
-        <div class="term-body"><span class="t-dim">$</span> git clone https://github.com/mmelika/membridge
+        <div class="term-body"><span class="t-dim"># macOS (Apple Silicon) — the app + membridge CLI, no warnings</span>
+<span class="t-dim">$</span> curl -fsSL https://membridge.me/install.sh | sh
+
+<span class="t-dim"># any platform — run the CLI from source</span>
+<span class="t-dim">$</span> git clone https://github.com/mmelika/membridge
 <span class="t-dim">$</span> cd membridge
 <span class="t-dim">$</span> node bin/membridge.js start</div>
       </div>
-      <p class="install-note">Node 18+ · macOS, Linux, Windows · npm package coming soon</p>
+      <p class="install-note">macOS (Apple Silicon): app + CLI in one command · Linux/Windows: CLI from source · Node 18+</p>
     </div>
     <div class="wl">
       <h2>Follow the build.</h2>
@@ -1221,7 +1225,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
   });
 
   /* ---------- copy install ---------- */
-  var COPY_TEXT = 'git clone https://github.com/mmelika/membridge\ncd membridge\nnode bin/membridge.js start';
+  var COPY_TEXT = 'curl -fsSL https://membridge.me/install.sh | sh';
   var copyBtn = document.getElementById('copyBtn');
   copyBtn.addEventListener('click', function () {
     function done(ok) {
