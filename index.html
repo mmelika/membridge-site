@@ -3,29 +3,76 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MemBridge - Shared Memory for Claude Code, Codex &amp; AI Coding Tools</title>
+<meta name="description" content="MemBridge is a local-first daemon that syncs memory across Claude Code, Codex, and every AI coding tool you use. Automatic capture, per-project context in CLAUDE.md and AGENTS.md, 100% on your machine. Free and source-available.">
+<meta name="keywords" content="Claude Code memory, Codex memory, CLAUDE.md, AGENTS.md, AI coding tools, shared context, local-first, AI agent memory, cross-tool context sync, membridge">
 <link rel="canonical" href="https://membridge.me/">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0E1526">
-<title>MemBridge — shared memory for your team's AI tools</title>
-<meta name="description" content="Your team shares a codebase. Now your AI shares a memory. MemBridge is a tiny local daemon that syncs context across Claude Code, Codex, and every AI tool your team codes with. 100% on your machine.">
-<meta property="og:title" content="MemBridge — Your team shares a codebase. Now your AI shares a memory.">
-<meta property="og:description" content="A tiny local daemon that shares memory across Claude Code, Codex, and every AI tool your team codes with. Free, source-available, zero dependencies, 100% on your machine.">
+<meta name="theme-color" content="#2F4FE0">
+<meta name="author" content="MemBridge">
+<!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="MemBridge">
 <meta property="og:url" content="https://membridge.me/">
-<meta property="og:image" content="https://membridge.me/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="MemBridge — Your team shares a codebase. Now your AI shares a memory.">
+<meta property="og:site_name" content="MemBridge">
+<meta property="og:title" content="MemBridge - Shared Memory for Claude Code, Codex &amp; AI Coding Tools">
+<meta property="og:description" content="A local-first daemon that syncs context across Claude Code, Codex, and every AI coding tool you use, so what one figures out, the rest already know. 100% on your machine.">
+<meta property="og:image" content="https://membridge.me/og.png">
+<meta property="og:image:alt" content="MemBridge: one shared memory across your AI coding tools.">
+<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MemBridge — Your team shares a codebase. Now your AI shares a memory.">
-<meta name="twitter:description" content="Shared memory across Claude Code, Codex, and every AI tool your team codes with. 100% local, source-available, zero dependencies.">
-<meta name="twitter:image" content="https://membridge.me/og-image.png">
+<meta name="twitter:title" content="MemBridge - Shared Memory for Claude Code, Codex &amp; AI Coding Tools">
+<meta name="twitter:description" content="A local-first daemon that syncs context across the AI coding tools you already use. Automatic, per-project, 100% on your machine.">
+<meta name="twitter:image" content="https://membridge.me/og.png">
+<!-- Structured data: SoftwareApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MemBridge",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS, Linux, Windows",
+  "description": "A local-first daemon that syncs memory across Claude Code, Codex, and other AI coding tools by distilling session activity into the context files each tool already reads (CLAUDE.md, AGENTS.md).",
+  "url": "https://membridge.me/",
+  "downloadUrl": "https://github.com/mmelika/membridge",
+  "softwareVersion": "0.3.0",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "MemBridge", "url": "https://membridge.me/" }
+}
+</script>
+<!-- Structured data: FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How do I give Claude Code a persistent memory?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Run membridge start. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into CLAUDE.md, which Claude Code reads on every startup. Your next session starts already knowing what the last one did." } },
+    { "@type": "Question", "name": "How do I share context between Claude Code and Codex?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The same memory block lands in both CLAUDE.md and AGENTS.md, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring." } },
+    { "@type": "Question", "name": "Does MemBridge send my code to the cloud?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. The daemon binds to 127.0.0.1 and solo use makes zero network calls: no accounts, no telemetry, nothing phoning home. You can verify it yourself with one lsof command. Team sync is opt-in and end-to-end encrypted." } },
+    { "@type": "Question", "name": "Will it overwrite my CLAUDE.md or AGENTS.md?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Never. MemBridge only writes between its own markers, your notes stay byte-for-byte intact, and membridge remove restores every file exactly. It is plain markdown you can read and diff." } },
+    { "@type": "Question", "name": "Does it work with Cursor, Gemini CLI, or other AI coding tools?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Claude Code and Codex adapters ship built in. Any tool that logs its sessions as JSONL can be wired up with a small config entry, no code required. More first-class adapters are on the roadmap." } },
+    { "@type": "Question", "name": "How is MemBridge different from Mem0, claude-mem, and other AI memory tools?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Four ways. MemBridge captures automatically by tailing session logs, so there is no save tool for the agent to forget. Memory is per-project, not one global store that bleeds between repos. It runs 100% locally with no API key or cloud service. And membridge why file:line answers a question git blame cannot: the reasoning behind any line of code." } },
+    { "@type": "Question", "name": "Is MemBridge free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The core is free and source-available with zero dependencies. The only thing that ever costs anything is optional: bring your own Anthropic key for per-project roadmaps, billed to your key at roughly a cent each." } },
+    { "@type": "Question", "name": "How does a team share one AI memory?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. End-to-end encrypted before it leaves each machine, invite-only, off by default." } },
+    { "@type": "Question", "name": "Won't Anthropic or OpenAI just build this?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Each can build memory inside its own tool. Neither has a reason to build the bridge across its competitor's, and that neutral spot is exactly where MemBridge lives. The cross-tool provenance it accumulates is the part that compounds." } }
+  ]
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233E63F0'/%3E%3Cstop offset='1' stop-color='%2316219B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='1' y='1' width='30' height='30' rx='8.5' fill='url(%23g)' stroke='%234A78FF' stroke-width='1.6'/%3E%3Cpath d='M9 22.5 V11 L16 18 L23 11 V22.5' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 16.5 H27' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root {
   --blue: #2F4FE0;
   --blue-dark: #2440C4;
+  --pink: #C23B9E;
+  --pink-grad: #E86CC8;
   --blue-grad-a: #4A78FF;
   --ink: #10182B;
   --muted: #5D6B85;
@@ -35,6 +82,10 @@
   --tint: #EDF1FD;
   --tint-border: #D9E2FA;
   --border: #E6EAF3;
+  --green: #1D8A5F;
+  --orange: #C97A1E;
+  --dark: #0E1526;
+  --dark-border: #1D2740;
   --term-bg: #0E1526;
   --term-border: #1D2740;
   --term-text: #D7E0F2;
@@ -122,6 +173,17 @@ nav {
 }
 .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
 .hero-note { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .04em; }
+.hero .sub code {
+  font-family: var(--mono); font-size: .86em; background: var(--tint);
+  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px;
+  color: var(--ink); white-space: nowrap;
+}
+.hero-cap { font-size: 14.5px; color: var(--muted); margin: 40px 0 -22px; }
+.hero-cap em { font-style: italic; color: var(--blue); font-weight: 600; }
+.hero-cap code {
+  font-family: var(--mono); font-size: .86em; background: var(--tint);
+  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px; color: var(--ink);
+}
 
 /* ---------- terminals ---------- */
 .term {
@@ -150,6 +212,7 @@ nav {
 }
 @keyframes blink { 50% { opacity: 0; } }
 .hero-term { max-width: 720px; margin-top: 44px; }
+.hero-term .term-body { height: 196px; min-height: 0; overflow: hidden; }
 .replay {
   background: none; border: none; cursor: pointer; padding: 4px 8px;
   font-family: var(--mono); font-size: 11px; color: var(--term-muted);
@@ -159,22 +222,38 @@ nav {
 
 /* ---------- sync demo ---------- */
 #demo { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.tree-stage { position: relative; max-width: 720px; margin: 0 auto; }
+.demo-stage { position: relative; max-width: 780px; margin: 0 auto; }
 .wires { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .wires path { fill: none; stroke: var(--blue); stroke-width: 1.8; opacity: 0; stroke-linejoin: round; }
 .wires .ghost { stroke: var(--tint-border); opacity: 1; }
 .wires circle { fill: var(--blue); opacity: 0; }
-.trow { position: relative; z-index: 1; display: flex; justify-content: center; }
-.tree-stage .term { width: min(480px, 100%); font-size: 11.5px; }
-.tree-stage .term-bar { padding: 7px 11px; }
-.tree-stage .term-body { min-height: 58px; padding: 10px 13px 12px; }
-.mrow { height: 92px; align-items: center; }
-.mwrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.drow { position: relative; z-index: 1; display: flex; justify-content: center; }
+.pcard {
+  position: relative; z-index: 1; width: min(480px, 100%); margin: 0 auto 7px;
+  display: flex; align-items: center; gap: 11px;
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 7px 12px; box-shadow: 0 8px 22px -14px rgba(16,24,43,.18);
+}
+.pav { width: 30px; height: 30px; border-radius: 10px; flex: none; color: #fff; font: 700 13px var(--sans); display: flex; align-items: center; justify-content: center; }
+.pav.sam { background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
+.pav.maya { background: linear-gradient(135deg, #6C8CFF, var(--blue)); }
+.pname { font-weight: 650; font-size: 14.5px; }
+.pname small { display: block; font-weight: 500; font-size: 11.5px; color: var(--muted); }
+.ptool { margin-left: auto; text-align: right; }
+.ptool .tchip { font-family: var(--mono); font-size: 10px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; color: var(--muted); display: inline-block; }
+.ptool .ptime { display: block; font-family: var(--mono); font-size: 10px; color: var(--faint); margin-top: 4px; letter-spacing: .05em; }
+.demo-stage .term { width: min(480px, 100%); font-size: 11.5px; }
+.demo-stage .term.acc-sam { border-top: 3px solid var(--pink); }
+.demo-stage .term.acc-maya { border-top: 3px solid var(--blue); }
+.demo-stage .term-bar { padding: 7px 11px; }
+/* fixed height: exactly 3 lines, nothing below ever moves while typing */
+.demo-stage .term-body { padding: 10px 13px 12px; height: 78px; min-height: 0; overflow: hidden; }
+.mwrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .bigm {
   width: 44px; height: 44px; position: relative; z-index: 2;
   filter: drop-shadow(0 8px 18px rgba(47, 79, 224, .4));
 }
-.mwrap.pulse .bigm { animation: pulse 1.05s ease infinite; }
+.mwrap.pulse .bigm { animation: pulse 1s ease infinite; }
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.09); }
@@ -195,6 +274,7 @@ nav {
   background: rgba(247, 249, 254, .85); padding: 1px 7px; border-radius: 999px;
 }
 .mstatus.active { color: var(--blue); }
+.mrow { height: 80px; align-items: center; }
 .frag {
   position: absolute; z-index: 4; left: 0; top: 0; opacity: 0;
   font-family: var(--mono); font-size: 9.5px; color: var(--blue);
@@ -202,9 +282,9 @@ nav {
   padding: 1px 7px; white-space: nowrap; pointer-events: none;
   transform: translate(-50%, -50%);
 }
-.files-row { gap: clamp(20px, 6vw, 70px); padding: 6px 0; align-items: stretch; }
+.files { gap: clamp(20px, 6vw, 64px); padding: 2px 0; align-items: stretch; }
 .file-card {
-  width: min(272px, 45%); background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  width: min(260px, 45%); background: #fff; border: 1px solid var(--border); border-radius: 10px;
   box-shadow: 0 12px 30px -18px rgba(16, 24, 43, .2); overflow: hidden;
 }
 .file-tab {
@@ -217,131 +297,264 @@ nav {
   text-transform: uppercase; color: var(--blue); opacity: 0; transition: opacity .4s ease;
 }
 .file-tab .fnew.on { opacity: 1; }
-.file-body { padding: 8px 11px 10px; font-family: var(--mono); font-size: 9.5px; line-height: 1.7; }
+.file-body { padding: 7px 11px 8px; font-family: var(--mono); font-size: 9.5px; line-height: 1.55; }
 .file-body .fl { display: block; color: var(--faint); }
 .fl.marker { color: var(--blue); opacity: .75; }
-.fl.mem { color: var(--ink); border-left: 2px solid var(--tint-border); padding-left: 8px; }
+.fl.mem { color: var(--ink); border-left: 2px solid var(--tint-border); padding-left: 7px; }
 .fl.new { opacity: 0; transform: translateY(3px); transition: opacity .35s ease, transform .35s ease; }
 .fl.new.on { opacity: 1; transform: none; border-left-color: var(--blue); animation: memflash 1.5s ease; }
 @keyframes memflash {
   0% { background: var(--tint); }
   100% { background: transparent; }
 }
-.gap-bot { height: 54px; }
+.gap { height: 26px; }
 
-/* ---------- app showcase ---------- */
+/* ---------- app showcase (full clickable demo) ---------- */
 .app-window {
-  max-width: 860px; margin: 0 auto; background: #fff;
-  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+  max-width: 960px; margin: 0 auto;
+  background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
   box-shadow: 0 32px 80px -32px rgba(16, 24, 43, .25);
 }
+.app-window .mono-label { font-size: 10.5px; }
 .app-topbar {
-  display: flex; align-items: center; gap: 14px; padding: 12px 18px;
-  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px; padding: 12px 18px;
+  border-bottom: 1px solid var(--border); flex-wrap: wrap;
 }
 .app-topbar .dots { display: flex; gap: 6px; }
 .app-topbar .dots i { width: 11px; height: 11px; border-radius: 50%; background: #E3E8F2; display: block; }
 .app-brand { display: flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 15px; font-weight: 600; }
-.app-brand .m-tile { width: 24px; height: 24px; border-radius: 7px; }
-.app-tabs { display: flex; gap: 4px; margin-left: 10px; }
+.app-brand .m-tile { width: 24px; height: 24px; border-radius: 7px; display: block; }
+.app-tabs { display: flex; gap: 4px; margin-left: 8px; }
 .app-tab {
   background: none; border: none; cursor: pointer; font: 500 13.5px var(--sans);
-  color: var(--muted); padding: 8px 12px 10px; border-radius: 8px; position: relative;
+  color: var(--muted); padding: 8px 11px 10px; border-radius: 8px; position: relative;
 }
 .app-tab:hover { color: var(--ink); }
 .app-tab.active { color: var(--blue); font-weight: 600; }
 .app-tab.active::after {
-  content: ''; position: absolute; left: 12px; right: 12px; bottom: 2px;
+  content: ''; position: absolute; left: 11px; right: 11px; bottom: 2px;
   height: 2px; border-radius: 2px; background: var(--blue);
 }
-.app-topbar .pill { margin-left: auto; padding: 5px 12px; font-size: 10px; }
-.app-view { padding: 26px 30px 30px; min-height: 372px; }
+.enc-pill {
+  display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--green);
+  border: 1px solid #BFE3D2; background: #F2FBF7; border-radius: 999px; padding: 5px 11px;
+}
+.sync-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--blue);
+  background: var(--tint); border: 1px solid var(--tint-border); border-radius: 999px; padding: 5px 11px;
+  white-space: nowrap;
+}
+.sync-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 3px rgba(47,79,224,.14); }
+.invite-btn {
+  cursor: pointer; background: var(--blue); color: #fff; border: none; border-radius: 10px;
+  font: 600 13px var(--sans); padding: 8px 16px;
+}
+.invite-btn:hover { background: var(--blue-dark); }
+
+.app-view { padding: 26px 30px 30px; min-height: 560px; }
 .app-view[hidden] { display: none; }
-.app-h { font-family: var(--serif); font-size: 27px; font-weight: 500; margin: 0 0 2px; }
+.app-h { font-family: var(--serif); font-size: 30px; font-weight: 500; margin: 0 0 2px; }
 .app-h .hb { color: var(--blue); }
-.app-sub { color: var(--faint); font-size: 13.5px; margin: 0 0 20px; }
+.app-sub { color: var(--faint); font-size: 13.5px; margin: 0 0 18px; }
+
+/* ---- filters (projects) ---- */
+.filter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.filter-row .mono-label { margin-right: 2px; }
+.seg { display: inline-flex; background: #F3F6FD; border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+.seg button {
+  border: none; background: none; cursor: pointer; font: 600 12.5px var(--sans);
+  color: var(--muted); border-radius: 999px; padding: 5px 13px;
+}
+.seg button.active { background: #fff; color: var(--blue); box-shadow: 0 1px 4px rgba(16,24,43,.08); }
+
+/* ---- project rows ---- */
 .proj-row {
   display: flex; align-items: center; gap: 14px; padding: 15px 10px;
   border: none; border-top: 1px solid var(--border); border-radius: 0;
   background: none; width: 100%; text-align: left; cursor: pointer;
   font: inherit; color: inherit; transition: background .15s ease;
 }
-.proj-row:hover { background: var(--bg-alt); }
-.proj-go { font-family: var(--mono); font-size: 15px; color: var(--faint); flex: none; }
-.proj-row:hover .proj-go { color: var(--blue); }
-.pd-back {
-  background: none; border: none; cursor: pointer; color: var(--blue);
-  font: 600 13px var(--sans); padding: 0 0 14px; display: block;
-}
-.pd-head { display: flex; align-items: center; gap: 14px; }
-.pd-head .proj-tile { width: 44px; height: 44px; border-radius: 12px; font-size: 13px; }
-.pd-name { font-family: var(--serif); font-size: 22px; font-weight: 500; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.pd-path { font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-top: 2px; }
-.pd-stats { font-size: 12.5px; color: var(--muted); margin: 12px 0 4px; }
-.pd-stats b { color: var(--ink); font-weight: 600; }
-.pd-label { display: block; margin: 18px 0 8px; }
-.pd-mem {
-  border: 1px solid var(--border); border-radius: 10px; padding: 10px 13px;
-  background: #FBFCFF; font-family: var(--mono); font-size: 10.5px; line-height: 1.75;
-}
-.pd-mem .fl { display: block; color: var(--ink); }
-.pd-mem .marker { color: var(--blue); opacity: .75; }
+.proj-row:hover { background: #F7F9FE; }
+.proj-row[hidden] { display: none; }
 .proj-tile {
   width: 38px; height: 38px; border-radius: 11px; flex: none;
-  background: linear-gradient(135deg, var(--blue-grad-a), var(--blue));
+  background: linear-gradient(135deg, #6C8CFF, var(--blue));
   color: #fff; font: 700 12px var(--sans); display: flex;
   align-items: center; justify-content: center; letter-spacing: .04em;
 }
 .proj-main { flex: 1; min-width: 0; }
 .proj-name { font-weight: 600; font-size: 15px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.proj-badge {
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--faint);
-}
+.proj-badge { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
 .proj-badge.shared { color: var(--blue); }
-.proj-path {
-  display: block; font-family: var(--mono); font-size: 11.5px; color: var(--faint);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 2px 0 5px;
-}
+.proj-path { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 2px 0 5px; }
 .proj-stats { display: block; font-size: 12.5px; color: var(--muted); }
 .proj-stats b { color: var(--ink); font-weight: 600; }
 .proj-time { font-family: var(--mono); font-size: 11px; color: var(--faint); flex: none; }
-.act-day { display: block; margin: 18px 0 10px; }
-.act-day:first-of-type { margin-top: 0; }
-.act-card {
-  display: flex; gap: 12px; border: 1px solid var(--border); border-radius: 12px;
-  padding: 15px 16px; margin-bottom: 12px;
+.proj-go { font-family: var(--mono); font-size: 15px; color: var(--faint); flex: none; }
+.proj-row:hover .proj-go { color: var(--blue); }
+
+/* ---- project detail ---- */
+.pd-back, .link-btn {
+  background: none; border: none; cursor: pointer; color: var(--blue);
+  font: 600 13px var(--sans); padding: 0; display: inline-block;
 }
+.pd-back { padding-bottom: 14px; display: block; }
+.pd-headrow { display: flex; align-items: flex-start; gap: 14px; }
+.pd-headrow .grow { flex: 1; min-width: 0; }
+.pd-name { font-family: var(--serif); font-size: 26px; font-weight: 500; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.pd-path { font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-top: 2px; }
+.copy-ai {
+  cursor: pointer; background: var(--blue); color: #fff; border: none; border-radius: 10px;
+  font: 600 13px var(--sans); padding: 9px 16px; flex: none;
+}
+.copy-ai:hover { background: var(--blue-dark); }
+.catch-pill {
+  display: inline-flex; align-items: center; gap: 8px; margin: 18px 0 10px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--blue); background: var(--tint); border: 1px solid var(--tint-border);
+  border-radius: 999px; padding: 5px 13px;
+}
+.catch-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+.catch-card {
+  display: flex; align-items: center; gap: 14px;
+  border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 16px;
+}
+.catch-check {
+  width: 40px; height: 40px; border-radius: 12px; flex: none; color: #fff;
+  background: linear-gradient(135deg, #6C8CFF, var(--blue));
+  display: flex; align-items: center; justify-content: center; font-size: 17px;
+}
+.catch-card h4 { margin: 0; font-size: 15.5px; }
+.catch-card p { margin: 1px 0 0; color: var(--muted); font-size: 13px; }
+.stat-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
+.stat-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px 12px; }
+.stat-card .n { font-family: var(--serif); font-size: 28px; line-height: 1.1; }
+.stat-card .n.blue { color: var(--blue); }
+.stat-card .l { display: block; margin-top: 4px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+
+/* ---- day / activity cards ---- */
+.day-label { display: block; margin: 16px 0 10px; }
+.act-card { border: 1px solid var(--border); border-radius: 12px; padding: 15px 16px; margin-bottom: 12px; }
+.act-top { display: flex; gap: 12px; }
 .act-tile {
   width: 27px; height: 27px; border-radius: 8px; flex: none; margin-top: 2px;
   color: #fff; font: 700 11px var(--sans); display: flex; align-items: center; justify-content: center;
 }
-.act-tile.sam { background: linear-gradient(135deg, #E86CC8, #C23B9E); }
-.act-tile.maya { background: linear-gradient(135deg, #6C8CFF, #3B5BE8); }
+.act-tile.sam { background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
+.act-tile.maya { background: linear-gradient(135deg, #6C8CFF, var(--blue)); }
 .act-main { flex: 1; min-width: 0; }
-.act-text { font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0 0 9px; }
-.act-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); }
-.act-meta .who { font-weight: 600; color: var(--ink); }
-.act-meta .tool-chip {
-  font-family: var(--mono); font-size: 10.5px; border: 1px solid var(--border);
-  border-radius: 999px; padding: 2px 9px; color: var(--muted);
+.act-who { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin-bottom: 3px; }
+.act-who .who { font-weight: 600; color: var(--ink); }
+.tool-chip { font-family: var(--mono); font-size: 10.5px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; color: var(--muted); }
+.act-who .proj { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+.act-who .when { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); }
+.act-title { font-size: 14.5px; font-weight: 650; line-height: 1.45; margin: 0 0 6px; }
+.act-title.dim { color: var(--faint); font-weight: 500; }
+.intent { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+.intent .il { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-right: 7px; }
+.working-row { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+.working-tag { margin-left: auto; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--orange); white-space: nowrap; }
+.meta-line { font-size: 12.5px; color: var(--faint); }
+.checks { list-style: none; margin: 4px 0 8px; padding: 0; display: grid; gap: 5px; }
+.checks li { display: flex; gap: 8px; font-size: 13px; color: var(--muted); }
+.checks li::before { content: '✓'; color: var(--green); flex: none; }
+.checks li.extra[hidden] { display: none; }
+.card-links { display: flex; align-items: center; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
+.expander { background: none; border: none; cursor: pointer; color: var(--blue); font: 600 12.5px var(--sans); padding: 0; }
+.share-chip {
+  cursor: pointer; background: #fff; border: 1px solid var(--border); border-radius: 999px;
+  font: 600 12px var(--sans); color: var(--muted); padding: 4px 12px;
 }
-.act-meta .proj { font-family: var(--mono); font-size: 11px; color: var(--faint); }
-.act-meta .when { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); }
-.prompts {
-  background: none; border: none; padding: 0; cursor: pointer;
-  color: var(--blue); font: 600 12px var(--sans);
-}
-.prompts .chev { display: inline-block; font-size: 9px; transition: transform .2s ease; vertical-align: 1px; }
-.prompts[aria-expanded="true"] .chev { transform: rotate(180deg); }
-.prompt-list {
-  margin: 10px 0 0; padding: 10px 0 2px; border-top: 1px dashed var(--border);
-  list-style: none; display: grid; gap: 8px;
-}
-.prompt-list[hidden] { display: none; }
+.share-chip:hover { border-color: var(--blue); color: var(--blue); }
+.share-chip.shared { color: var(--green); border-color: #BFE3D2; cursor: default; }
+.card-links .when { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); }
+.detail[hidden] { display: none; }
+.detail { border-top: 1px dashed var(--border); margin-top: 10px; padding-top: 10px; }
+.detail .dl { display: block; margin-bottom: 6px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.detail .summary { font-size: 13.5px; color: var(--muted); margin: 0 0 10px; }
+.prompt-list { margin: 0; padding: 0 0 2px; list-style: none; display: grid; gap: 7px; }
 .prompt-list li { display: flex; gap: 10px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .prompt-list .pn { font-family: var(--mono); font-size: 10.5px; color: var(--blue); flex: none; padding-top: 2px; }
 .prompt-list em { font-style: italic; }
+.prompt-list .ph { color: var(--faint); }
+
+/* ---- team view ---- */
+.team-eyebrow { color: var(--blue); display: block; margin-bottom: 8px; }
+.team-name { font-family: var(--serif); font-size: 40px; font-weight: 500; margin: 0 0 4px; }
+.team-sub { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+.members-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 22px; }
+.members-head {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #F3F6FD; padding: 10px 16px;
+}
+.member-row { display: flex; align-items: center; gap: 13px; padding: 14px 16px; border-top: 1px solid var(--border); }
+.member-av {
+  width: 38px; height: 38px; border-radius: 11px; flex: none; color: #fff;
+  font: 700 14px var(--sans); display: flex; align-items: center; justify-content: center;
+}
+.member-av.maya { background: linear-gradient(135deg, #6C8CFF, var(--blue)); }
+.member-av.sam { background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
+.member-main { flex: 1; }
+.member-name { font-weight: 600; font-size: 14.5px; }
+.member-name small { font-weight: 400; color: var(--muted); }
+.member-sub { font-size: 12.5px; color: var(--faint); }
+.role-pill { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; border-radius: 999px; padding: 4px 12px; }
+.role-pill.owner { color: var(--blue); background: var(--tint); border: 1px solid var(--tint-border); }
+.role-pill.member { color: var(--muted); border: 1px solid var(--border); }
+.join-label { color: var(--blue); display: block; margin-bottom: 8px; }
+.join-card {
+  background: var(--dark); border: 1px solid var(--dark-border); border-radius: 12px;
+  padding: 18px 20px 14px; color: #D7E0F2;
+}
+.join-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.join-code { font-family: var(--mono); font-size: 15px; letter-spacing: .02em; flex: 1; min-width: 240px; }
+.join-copy {
+  cursor: pointer; background: rgba(255,255,255,.08); border: 1px solid var(--dark-border);
+  border-radius: 9px; color: #D7E0F2; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; padding: 9px 18px;
+}
+.join-copy:hover { border-color: #6B7A99; }
+.join-note { margin: 12px 0 0; font-size: 12.5px; color: #6B7A99; }
+.team-perm { margin-top: 12px; font-size: 12.5px; color: var(--faint); }
+.flash { animation: joinflash 1.2s ease; }
+.gear-btn {
+  width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border);
+  background: #fff; cursor: pointer; font-size: 15px; color: var(--muted);
+  display: flex; align-items: center; justify-content: center; flex: none;
+}
+.gear-btn:hover { color: var(--ink); border-color: var(--faint); }
+.gear-btn.active { color: var(--blue); border-color: var(--tint-border); background: var(--tint); }
+.act-title.link { cursor: pointer; }
+.act-title.link:hover { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.crumb { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin: 4px 0 8px; }
+.day-head { font-size: 20px; font-weight: 700; line-height: 1.35; margin: 0 0 14px; }
+.day-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
+.working-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--orange); display: block; margin-bottom: 6px; }
+.day-card h4 { margin: 0 0 8px; font-size: 15.5px; }
+.day-card .summary { font-size: 13.5px; color: var(--muted); margin: 0 0 10px; }
+.set-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 8px 0 22px; }
+.set-row { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-top: 1px solid var(--border); }
+.set-row:first-child { border-top: none; }
+.set-row .grow { flex: 1; min-width: 0; }
+.set-name { font-weight: 600; font-size: 14px; display: flex; align-items: baseline; gap: 9px; }
+.set-path { display: block; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 1px; }
+.pause-btn { background: none; border: none; color: var(--blue); font: 600 12.5px var(--sans); cursor: pointer; flex: none; }
+.tools-foot { padding: 11px 16px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: .05em; }
+.set-check { width: 15px; height: 15px; accent-color: var(--blue); flex: none; cursor: pointer; }
+.set-spacer { width: 15px; flex: none; }
+.manage-btn { cursor: pointer; background: var(--tint); border: 1px solid var(--tint-border); color: var(--blue); border-radius: 10px; font: 600 13px var(--sans); padding: 8px 14px; flex: none; }
+.acct-av { width: 38px; height: 38px; border-radius: 11px; flex: none; color: #fff; font: 700 14px var(--sans); display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
+@keyframes joinflash { 0% { box-shadow: 0 0 0 3px rgba(47,79,224,.55); } 100% { box-shadow: 0 0 0 0 rgba(47,79,224,0); } }
+
+@media (max-width: 640px) {
+  .app-view { padding: 18px 16px 22px; }
+  .stat-trio { grid-template-columns: 1fr; }
+  .proj-time { display: none; }
+  .enc-pill { display: none; }
+  .act-who .when { margin-left: 0; }
+}
 .app-caption {
   text-align: center; font-family: var(--mono); font-size: 12px;
   color: var(--faint); margin-top: 22px; letter-spacing: .03em;
@@ -349,12 +562,6 @@ nav {
 .app-caption code {
   font-size: 11.5px; background: var(--tint); border: 1px solid var(--tint-border);
   border-radius: 5px; padding: 1px 6px; color: var(--ink);
-}
-@media (max-width: 640px) {
-  .app-view { padding: 18px 16px 22px; }
-  .proj-time { display: none; }
-  .app-topbar .pill { display: none; }
-  .act-meta .when { margin-left: 0; }
 }
 
 /* ---------- how it works ---------- */
@@ -380,14 +587,80 @@ nav {
 .trust-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .trust-row.cols3 { grid-template-columns: repeat(3, 1fr); }
 #team .trust-item { border-top-color: var(--blue); }
+.soon-tag {
+  font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blue); background: var(--tint); border: 1px solid var(--tint-border);
+  border-radius: 999px; padding: 1px 6px; margin-left: 6px; vertical-align: 2px;
+}
+
+/* ---------- why / differentiation ---------- */
+#why { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.why-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 22px 20px; }
+.why-card .wk { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 12px; }
+.why-card h3 { font-size: 16px; margin: 0 0 7px; font-weight: 650; }
+.why-card p { margin: 0; color: var(--muted); font-size: 14px; }
+.why-card code {
+  font-family: var(--mono); font-size: .88em; background: var(--tint);
+  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px; color: var(--ink); white-space: nowrap;
+}
+@media (max-width: 820px) { .why-grid { grid-template-columns: 1fr; } }
+
+/* ---------- faq ---------- */
+.faq-list { max-width: 780px; margin-top: 6px; }
+.faq-item { border-top: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: 1px solid var(--border); }
+.faq-item summary {
+  list-style: none; cursor: pointer; padding: 18px 2px; gap: 16px;
+  font: 600 16.5px var(--sans); color: var(--ink);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary .fx { color: var(--blue); font-size: 21px; line-height: 1; flex: none; transition: transform .2s ease; }
+.faq-item[open] summary .fx { transform: rotate(45deg); }
+.faq-item .faq-a { margin: -4px 2px 20px; color: var(--muted); font-size: 15px; max-width: 70ch; }
+.faq-item .faq-a code {
+  font-family: var(--mono); font-size: .88em; background: var(--tint);
+  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px; color: var(--ink);
+}
+.faq-item .faq-a a { font-weight: 500; }
+.faq-more { margin-top: 22px; font-size: 14.5px; color: var(--muted); }
+.proof { max-width: 660px; margin-top: 44px; }
+.proof-label { color: var(--blue); }
+.proof-term { margin-top: 10px; }
+.proof-term .term-body { min-height: 0; }
+.proof-term .t-dim, .proof-term .t-out { user-select: none; -webkit-user-select: none; }
+.t-out { color: var(--term-muted); }
+.proof-line { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
 .trust-item { border-top: 2px solid var(--tint-border); padding-top: 16px; }
 .trust-item .mono-label { color: var(--blue); display: block; margin-bottom: 8px; }
 .trust-item p { margin: 0; color: var(--muted); font-size: 14px; }
 
 /* ---------- get it ---------- */
 #get { background: var(--bg-alt); border-top: 1px solid var(--border); }
-.get-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-.install-box .term-body { min-height: 0; }
+.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.path { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+.path-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.path-ico {
+  width: 38px; height: 38px; border-radius: 11px; flex: none;
+  background: var(--tint); border: 1px solid var(--tint-border);
+  display: flex; align-items: center; justify-content: center; font-size: 17px;
+}
+.path h3 { margin: 0; font-size: 16px; font-weight: 650; }
+.ph-sub { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+.path p { color: var(--muted); font-size: 13.5px; margin: 8px 0 12px; }
+.path .term { font-size: 12px; }
+.path .term-body { min-height: 0; padding: 11px 14px 13px; }
+.strip {
+  margin-top: 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  background: linear-gradient(90deg, var(--tint), #fff); border: 1px solid var(--tint-border);
+  border-radius: 14px; padding: 16px 22px;
+}
+.strip .npm { font-family: var(--mono); font-size: 13px; color: var(--ink); }
+.strip .npm .soon-tag { margin-left: 8px; vertical-align: 2px; }
+.strip .s-copy { flex: 1; min-width: 200px; }
+.strip .s-copy p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+.strip .wl-form { flex: 1.1; min-width: 300px; max-width: none; }
 .copy-btn {
   margin-left: auto; cursor: pointer;
   background: rgba(255,255,255,.06); border: 1px solid var(--term-border);
@@ -395,11 +668,7 @@ nav {
   font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
 }
 .copy-btn:hover { color: var(--term-text); border-color: var(--term-muted); }
-.install-note { font-family: var(--mono); font-size: 12px; color: var(--faint); margin-top: 12px; letter-spacing: .03em; }
-.wl { text-align: center; }
-.wl h2 { margin-bottom: 10px; }
-.wl > p { color: var(--muted); margin: 0 0 22px; font-size: 15.5px; }
-.wl-form { display: flex; gap: 10px; max-width: 440px; margin: 0 auto; }
+.wl-form { display: flex; gap: 10px; max-width: 440px; }
 .wl-form input[type="email"] {
   flex: 1; min-width: 0; font: 15px var(--sans); color: var(--ink);
   background: #fff; border: 1px solid var(--border); border-radius: 12px;
@@ -411,6 +680,7 @@ nav {
 .wl-msg { font-size: 14px; margin-top: 12px; min-height: 22px; }
 .wl-msg.ok { color: #1D8A5F; }
 .wl-msg.err { color: #C2453A; }
+.wl-fine { font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-top: 6px; letter-spacing: .03em; }
 
 /* ---------- footer ---------- */
 footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
@@ -420,53 +690,35 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
 .foot-links { display: flex; gap: 20px; flex: 1; }
 .foot-links a { color: var(--muted); font-size: 13.5px; }
 .foot-note { font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: .04em; }
+.foot-blurb { margin-top: 26px; color: var(--faint); font-size: 13px; line-height: 1.7; max-width: 780px; }
+.foot-blurb code { font-family: var(--mono); font-size: .9em; color: var(--muted); }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .section { padding: 64px 0; }
-  .files-row { gap: 14px; }
+  .files { gap: 12px; }
   .file-card { width: 48%; }
   .file-body { font-size: 8.5px; }
-  .mrow { height: 78px; }
-  .gap-bot { height: 44px; }
+  .mrow { height: 66px; }
+  .gap { height: 22px; }
   .frag { display: none; }
+  .demo-stage .term-body { height: 96px; }
+  .hero-term .term-body { height: 268px; }
   .steps, .trust-row { grid-template-columns: 1fr; }
-  .get-grid { grid-template-columns: 1fr; }
+  .paths { grid-template-columns: 1fr; }
   .nav-links { display: none; }
+  .foot-links { flex-wrap: wrap; gap: 12px 18px; }
 }
 @media (max-width: 520px) {
   .wl-form { flex-direction: column; }
   .hero { padding: 56px 0 48px; }
+  .pill { white-space: normal; line-height: 1.5; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .caret, .bridge-col.pulse .bridge-tile { animation: none; }
 }
 </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      "name": "MemBridge",
-      "url": "https://membridge.me/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "macOS, Linux, Windows",
-      "description": "MemBridge is a local daemon that shares memory across Claude Code, Codex, and every AI coding tool your team uses. 100% local, source-available, zero dependencies.",
-      "softwareRequirements": "Node.js 18+",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "author": { "@type": "Organization", "name": "MemBridge" },
-      "sameAs": [ "https://github.com/mmelika/membridge" ]
-    },
-    {
-      "@type": "WebSite",
-      "name": "MemBridge",
-      "url": "https://membridge.me/"
-    }
-  ]
-}
-</script>
 </head>
 <body>
 
@@ -492,9 +744,11 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     <div class="nav-links">
       <a href="#demo">Demo</a>
       <a href="#app">The app</a>
-      <a href="#team">Team</a>
-      <a href="#how">How it works</a>
+      <a href="#why">Why</a>
+      <a href="#team">Teams</a>
       <a href="#privacy">Privacy</a>
+      <a href="#get">Get it</a>
+      <a href="#faq">FAQ</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-secondary" href="https://github.com/mmelika/membridge" target="_blank" rel="noopener">
@@ -508,17 +762,18 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
 <header class="hero">
   <div class="wrap">
     <span class="pill"><span class="dot"></span>100% local &middot; source-available &middot; zero dependencies</span>
-    <h1>Your team shares a <em>codebase</em>.<br>Now your AI shares a <em>memory</em>.</h1>
-    <p class="sub">Every line your AI tools write traces back to a prompt and a reason. MemBridge keeps that memory on your machine and shares it across Claude Code, Codex — and your whole team.</p>
+    <h1>Different tools. <em>One brain.</em></h1>
+    <p class="sub">MemBridge is a local memory layer for Claude Code, Codex, and every AI tool you code with. It watches your sessions, syncs the context into <code>CLAUDE.md</code> and <code>AGENTS.md</code> automatically, and can tell you the prompt behind any line of code. 100% on your machine.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="https://github.com/mmelika/membridge" target="_blank" rel="noopener">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
         Star on GitHub
       </a>
-      <a class="btn btn-secondary" href="#get">Get updates</a>
+      <a class="btn btn-secondary" href="#get">Get it &rarr;</a>
     </div>
-    <p class="hero-note">A tiny background daemon. Node 18+. Nothing leaves your machine.</p>
+    <p class="hero-note">A tiny background daemon · Node 18+ · Claude Code &amp; Codex built in · nothing leaves your machine.</p>
 
+    <p class="hero-cap">And the part <code>git blame</code> can't do: ask any line <em>why</em> it exists.</p>
     <div class="term hero-term">
       <div class="term-bar">
         <span class="dots"><i></i><i></i><i></i></span>
@@ -532,38 +787,37 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
 
 <section class="section" id="demo">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head" style="margin-bottom: 18px;">
       <span class="mono-label">The demo</span>
-      <h2>Two tools. One memory.</h2>
-      <p>Claude Code makes a decision. MemBridge distills it and amends the memory already living in <code>CLAUDE.md</code> and <code>AGENTS.md</code> — files your tools read on every start. Codex picks it up. Watch:</p>
+      <h2>Two sessions. Zero re-explaining.</h2>
+      <p><b>Sam</b> makes a call in Claude Code tonight. MemBridge writes it into the shared memory both AI tools read, <b>CLAUDE.md</b> and <b>AGENTS.md</b>. When <b>Maya</b> opens Codex tomorrow, it already knows.</p>
     </div>
-    <div class="tree-stage" id="treeStage">
+
+    <div class="demo-stage" id="demoStage">
       <svg class="wires" id="wires" aria-hidden="true"></svg>
 
-      <div class="trow">
-        <div class="term">
-          <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">Claude Code · Sam · ~/cartful</span><button class="replay" id="syncReplay" type="button">↻ replay</button></div>
-          <div class="term-body" id="topBody"></div>
-        </div>
+      <div class="pcard">
+        <span class="pav sam">S</span>
+        <span class="pname">Sam <small>working late in cartful</small></span>
+        <span class="ptool"><span class="tchip">Claude Code</span><span class="ptime">TONIGHT · 11:42 PM</span></span>
+      </div>
+      <div class="drow">
+        <div class="term acc-sam" id="topT"><div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">~/cartful</span><button class="replay" id="syncReplay" type="button">↻ replay</button></div><div class="term-body" id="topBody"></div></div>
       </div>
 
-      <div class="trow mrow">
-        <div class="mwrap" id="mwrap">
-          <span class="ring" id="mring"></span>
-          <svg class="bigm" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
-          <span class="mstatus" id="mstatus">watching session…</span>
-        </div>
+      <div class="drow mrow">
+        <div class="mwrap" id="mwrap"><span class="ring" id="mring"></span><svg class="bigm" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg><span class="mstatus" id="mstatus">watching…</span></div>
       </div>
 
-      <div class="trow files-row">
+      <div class="drow files">
         <div class="file-card" id="fileL">
           <div class="file-tab"><span class="fname">CLAUDE.md</span><span class="fnew">amended</span></div>
           <div class="file-body">
-            <span class="fl"># cartful — dev notes</span>
+            <span class="fl"># cartful, dev notes</span>
             <span class="fl marker">&lt;!-- membridge --&gt;</span>
-            <span class="fl mem">Cart drawer: optimistic. (Maya, Jul 15)</span>
-            <span class="fl mem new">Retries: backoff, cap 3 — gateway</span>
-            <span class="fl mem new">10s limit. (Sam, Jul 17)</span>
+            <span class="fl mem">Free plan caps at 3. (Maya, Jul 15)</span>
+            <span class="fl mem new">Checkout button: "Reserve your spot",</span>
+            <span class="fl mem new">not "Buy now". (Sam, Jul 17)</span>
             <span class="fl marker">&lt;!-- /membridge --&gt;</span>
           </div>
         </div>
@@ -572,21 +826,23 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
           <div class="file-body">
             <span class="fl"># Agent instructions</span>
             <span class="fl marker">&lt;!-- membridge --&gt;</span>
-            <span class="fl mem">Cart drawer: optimistic. (Maya, Jul 15)</span>
-            <span class="fl mem new">Retries: backoff, cap 3 — gateway</span>
-            <span class="fl mem new">10s limit. (Sam, Jul 17)</span>
+            <span class="fl mem">Free plan caps at 3. (Maya, Jul 15)</span>
+            <span class="fl mem new">Checkout button: "Reserve your spot",</span>
+            <span class="fl mem new">not "Buy now". (Sam, Jul 17)</span>
             <span class="fl marker">&lt;!-- /membridge --&gt;</span>
           </div>
         </div>
       </div>
 
-      <div class="trow gap-bot"></div>
+      <div class="drow gap"></div>
 
-      <div class="trow">
-        <div class="term">
-          <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">Codex · Maya · next morning</span></div>
-          <div class="term-body" id="botBody"></div>
-        </div>
+      <div class="pcard">
+        <span class="pav maya">M</span>
+        <span class="pname">Maya <small>picking it up fresh</small></span>
+        <span class="ptool"><span class="tchip">Codex</span><span class="ptime">NEXT MORNING · 9:04 AM</span></span>
+      </div>
+      <div class="drow">
+        <div class="term acc-maya" id="botT"><div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">~/cartful</span></div><div class="term-body" id="botBody"></div></div>
       </div>
     </div>
   </div>
@@ -597,116 +853,285 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     <div class="section-head">
       <span class="mono-label">The app</span>
       <h2>Don't want the terminal? There's an app.</h2>
-      <p>The same memory, as a local dashboard: your projects, a plain-English feed of what your AI tools did, and every prompt behind every change. Built for people who ship with AI but don't live in a CLI — and for teammates catching up on each other's sessions.</p>
+      <p>Your team did things while you were gone. The dashboard shows you exactly what: project by project, session by session, down to the word-for-word prompts. All of it on your machine.</p>
     </div>
 
-    <div class="app-window">
-      <div class="app-topbar">
-        <span class="dots"><i></i><i></i><i></i></span>
-        <span class="app-brand">
-          <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
-          MemBridge
+  <div class="app-window" id="appWin">
+    <div class="app-topbar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="app-brand">
+        <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
+        MemBridge
+      </span>
+      <div class="app-tabs" role="tablist" aria-label="Dashboard views">
+        <button class="app-tab active" data-view="projects" type="button" role="tab" aria-selected="true">Projects</button>
+        <button class="app-tab" data-view="activity" type="button" role="tab" aria-selected="false">Activity</button>
+        <button class="app-tab" data-view="team" type="button" role="tab" aria-selected="false">Team</button>
+      </div>
+      <span class="enc-pill">🔒 ENCRYPTED</span>
+      <span class="sync-pill"><span class="dot"></span>SYNCED · <span id="syncAgo">8S</span> AGO</span>
+      <button class="invite-btn" id="inviteBtn" type="button">Invite</button>
+      <button class="gear-btn" id="gearBtn" type="button" aria-label="Settings">⚙</button>
+    </div>
+
+    <!-- ================= PROJECTS ================= -->
+    <div class="app-view" id="view-projects">
+      <h3 class="app-h">Projects</h3>
+      <p class="app-sub">All caught up across your projects. Click one to open it.</p>
+      <div class="filter-row">
+        <span class="mono-label">Show</span>
+        <div class="seg" id="showSeg">
+          <button class="active" data-filter="all" type="button">All</button>
+          <button data-filter="shared" type="button">Shared</button>
+          <button data-filter="local" type="button">Local</button>
+        </div>
+      </div>
+      <button class="proj-row" type="button" data-proj="cartful" data-kind="shared">
+        <span class="proj-tile">CA</span>
+        <span class="proj-main">
+          <span class="proj-name">cartful <span class="proj-badge shared">Shared · Sam + Maya</span></span>
+          <span class="proj-path">/Users/sam/cartful</span>
+          <span class="proj-stats"><b>17</b> sessions this week &nbsp;·&nbsp; <b>49</b> files touched &nbsp;·&nbsp; <b>1</b> open todo</span>
         </span>
-        <div class="app-tabs" role="tablist" aria-label="Dashboard views">
-          <button class="app-tab active" id="tabProjects" type="button" role="tab" aria-selected="true" aria-controls="viewProjects">Projects</button>
-          <button class="app-tab" id="tabActivity" type="button" role="tab" aria-selected="false" aria-controls="viewActivity">Activity</button>
-        </div>
-        <span class="pill"><span class="dot"></span>Synced · 2m ago</span>
-      </div>
+        <span class="proj-time">37m ago</span>
+        <span class="proj-go">›</span>
+      </button>
+      <button class="proj-row" type="button" data-proj="brewlog" data-kind="local">
+        <span class="proj-tile">BR</span>
+        <span class="proj-main">
+          <span class="proj-name">brewlog <span class="proj-badge">Local only</span></span>
+          <span class="proj-path">/Users/sam/Desktop/brewlog</span>
+          <span class="proj-stats"><b>5</b> sessions this week &nbsp;·&nbsp; <b>21</b> files touched &nbsp;·&nbsp; <b>0</b> open todos</span>
+        </span>
+        <span class="proj-time">25h ago</span>
+        <span class="proj-go">›</span>
+      </button>
+      <button class="proj-row" type="button" data-proj="study-buddy" data-kind="local">
+        <span class="proj-tile">ST</span>
+        <span class="proj-main">
+          <span class="proj-name">study-buddy <span class="proj-badge">Local only</span></span>
+          <span class="proj-path">/Users/sam/study-buddy</span>
+          <span class="proj-stats"><b>2</b> sessions this week &nbsp;·&nbsp; <b>8</b> files touched &nbsp;·&nbsp; <b>0</b> open todos</span>
+        </span>
+        <span class="proj-time">3d ago</span>
+        <span class="proj-go">›</span>
+      </button>
+    </div>
 
-      <div class="app-view" id="viewProjects" role="tabpanel">
-        <h3 class="app-h">Projects</h3>
-        <p class="app-sub">All caught up across your projects — click one to open it</p>
-        <button class="proj-row" type="button" data-proj="cartful">
-          <span class="proj-tile">CA</span>
-          <span class="proj-main">
-            <span class="proj-name">cartful <span class="proj-badge shared">Shared · Sam + Maya</span></span>
-            <span class="proj-path">/Users/sam/cartful</span>
-            <span class="proj-stats"><b>17</b> sessions this week &nbsp;·&nbsp; <b>49</b> files touched &nbsp;·&nbsp; <b>1</b> open todo</span>
-          </span>
-          <span class="proj-time">67m ago</span>
-          <span class="proj-go">›</span>
-        </button>
-        <button class="proj-row" type="button" data-proj="brewlog">
-          <span class="proj-tile">BR</span>
-          <span class="proj-main">
-            <span class="proj-name">brewlog <span class="proj-badge">Local only</span></span>
-            <span class="proj-path">/Users/sam/Desktop/brewlog</span>
-            <span class="proj-stats"><b>5</b> sessions this week &nbsp;·&nbsp; <b>21</b> files touched &nbsp;·&nbsp; <b>0</b> open todos</span>
-          </span>
-          <span class="proj-time">25h ago</span>
-          <span class="proj-go">›</span>
-        </button>
-        <button class="proj-row" type="button" data-proj="study-buddy">
-          <span class="proj-tile">ST</span>
-          <span class="proj-main">
-            <span class="proj-name">study-buddy <span class="proj-badge">Local only</span></span>
-            <span class="proj-path">/Users/sam/study-buddy</span>
-            <span class="proj-stats"><b>2</b> sessions this week &nbsp;·&nbsp; <b>8</b> files touched &nbsp;·&nbsp; <b>0</b> open todos</span>
-          </span>
-          <span class="proj-time">3d ago</span>
-          <span class="proj-go">›</span>
-        </button>
-      </div>
+    <!-- ================= PROJECT DETAIL ================= -->
+    <div class="app-view" id="view-detail" hidden></div>
 
-      <div class="app-view" id="viewProject" role="tabpanel" hidden></div>
+    <!-- ================= ACTIVITY ================= -->
+    <div class="app-view" id="view-activity" hidden>
+      <h3 class="app-h">Activ<span class="hb">ity</span></h3>
+      <p class="app-sub">Every session, every teammate, in plain English.</p>
 
-      <div class="app-view" id="viewActivity" role="tabpanel" hidden>
-        <h3 class="app-h">Activ<span class="hb">ity</span></h3>
-        <p class="app-sub">Every teammate's session, in plain English — tap the prompts to see them word for word</p>
-        <span class="mono-label act-day">Today</span>
-        <div class="act-card">
+      <span class="mono-label day-label">Today</span>
+      <div class="act-card">
+        <div class="act-top">
           <span class="act-tile sam">S</span>
-          <span class="act-main">
-            <p class="act-text">Moved checkout retries to exponential backoff and capped them at 3 — the payment gateway was timing out on slow connections.</p>
-            <span class="act-meta"><span class="who">Sam</span><span class="tool-chip">Claude Code</span><span class="proj">cartful</span><span class="when">2h ago</span><button class="prompts" type="button" aria-expanded="false">4 prompts <span class="chev">▾</span></button></span>
-            <ol class="prompt-list" hidden>
-              <li><span class="pn">01</span><em>"Switch checkout retries to exponential backoff — cap at 3, the gateway times out at 10s."</em></li>
-              <li><span class="pn">02</span><em>"continue"</em></li>
-              <li><span class="pn">03</span><em>"Update the retry tests to cover the new backoff timings."</em></li>
-              <li><span class="pn">04</span><em>"Run the full suite and fix whatever breaks."</em></li>
-            </ol>
-          </span>
+          <div class="act-main">
+            <div class="act-who"><span class="who">You</span><span class="tool-chip">Claude Code</span><span class="proj">cartful</span><span class="when">12m ago</span></div>
+            <p class="act-title link" data-day="sam-live" title="Open the day view">Checkout copy swap: "Reserve your spot", mobile spacing pass</p>
+            <div class="working-row">◐ Swapping checkout button copy across views <span class="working-tag">● WORKING NOW</span></div>
+            <p class="meta-line">1 session · 6 prompts · 3 files</p>
+          </div>
         </div>
-        <span class="mono-label act-day">Yesterday</span>
-        <div class="act-card">
+      </div>
+
+      <div class="act-card">
+        <div class="act-top">
           <span class="act-tile maya">M</span>
-          <span class="act-main">
-            <p class="act-text">Rewrote the empty-cart screen and added a "save for later" nudge — mobile bounce on that step should drop.</p>
-            <span class="act-meta"><span class="who">Maya</span><span class="tool-chip">Codex</span><span class="proj">cartful</span><span class="when">22h ago</span><button class="prompts" type="button" aria-expanded="false">3 prompts <span class="chev">▾</span></button></span>
-            <ol class="prompt-list" hidden>
-              <li><span class="pn">01</span><em>"Rewrite the empty-cart screen — warmer, one sentence max."</em></li>
-              <li><span class="pn">02</span><em>"Add a save-for-later link under the items."</em></li>
-              <li><span class="pn">03</span><em>"Tighten mobile spacing so checkout stays above the fold."</em></li>
-            </ol>
-          </span>
+          <div class="act-main">
+            <div class="act-who"><span class="who">Maya</span><span class="tool-chip">Claude Code</span><span class="tool-chip">Codex</span><span class="proj">cartful</span><span class="when">86m ago</span></div>
+            <p class="act-title link" data-day="maya-multi" title="Open the day view">Empty-cart rework, config cleanup, retry hardening</p>
+            <ul class="checks">
+              <li>Empty-cart screen rewritten, "save for later" nudge added</li>
+              <li>Free plan cap moved into config, no more magic number</li>
+              <li>Retries: exponential backoff capped at 3, gateway 10s limit respected</li>
+              <li>Baseline test suite green at 214 of 214</li>
+              <li class="extra" hidden>Cart drawer optimistic updates now roll back on 5xx</li>
+              <li class="extra" hidden>Mobile checkout spacing tightened, button stays above the fold</li>
+              <li class="extra" hidden>Stripe webhook retries deduped by event id</li>
+              <li class="extra" hidden>Session summaries now sync within 60 seconds</li>
+            </ul>
+            <div class="card-links">
+              <button class="expander" id="showChanges" type="button" aria-expanded="false">Show all 8 changes ▾</button>
+              <span class="meta-line">19 sessions · 94 prompts · 8 files</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span class="mono-label day-label">Yesterday</span>
+      <div class="act-card">
+        <div class="act-top">
+          <span class="act-tile maya">M</span>
+          <div class="act-main">
+            <div class="act-who"><span class="who">Maya</span><span class="tool-chip">Codex</span><span class="proj">cartful</span><span class="when">22h ago</span></div>
+            <p class="act-title dim">session ended · no summary shared</p>
+            <p class="meta-line">1 session · 9 prompts</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <p class="app-caption">Ships with the daemon — <code>membridge dashboard</code> opens it. Menu-bar app on macOS.</p>
+    <!-- ================= TEAM ================= -->
+    <div class="app-view" id="view-team" hidden>
+      <span class="mono-label team-eyebrow">Team</span>
+      <h3 class="team-name">cartful</h3>
+      <p class="team-sub">2 members · created July 2026 · you are a member</p>
+
+      <div class="members-card">
+        <div class="members-head">
+          <span class="mono-label">Members</span>
+          <button class="link-btn" id="inviteSomeone" type="button">+ Invite someone</button>
+        </div>
+        <div class="member-row">
+          <span class="member-av maya">M</span>
+          <span class="member-main">
+            <span class="member-name">Maya</span>
+            <span class="member-sub">joined July 2026</span>
+          </span>
+          <span class="role-pill owner">OWNER</span>
+        </div>
+        <div class="member-row">
+          <span class="member-av sam">S</span>
+          <span class="member-main">
+            <span class="member-name">Sam <small>· you</small></span>
+            <span class="member-sub">joined July 2026</span>
+          </span>
+          <span class="role-pill member">MEMBER</span>
+        </div>
+      </div>
+
+      <span class="mono-label join-label">Join code</span>
+      <div class="join-card" id="joinCard">
+        <div class="join-row">
+          <span class="join-code">7a2c91d4-5e78-4007-abec-d7b89ca61ec4</span>
+          <button class="join-copy" id="joinCopy" type="button" data-code="7a2c91d4-5e78-4007-abec-d7b89ca61ec4">COPY</button>
+        </div>
+        <p class="join-note">Anyone with this code joins as a member. Regenerating invalidates the old code.</p>
+      </div>
+      <p class="team-perm">You're a member. Only the owner can rename the team, change roles, or manage the join code.</p>
+    </div>
+
+    <!-- ================= DAY DETAIL ================= -->
+    <div class="app-view" id="view-day" hidden></div>
+
+    <!-- ================= SETTINGS ================= -->
+    <div class="app-view" id="view-settings" hidden>
+      <h3 class="app-h">Settings</h3>
+      <p class="app-sub">Watched projects, team, account.</p>
+
+      <span class="mono-label">Watched projects</span>
+      <div class="set-card">
+        <div class="set-row">
+          <input class="set-check" type="checkbox" id="selAll">
+          <label for="selAll" style="font-size:13.5px; color: var(--muted); cursor: pointer;">Select all local</label>
+        </div>
+        <div class="set-row">
+          <span class="set-spacer"></span>
+          <span class="grow"><span class="set-name">cartful <span class="proj-badge shared">Shared</span></span><span class="set-path">/Users/sam/cartful</span></span>
+          <button class="pause-btn" type="button">Pause</button>
+        </div>
+        <div class="set-row">
+          <input class="set-check loc" type="checkbox">
+          <span class="grow"><span class="set-name">brewlog <span class="proj-badge">Local only</span></span><span class="set-path">/Users/sam/Desktop/brewlog</span></span>
+          <button class="pause-btn" type="button">Pause</button>
+        </div>
+        <div class="set-row">
+          <input class="set-check loc" type="checkbox">
+          <span class="grow"><span class="set-name">study-buddy <span class="proj-badge">Local only</span></span><span class="set-path">/Users/sam/study-buddy</span></span>
+          <button class="pause-btn" type="button">Pause</button>
+        </div>
+        <div class="tools-foot">Tools detected: Claude Code ✓ · Codex ✓</div>
+      </div>
+
+      <span class="mono-label">Team</span>
+      <div class="set-card">
+        <div class="set-row">
+          <span class="grow"><span class="set-name">cartful</span><span class="set-path" style="font-family: var(--sans); font-size: 12.5px;">2 members · roles, invites and renaming live on the Team screen</span></span>
+          <button class="manage-btn" id="manageTeam" type="button">Manage team →</button>
+        </div>
+      </div>
+
+      <span class="mono-label">Account</span>
+      <div class="set-card">
+        <div class="set-row">
+          <span class="acct-av">S</span>
+          <span class="grow"><span class="set-name">sam@cartful.dev</span><span class="set-path" style="font-family: var(--sans); font-size: 12.5px;">Signed in via email</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <p class="app-caption">Ships with the daemon: <code>membridge dashboard</code> opens it. Menu-bar app on macOS.</p>
   </div>
 </section>
+
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="mono-label">Why MemBridge</span>
+      <h2>There are a lot of AI memory tools. Most make you do the remembering.</h2>
+      <p>MemBridge is built on a different bet: the memory should capture itself, stay on your machine, and live in the files your tools already read. Here's what that buys you.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="wk">01 · Zero-effort capture</span>
+        <h3>No save button to forget</h3>
+        <p>The daemon tails your Claude Code and Codex sessions and distills them on its own. No "remember this" tool to call, no notes to maintain. Forgetting to save is the thing that kills every other memory tool.</p>
+      </div>
+      <div class="why-card">
+        <span class="wk">02 · Local by architecture</span>
+        <h3>No cloud, no API key</h3>
+        <p>It runs where your code already lives. Binds to <code>127.0.0.1</code>, zero network calls in solo use, no account, no telemetry. Nothing to trust because nothing leaves.</p>
+      </div>
+      <div class="why-card">
+        <span class="wk">03 · Per-project memory</span>
+        <h3>No cross-project bleed</h3>
+        <p>Memory is scoped to each repo, not one global blob. What you decided in <code>cartful</code> never leaks into the next project's context.</p>
+      </div>
+      <div class="why-card">
+        <span class="wk">04 · Provenance built in</span>
+        <h3>The reason, not just the author</h3>
+        <p><code>membridge why file:line</code> surfaces the prompt and decision behind any line of code. <code>git blame</code> tells you who; MemBridge tells you why. No other memory tool does this.</p>
+      </div>
+      <div class="why-card">
+        <span class="wk">05 · Cross-tool by design</span>
+        <h3>One memory, every agent</h3>
+        <p>Claude Code and Codex are built in; anything that logs JSONL plugs in via config. The neutral bridge no single vendor will build across its rivals.</p>
+      </div>
+      <div class="why-card">
+        <span class="wk">06 · Plain, reversible files</span>
+        <h3>It's just markdown</h3>
+        <p>Memory lands between markers in <code>CLAUDE.md</code> / <code>AGENTS.md</code>: readable, diffable, and <code>membridge remove</code> restores everything byte-for-byte. No lock-in, no black box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section class="section" id="team">
   <div class="wrap">
     <div class="section-head">
-      <span class="mono-label">Team sync</span>
-      <h2>Your whole team's memory. Not just yours.</h2>
-      <p>Share a project and every teammate's sessions land in the same feed — the summary up top, the exact prompts one click down. Stop re-asking what Maya already answered.</p>
+      <span class="mono-label">Teams</span>
+      <h2>Every teammate's AI sessions, one encrypted feed.</h2>
+      <p>Invite your team to a project and every Claude Code and Codex session lands in one shared feed: the plain-English summary up top, the exact prompts one click down. End-to-end encrypted, invite-only, and off by default.</p>
     </div>
     <div class="trust-row cols3">
       <div class="trust-item">
         <span class="mono-label">Invite-only</span>
-        <p>Projects are private by default. Share one, and only the people you invite see its memory — pause or leave any time.</p>
+        <p>Projects stay private until you share them. Only the people you invite can see a project's memory, and anyone can pause or leave at any time.</p>
       </div>
       <div class="trust-item">
         <span class="mono-label">End-to-end encrypted</span>
-        <p>Shared memory is encrypted on your machine before it syncs. The relay can't read your code, your prompts, or your summaries.</p>
+        <p>Your team's shared memory is encrypted on your machine before it syncs. The relay only ever moves ciphertext: it can never read your code, your prompts, or your summaries.</p>
       </div>
       <div class="trust-item">
         <span class="mono-label">Summaries + exact prompts</span>
-        <p>Catch up from the feed: what changed in plain English — and the word-for-word prompts that produced it.</p>
+        <p>Catch up on any teammate's AI coding session in seconds: what changed in plain English, plus the word-for-word prompts that produced it.</p>
       </div>
     </div>
   </div>
@@ -717,23 +1142,23 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     <div class="section-head">
       <span class="mono-label">How it works</span>
       <h2>A background daemon, not a platform.</h2>
-      <p>No accounts. No cloud. It reads the session logs your tools already keep, and writes to the context files they already read.</p>
+      <p>No accounts, no cloud, no setup ritual. MemBridge reads the session logs Claude Code and Codex already keep, and writes to the context files they already read.</p>
     </div>
     <div class="steps">
       <div class="step">
-        <span class="num">01 — WATCH</span>
+        <span class="num">01 · WATCH</span>
         <h3>Tail the session logs</h3>
-        <p><code>membridge start</code> watches Claude Code and Codex transcripts — read-only, incremental, byte offsets only. Any tool that logs JSONL plugs in with a config entry. No code.</p>
+        <p><code>membridge start</code> watches your Claude Code and Codex transcripts: read-only, incremental, byte offsets only. Any tool that logs JSONL plugs in with a config entry. No code.</p>
       </div>
       <div class="step">
-        <span class="num">02 — DISTILL</span>
+        <span class="num">02 · DISTILL</span>
         <h3>Build a per-project memory</h3>
-        <p>Recent asks, files touched, and the decisions behind them become a short digest. Secrets (<code>sk-…</code>, <code>AKIA…</code>, <code>ghp_…</code>) are scrubbed before a single byte is written.</p>
+        <p>Recent prompts, files touched, and the decisions behind them become a short per-project digest. Secrets (<code>sk-…</code>, <code>AKIA…</code>, <code>ghp_…</code>) are scrubbed before a single byte is written.</p>
       </div>
       <div class="step">
-        <span class="num">03 — INJECT</span>
+        <span class="num">03 · INJECT</span>
         <h3>Write where tools already read</h3>
-        <p>The digest lands between <code>&lt;!-- membridge --&gt;</code> markers in <code>CLAUDE.md</code> and <code>AGENTS.md</code>. Your own notes stay byte-for-byte intact — and <code>membridge remove</code> restores everything exactly.</p>
+        <p>The digest lands between <code>&lt;!-- membridge --&gt;</code> markers in <code>CLAUDE.md</code> and <code>AGENTS.md</code>. Your own notes stay byte-for-byte intact, and <code>membridge remove</code> restores everything exactly.</p>
       </div>
     </div>
   </div>
@@ -744,57 +1169,131 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     <div class="section-head">
       <span class="mono-label">Privacy</span>
       <h2>Local is not a feature. It's the architecture.</h2>
+      <p>Your code never leaves your machine. Not as telemetry, not as analytics, not as an oops. MemBridge is local-first by architecture, and every claim below is one you can check yourself.</p>
     </div>
     <div class="trust-row">
       <div class="trust-item">
         <span class="mono-label">127.0.0.1 only</span>
-        <p>The daemon binds to localhost. Solo use makes zero network calls — no telemetry, no accounts. Team sync is opt-in and end-to-end encrypted.</p>
+        <p>The daemon binds to localhost and nothing else. Solo use makes zero network calls: no telemetry, no analytics, no accounts. Turn your wifi off and MemBridge won't notice. Team sync is opt-in, off by default, and end-to-end encrypted.</p>
       </div>
       <div class="trust-item">
         <span class="mono-label">Zero dependencies</span>
-        <p>The core is plain Node. Nothing to audit but the code itself — and it's all there on GitHub.</p>
+        <p>The core is plain Node with zero npm dependencies. No supply chain to attack, no transitive packages to audit, nothing to read but the code itself. And the code is on GitHub.</p>
       </div>
       <div class="trust-item">
         <span class="mono-label">Secrets redacted</span>
-        <p>Common key shapes are scrubbed by default before anything is written to a context file. Add your own patterns in config.</p>
+        <p>API keys and tokens (<code>sk-…</code>, <code>AKIA…</code>, <code>ghp_…</code>) are scrubbed before a single byte hits a context file. Redaction happens before write, never after. Add your own patterns in config.</p>
       </div>
       <div class="trust-item">
         <span class="mono-label">Fully reversible</span>
-        <p>MemBridge only ever touches the content between its own markers. One command strips every trace and restores your files.</p>
+        <p>MemBridge only ever writes between its own markers, and never touches your code. One command, <code>membridge remove</code>, strips every trace and restores your files byte-for-byte. Leaving takes ten seconds.</p>
       </div>
+    </div>
+    <div class="proof">
+      <span class="mono-label proof-label">Don't just trust us. Check it yourself.</span>
+      <div class="term proof-term">
+        <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">verify</span><button class="copy-btn" data-cmd="lsof -nP -iTCP:7437" type="button">copy</button></div>
+        <div class="term-body"><span class="t-dim">$ </span>lsof -nP -iTCP:7437
+<span class="t-out">COMMAND  PID   USER  TYPE  NAME
+node     4821  sam   IPv4  TCP 127.0.0.1:7437 (LISTEN)</span></div>
+      </div>
+      <p class="proof-line">With MemBridge running: one socket. It's your dashboard, and it only answers your own machine.</p>
     </div>
   </div>
 </section>
 
 <section class="section" id="get">
-  <div class="wrap get-grid">
-    <div>
-      <div class="section-head" style="margin-bottom: 24px;">
-        <span class="mono-label">Get it</span>
-        <h2>Running in a minute.</h2>
-      </div>
-      <div class="term install-box">
-        <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">install</span><button class="copy-btn" id="copyBtn" type="button">copy</button></div>
-        <div class="term-body"><span class="t-dim"># macOS (Apple Silicon) — the app + membridge CLI, no warnings</span>
-<span class="t-dim">$</span> curl -fsSL https://membridge.me/install.sh | sh
-
-<span class="t-dim"># any platform — run the CLI from source</span>
-<span class="t-dim">$</span> git clone https://github.com/mmelika/membridge
-<span class="t-dim">$</span> cd membridge
-<span class="t-dim">$</span> node bin/membridge.js start</div>
-      </div>
-      <p class="install-note">macOS (Apple Silicon): app + CLI in one command · Linux/Windows: CLI from source · Node 18+</p>
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom: 26px;">
+      <span class="mono-label">Get it</span>
+      <h2>Two ways to run it. Both stay on your machine.</h2>
     </div>
-    <div class="wl">
-      <h2>Follow the build.</h2>
-      <p>The npm release, the signed macOS app, and <code>membridge why</code> for every repo are landing soon. One email when they do — that's it.</p>
+    <div class="paths">
+      <div class="path">
+        <div class="path-head">
+          <span class="path-ico">⌘</span>
+          <div><h3>The app</h3><span class="ph-sub">macOS · Apple Silicon</span></div>
+        </div>
+        <p>Menu-bar app plus the membridge CLI in one command. No warnings, no ceremony.</p>
+        <div class="term">
+          <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><button class="copy-btn" data-cmd="curl -fsSL https://membridge.me/install.sh | sh" type="button">copy</button></div>
+          <div class="term-body"><span class="t-dim">$ </span>curl -fsSL https://membridge.me/install.sh | sh</div>
+        </div>
+      </div>
+      <div class="path">
+        <div class="path-head">
+          <span class="path-ico">&gt;_</span>
+          <div><h3>From source</h3><span class="ph-sub">macOS · Linux · Windows · Node 18+</span></div>
+        </div>
+        <p>Clone it, read it, run it. Zero dependencies, so what you read is what runs. Your dashboard comes up at 127.0.0.1:7437.</p>
+        <div class="term">
+          <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><button class="copy-btn" data-cmd="git clone https://github.com/mmelika/membridge&#10;cd membridge&#10;node bin/membridge.js start" type="button">copy</button></div>
+          <div class="term-body"><span class="t-dim">$ </span>git clone https://github.com/mmelika/membridge
+<span class="t-dim">$ </span>cd membridge
+<span class="t-dim">$ </span>node bin/membridge.js start</div>
+        </div>
+      </div>
+    </div>
+    <div class="strip">
+      <div class="s-copy">
+        <span class="npm">npm install -g membridge<span class="soon-tag">soon</span></span>
+        <p>One email the day it ships. Nothing else, ever.</p>
+      </div>
       <form class="wl-form" id="wlForm" novalidate>
         <input type="email" id="wlEmail" name="email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">
         <input type="text" class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="btn btn-primary" type="submit" id="wlBtn">Get updates</button>
       </form>
-      <p class="wl-msg" id="wlMsg" role="status"></p>
+      <p class="wl-msg" id="wlMsg" role="status" style="flex-basis:100%;margin:0"></p>
     </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="mono-label">FAQ</span>
+      <h2>Questions engineers actually ask.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>How do I give Claude Code a persistent memory? <span class="fx">+</span></summary>
+        <p class="faq-a">Run <code>membridge start</code>. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into <code>CLAUDE.md</code>, which Claude Code reads on every startup. Your next session starts already knowing what the last one did.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I share context between Claude Code and Codex? <span class="fx">+</span></summary>
+        <p class="faq-a">The same memory block lands in both <code>CLAUDE.md</code> and <code>AGENTS.md</code>, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does MemBridge send my code to the cloud? <span class="fx">+</span></summary>
+        <p class="faq-a">No. The daemon binds to <code>127.0.0.1</code> and solo use makes zero network calls: no accounts, no telemetry, nothing phoning home. You can verify it yourself with one lsof command, shown in the Privacy section above. Team sync is opt-in and end-to-end encrypted.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will it overwrite my CLAUDE.md or AGENTS.md? <span class="fx">+</span></summary>
+        <p class="faq-a">Never. MemBridge only writes between its own <code>&lt;!-- membridge --&gt;</code> markers, your notes stay byte-for-byte intact, and <code>membridge remove</code> restores every file exactly. It's plain markdown you can read and diff.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does it work with Cursor, Gemini CLI, or other AI coding tools? <span class="fx">+</span></summary>
+        <p class="faq-a">Claude Code and Codex adapters ship built in. Any tool that logs its sessions as JSONL can be wired up with a small config entry, no code required. More first-class adapters are on the roadmap.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How is MemBridge different from Mem0, claude-mem, and other AI memory tools? <span class="fx">+</span></summary>
+        <p class="faq-a">Four ways. MemBridge captures <strong>automatically</strong> by tailing session logs, so there's no save tool for the agent to forget. Memory is <strong>per-project</strong>, not one global store that bleeds between repos. It runs <strong>100% locally</strong> with no API key or cloud service. And <code>membridge why file:line</code> answers a question git blame can't: the reasoning behind any line of code.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is MemBridge free? <span class="fx">+</span></summary>
+        <p class="faq-a">Yes. The core is free and source-available with zero dependencies. The only thing that ever costs anything is optional: bring your own Anthropic key for per-project roadmaps, billed to your key at roughly a cent each.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How does a team share one AI memory? <span class="fx">+</span></summary>
+        <p class="faq-a">Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. End-to-end encrypted before it leaves each machine, invite-only, off by default.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Won't Anthropic or OpenAI just build this? <span class="fx">+</span></summary>
+        <p class="faq-a">Each can build memory inside its own tool. Neither has a reason to build the bridge across its competitor's, and that neutral spot is exactly where MemBridge lives. The cross-tool provenance it accumulates is the part that compounds.</p>
+      </details>
+    </div>
+    <p class="faq-more">Still reading? <a href="https://github.com/mmelika/membridge" target="_blank" rel="noopener">The repo answers the rest</a>.</p>
   </div>
 </section>
 
@@ -805,11 +1304,17 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       MemBridge
     </a>
     <div class="foot-links">
+      <a href="#why">Why MemBridge</a>
+      <a href="#demo">Claude Code + Codex sync</a>
+      <a href="#faq">FAQ</a>
       <a href="https://github.com/mmelika/membridge" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/mmelika/membridge#readme" target="_blank" rel="noopener">Docs</a>
-      <a href="https://github.com/mmelika/membridge" target="_blank" rel="noopener">Source</a>
+      <a href="https://github.com/mmelika/membridge/blob/master/LICENSE" target="_blank" rel="noopener">License</a>
     </div>
     <span class="foot-note">No cookies. No analytics. Obviously.</span>
+  </div>
+  <div class="wrap foot-blurb">
+    MemBridge is a local-first, source-available memory layer for AI coding tools. It watches your Claude Code and Codex sessions, distills each one into per-project memory, and syncs it into the context files every tool already reads, <code>CLAUDE.md</code> and <code>AGENTS.md</code>, so your agents stop starting from zero. 100% on your machine.
   </div>
 </footer>
 
@@ -821,10 +1326,10 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
 
   /* ---------- tiny terminal script engine ----------
      step kinds:
-       type  — type text char-by-char (prefix rendered instantly)
-       line  — print a full line
-       wait  — pause ms
-       call  — run a function (bridge animations)
+       type : type text char-by-char (prefix rendered instantly)
+       line : print a full line
+       wait : pause ms
+       call : run a function (bridge animations)
   */
   function esc(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -881,15 +1386,15 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
 
   function whySteps() {
     return [
-      { kind: 'type', el: whyBody, prefix: '<span class="t-dim">$ </span>', text: 'membridge why src/checkout/retry.js:42', after: 500 },
+      { kind: 'type', el: whyBody, prefix: '<span class="t-dim">$ </span>', text: 'membridge why src/checkout/Button.jsx:18', after: 500 },
       { kind: 'line', el: whyBody, text: '', after: 60 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-ok">src/checkout/retry.js:42</span><span class="t-dim"> — </span>', text: 'MAX_RETRIES = 3', after: 300 },
+      { kind: 'line', el: whyBody, prefix: '<span class="t-ok">src/checkout/Button.jsx:18</span><span class="t-dim"> · </span>', text: 'label = "Reserve your spot"', after: 300 },
       { kind: 'line', el: whyBody, text: '', after: 60 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Written   </span>', text: '2 days ago · Claude Code · prompted by Sam', after: 180 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Prompt    </span>', text: '"Switch checkout retries to exponential backoff —', after: 90 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">          </span>', text: ' cap at 3, the gateway times out at 10s."', after: 180 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-mem">Why       </span>', text: '4 retries breached the payment gateway’s 10s hard timeout', after: 180 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Session   </span>', text: '~/cartful · Jul 17, 2:14 PM', after: 100 }
+      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Written   </span>', text: 'last night · Claude Code · prompted by Sam', after: 180 },
+      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Prompt    </span>', text: '"Change the checkout button to say', after: 90 },
+      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">          </span>', text: ' Reserve your spot, not Buy now."', after: 180 },
+      { kind: 'line', el: whyBody, prefix: '<span class="t-mem">Why       </span>', text: '"Buy now" was scaring people off at checkout', after: 180 },
+      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Session   </span>', text: '~/cartful · Jul 17, 11:42 PM', after: 100 }
     ];
   }
 
@@ -902,17 +1407,16 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
   document.getElementById('whyReplay').addEventListener('click', runWhy);
   runWhy();
 
-  /* ---------- sync demo (tree) ---------- */
-  var topBody = document.getElementById('topBody');
-  var botBody = document.getElementById('botBody');
-  var treeStage = document.getElementById('treeStage');
+  /* ---------- sync demo ---------- */
+  var demoStage = document.getElementById('demoStage');
   var wires = document.getElementById('wires');
-  var mwrap = document.getElementById('mwrap');
-  var mring = document.getElementById('mring');
-  var mstatus = document.getElementById('mstatus');
-  var fileL = document.getElementById('fileL');
-  var fileR = document.getElementById('fileR');
+  var topT = document.getElementById('topT'), botT = document.getElementById('botT');
+  var topBody = document.getElementById('topBody'), botBody = document.getElementById('botBody');
+  var mwrap = document.getElementById('mwrap'), mring = document.getElementById('mring'), mstatus = document.getElementById('mstatus');
+  var fileL = document.getElementById('fileL'), fileR = document.getElementById('fileR');
   var syncRunner = null, syncStarted = false, loopTimer = null;
+  var CAN_ANIM = !REDUCED && typeof document.body.animate === 'function';
+  var P = {};
 
   function bridgeSet(text, active, pulse) {
     mstatus.textContent = text;
@@ -920,21 +1424,17 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     mwrap.classList.toggle('pulse', !!pulse && !REDUCED);
   }
 
-  // an empty dark box reads as broken — show a waiting shell prompt instead
+  // an empty dark box reads as broken: show a waiting shell prompt instead
   function seedIdle(el) {
     el.innerHTML = '<span class="ln idle"><span class="t-prompt">&gt; </span><span class="caret"></span></span>';
   }
 
-  /* ---------- tree wires + distill/amend effects ---------- */
-  var CAN_ANIM = !REDUCED && typeof document.body.animate === 'function';
-  var P = {};
-
   function anchor(el, edge) {
-    var r = el.getBoundingClientRect(), s = treeStage.getBoundingClientRect();
-    return { x: r.left - s.left + r.width / 2, y: (edge === 'top' ? r.top : r.bottom) - s.top };
+    var r = el.getBoundingClientRect(), st = demoStage.getBoundingClientRect();
+    return { x: r.left - st.left + r.width / 2, y: (edge === 'top' ? r.top : r.bottom) - st.top };
   }
-  // straight right-angle elbow: down, across, down (Supabase-tree style)
-  function curve(a, b) {
+  // straight right-angle elbow: down, across, down
+  function elbowV(a, b) {
     if (Math.abs(a.x - b.x) < 1) return 'M' + a.x + ' ' + a.y + ' L' + b.x + ' ' + b.y;
     var my = (a.y + b.y) / 2;
     return 'M' + a.x + ' ' + a.y + ' L' + a.x + ' ' + my + ' L' + b.x + ' ' + my + ' L' + b.x + ' ' + b.y;
@@ -942,51 +1442,49 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
   function layoutWires() {
     wires.innerHTML = '';
     P = {};
-    wires.setAttribute('viewBox', '0 0 ' + treeStage.offsetWidth + ' ' + treeStage.offsetHeight);
-    var m = treeStage.querySelector('.bigm');
+    wires.setAttribute('viewBox', '0 0 ' + demoStage.offsetWidth + ' ' + demoStage.offsetHeight);
+    var big = mwrap.querySelector('.bigm');
     var defs = [
-      ['in',   curve(anchor(topBody.parentNode, 'bottom'), anchor(m, 'top'))],
-      ['outL', curve(anchor(m, 'bottom'), anchor(fileL, 'top'))],
-      ['outR', curve(anchor(m, 'bottom'), anchor(fileR, 'top'))],
-      ['dnL',  curve(anchor(fileL, 'bottom'), anchor(botBody.parentNode, 'top'))],
-      ['dnR',  curve(anchor(fileR, 'bottom'), anchor(botBody.parentNode, 'top'))]
+      ['in',   elbowV(anchor(topT, 'bottom'), anchor(big, 'top'))],
+      ['outL', elbowV(anchor(big, 'bottom'), anchor(fileL, 'top'))],
+      ['outR', elbowV(anchor(big, 'bottom'), anchor(fileR, 'top'))],
+      ['dnL',  elbowV(anchor(fileL, 'bottom'), anchor(botT, 'top'))],
+      ['dnR',  elbowV(anchor(fileR, 'bottom'), anchor(botT, 'top'))]
     ];
     // faint ghost tree, always visible
     defs.forEach(function (d) {
-      var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      p.setAttribute('d', d[1]);
-      p.setAttribute('class', 'ghost');
-      wires.appendChild(p);
+      var g = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      g.setAttribute('d', d[1]);
+      g.setAttribute('class', 'ghost');
+      wires.appendChild(g);
     });
     // blue overlay, revealed stage by stage
     defs.forEach(function (d) {
-      var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      p.setAttribute('d', d[1]);
-      wires.appendChild(p);
-      P[d[0]] = p;
+      var pth = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      pth.setAttribute('d', d[1]);
+      wires.appendChild(pth);
+      P[d[0]] = pth;
     });
   }
-
-  function drawPath(p, dur) {
-    if (!p) return;
-    var L = p.getTotalLength();
-    p.style.strokeDasharray = L;
-    if (!CAN_ANIM) { p.style.strokeDashoffset = 0; p.style.opacity = 1; return; }
-    p.style.opacity = 1;
-    p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: dur, easing: 'ease', fill: 'forwards' });
+  function drawPath(pth, dur) {
+    if (!pth) return;
+    var L = pth.getTotalLength();
+    pth.style.strokeDasharray = L;
+    if (!CAN_ANIM) { pth.style.strokeDashoffset = 0; pth.style.opacity = 1; return; }
+    pth.style.opacity = 1;
+    pth.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: dur, easing: 'ease', fill: 'forwards' });
   }
-
-  function travel(p, dur, delay) {
-    if (!p || !CAN_ANIM) return;
+  function travel(pth, dur, delay) {
+    if (!pth || !CAN_ANIM) return;
     setTimeout(function () {
       var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      dot.setAttribute('r', '4');
+      dot.setAttribute('r', '3.6');
       wires.appendChild(dot);
-      var L = p.getTotalLength(), t0 = null;
+      var L = pth.getTotalLength(), t0 = null;
       function step(ts) {
         if (t0 === null) t0 = ts;
         var t = Math.min(1, (ts - t0) / dur);
-        var pt = p.getPointAtLength(L * t);
+        var pt = pth.getPointAtLength(L * t);
         dot.setAttribute('cx', pt.x);
         dot.setAttribute('cy', pt.y);
         dot.style.opacity = t < 0.9 ? 1 : (1 - t) * 10;
@@ -995,42 +1493,39 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       requestAnimationFrame(step);
     }, delay || 0);
   }
-
   // fragments of the session ride the wire down and consolidate into the M
   function fragsIn() {
     if (!CAN_ANIM) return;
-    var words = ['backoff', 'cap = 3', '10s timeout', 'tests ✓'];
+    var words = ['checkout', 'button copy', '"Reserve your spot"', 'done ✓'];
     words.forEach(function (w, i) {
       setTimeout(function () {
-        var p = P['in'];
-        if (!p) return;
+        var pth = P['in'];
+        if (!pth) return;
         var f = document.createElement('span');
         f.className = 'frag';
         f.textContent = w;
-        treeStage.appendChild(f);
-        var L = p.getTotalLength(), t0 = null, dur = 800;
+        demoStage.appendChild(f);
+        var L = pth.getTotalLength(), t0 = null, dur = 800;
         function step(ts) {
           if (t0 === null) t0 = ts;
           var t = Math.min(1, (ts - t0) / dur);
-          var pt = p.getPointAtLength(L * t);
+          var pt = pth.getPointAtLength(L * t);
           f.style.left = pt.x + 'px';
           f.style.top = pt.y + 'px';
           f.style.opacity = t < 0.15 ? t / 0.15 : (t > 0.8 ? (1 - t) * 5 : 1);
-          f.style.transform = 'translate(-50%,-50%) scale(' + (1 - t * 0.7) + ')';
+          f.style.transform = 'translate(-50%,-50%) scale(' + (1 - t * 0.65) + ')';
           if (t < 1) requestAnimationFrame(step); else f.remove();
         }
         requestAnimationFrame(step);
       }, 120 + i * 190);
     });
   }
-
   function ringPulse() {
     mring.classList.remove('go');
     void mring.offsetWidth; // restart the animation
     mring.classList.add('go');
   }
-
-  // the files already exist — sync AMENDS the block between their markers
+  // the files already exist: sync AMENDS the block between their markers
   function amendFiles(on) {
     [fileL, fileR].forEach(function (card) {
       var lines = card.querySelectorAll('.fl.new');
@@ -1038,14 +1533,13 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
         (function (el, d) {
           if (on) setTimeout(function () { el.classList.add('on'); }, REDUCED ? 0 : d);
           else el.classList.remove('on');
-        })(lines[i], i * 170);
+        })(lines[i], i * 160);
       }
       card.querySelector('.fnew').classList.toggle('on', on);
     });
   }
-
   function clearBridgeFx() {
-    var fx = treeStage.querySelectorAll('.frag');
+    var fx = demoStage.querySelectorAll('.frag');
     for (var i = 0; i < fx.length; i++) fx[i].remove();
     mring.classList.remove('go');
   }
@@ -1053,8 +1547,8 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
   function syncSteps() {
     return [
       { kind: 'call', fn: function () { bridgeSet('watching…', false, false); } },
-      { kind: 'type', el: topBody, prefix: '<span class="t-prompt">&gt; </span>', text: 'Retries → exponential backoff, cap at 3 — gateway times out at 10s.', speed: 13, after: 350 },
-      { kind: 'line', el: topBody, prefix: '<span class="t-ok">⏺ </span>', text: 'retry.js updated · tests pass (14/14)', after: 420 },
+      { kind: 'type', el: topBody, prefix: '<span class="t-prompt">&gt; </span>', text: 'Change the checkout button to "Reserve your spot". "Buy now" was scaring people off.', speed: 13, after: 350 },
+      { kind: 'line', el: topBody, prefix: '<span class="t-ok">⏺ </span>', text: 'Checkout updated. The button now reads "Reserve your spot".', after: 420 },
       { kind: 'call', ms: 1250, fn: function () { bridgeSet('consolidating…', true, true); drawPath(P['in'], 550); fragsIn(); } },
       { kind: 'call', ms: 550, fn: function () {
           bridgeSet('amending memory…', true, false); ringPulse();
@@ -1067,8 +1561,8 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
           drawPath(P.dnL, 550); drawPath(P.dnR, 550);
           travel(P.dnL, 650, 150); travel(P.dnR, 650, 330);
         } },
-      { kind: 'type', el: botBody, prefix: '<span class="t-prompt">&gt; </span>', text: 'Why is the retry cap 3?', speed: 17, after: 380 },
-      { kind: 'line', el: botBody, prefix: '<span class="t-mem">⏺ </span>', text: 'AGENTS.md: capped at 3 — stays under the gateway’s 10s timeout. Keep it.', after: 200 }
+      { kind: 'type', el: botBody, prefix: '<span class="t-prompt">&gt; </span>', text: 'Why does checkout say "Reserve your spot"?', speed: 17, after: 380 },
+      { kind: 'line', el: botBody, prefix: '<span class="t-mem">⏺ </span>', text: 'From AGENTS.md: "Buy now" was scaring people off. Sam changed it last night.', after: 200 }
     ];
   }
 
@@ -1099,7 +1593,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
           io.disconnect();
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.25 });
     io.observe(document.getElementById('demo'));
   } else {
     runSync();
@@ -1111,133 +1605,311 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     rsT = setTimeout(runSync, 250);
   });
 
-  /* ---------- app mock: tabs, clickable projects, prompt toggles ---------- */
-  var tabP = document.getElementById('tabProjects');
-  var tabA = document.getElementById('tabActivity');
-  var viewP = document.getElementById('viewProjects');
-  var viewA = document.getElementById('viewActivity');
-  var viewPd = document.getElementById('viewProject');
-  var appWin = document.querySelector('.app-window');
+  /* ---------- app demo (merged from ui-demo.html) ---------- */
+(function () {
+  'use strict';
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
+  /* ---------- sync pill ticker ---------- */
+  var syncS = 8;
+  setInterval(function () {
+    syncS += 1;
+    if (syncS > 59) syncS = 2;
+    $('syncAgo').textContent = syncS + 'S';
+  }, 1000);
+
+  /* ---------- view switching ---------- */
+  var views = ['projects', 'detail', 'activity', 'team', 'day', 'settings'];
+  var tabs = document.querySelectorAll('.app-tab');
   function showView(name) {
-    viewP.hidden = name !== 'projects';
-    viewA.hidden = name !== 'activity';
-    viewPd.hidden = name !== 'project';
-    var projSide = name !== 'activity'; // an open project keeps the Projects tab lit
-    tabP.classList.toggle('active', projSide);
-    tabA.classList.toggle('active', !projSide);
-    tabP.setAttribute('aria-selected', String(projSide));
-    tabA.setAttribute('aria-selected', String(!projSide));
+    views.forEach(function (v) { $('view-' + v).hidden = (v !== name); });
+    var tabName = name === 'detail' ? 'projects' : (name === 'day' ? 'activity' : name);
+    tabs.forEach(function (t) {
+      var on = name !== 'settings' && t.getAttribute('data-view') === tabName;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', String(on));
+    });
+    $('gearBtn').classList.toggle('active', name === 'settings');
   }
-  tabP.addEventListener('click', function () { showView('projects'); });
-  tabA.addEventListener('click', function () { showView('activity'); });
+  $('gearBtn').addEventListener('click', function () { showView('settings'); });
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { showView(t.getAttribute('data-view')); });
+  });
+  $('inviteBtn').addEventListener('click', function () {
+    showView('team');
+    flashJoin();
+  });
+  $('inviteSomeone').addEventListener('click', flashJoin);
+  $('manageTeam').addEventListener('click', function () { showView('team'); });
 
-  var PROJ_DATA = {
+  /* ---------- settings interactions ---------- */
+  $('selAll').addEventListener('change', function () {
+    var on = this.checked;
+    document.querySelectorAll('.set-check.loc').forEach(function (c) { c.checked = on; });
+  });
+  function flashJoin() {
+    var jc = $('joinCard');
+    jc.classList.remove('flash');
+    void jc.offsetWidth;
+    jc.classList.add('flash');
+  }
+
+  /* ---------- projects filter ---------- */
+  var segBtns = document.querySelectorAll('#showSeg button');
+  segBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      segBtns.forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      var f = b.getAttribute('data-filter');
+      document.querySelectorAll('.proj-row').forEach(function (row) {
+        row.hidden = (f !== 'all' && row.getAttribute('data-kind') !== f);
+      });
+    });
+  });
+
+  /* ---------- project detail data ---------- */
+  var PROJ = {
     'cartful': {
       ini: 'CA', name: 'cartful', badge: 'Shared · Sam + Maya', shared: true,
-      path: '/Users/sam/cartful',
-      stats: '<b>17</b> sessions this week &nbsp;·&nbsp; <b>49</b> files touched &nbsp;·&nbsp; <b>1</b> open todo',
-      mem: ['<!-- membridge -->',
-        'Cart drawer: optimistic updates, roll back on 5xx. (Maya, Jul 15)',
-        'Retries: exponential backoff, capped at 3 — stay under the gateway’s 10s timeout. (Sam, Jul 17)',
-        '<!-- /membridge -->'],
-      sessions: [
-        { tile: 'sam', ini: 'S', who: 'Sam', tool: 'Claude Code', when: '2h ago',
-          text: 'Moved checkout retries to exponential backoff and capped them at 3 — the payment gateway was timing out on slow connections.',
-          prompts: ['"Switch checkout retries to exponential backoff — cap at 3, the gateway times out at 10s."', '"continue"', '"Update the retry tests to cover the new backoff timings."', '"Run the full suite and fix whatever breaks."'] },
-        { tile: 'maya', ini: 'M', who: 'Maya', tool: 'Codex', when: '22h ago',
-          text: 'Rewrote the empty-cart screen and added a "save for later" nudge — mobile bounce on that step should drop.',
-          prompts: ['"Rewrite the empty-cart screen — warmer, one sentence max."', '"Add a save-for-later link under the items."', '"Tighten mobile spacing so checkout stays above the fold."'] }
+      path: '/Users/sam/cartful', when: 'today',
+      catch_: 'Nothing new since you last looked.',
+      stats: [['17', 'Sessions this week'], ['49', 'Files touched'], ['1', 'Open todos', true]],
+      digest: 'cartful, shared memory digest (MemBridge)\n- Checkout button says "Reserve your spot", not "Buy now". "Buy now" scared people off. (Sam, Jul 17)\n- Free plan caps at 3 projects. (Maya, Jul 15)\n- Cart drawer: optimistic updates, roll back on 5xx. (Maya, Jul 15)\nPaste this into any AI to give it project context.',
+      days: [
+        { label: 'Today', cards: [
+          { tile: 'sam', ini: 'S', who: 'You', tool: 'Claude Code', when: '2h ago', share: null,
+            title: 'Checkout button now says "Reserve your spot"',
+            intent: 'Change checkout copy that was scaring buyers off',
+            nprompts: 4,
+            summary: 'The checkout button now reads "Reserve your spot" instead of "Buy now" across every view, including the mobile sticky footer. Copy change came from watching three test users hesitate at the old wording. Suite green at 214 of 214, shipped to the preview branch for Maya to review in the morning.',
+            agent: 'Checkout copy swap and mobile spacing',
+            prompts: ['"Change the checkout button to \'Reserve your spot\'. \'Buy now\' was scaring people off."', '"continue"', '"Tighten mobile spacing so checkout stays above the fold."', '"Run the suite and fix whatever breaks."'] },
+          { tile: 'maya', ini: 'M', who: 'Maya', tool: 'Codex', when: '9h ago', share: null,
+            title: 'Empty-cart screen rewritten, save-for-later added',
+            intent: 'Reduce mobile bounce on the empty-cart step',
+            nprompts: 3,
+            summary: 'Rewrote the empty-cart screen copy to one warm sentence and added a "save for later" link under the items. Mobile bounce on that step was the worst point in the funnel; this is the first of two planned fixes, the second is the checkout button copy Sam picked up tonight.',
+            agent: 'Empty-cart rework',
+            prompts: ['"Rewrite the empty-cart screen. Warmer, one sentence max."', '"Add a save-for-later link under the items."', '"Show me bounce for the cart step before and after."'] }
+        ]}
       ]
     },
     'brewlog': {
       ini: 'BR', name: 'brewlog', badge: 'Local only', shared: false,
-      path: '/Users/sam/Desktop/brewlog',
-      stats: '<b>5</b> sessions this week &nbsp;·&nbsp; <b>21</b> files touched &nbsp;·&nbsp; <b>0</b> open todos',
-      mem: ['<!-- membridge -->',
-        'Brew timer state lives in IndexedDB, not localStorage — Safari clears LS in private mode. (Sam, Jul 12)',
-        '<!-- /membridge -->'],
-      sessions: [
-        { tile: 'sam', ini: 'S', who: 'Sam', tool: 'Claude Code', when: '25h ago',
-          text: 'Added a pour-over preset and fixed the screen sleeping mid-brew on iOS.',
-          prompts: ['"Add a pour-over preset — 4:30 total, bloom at 45s."', '"The screen keeps sleeping mid-brew on iOS, fix that."'] }
+      path: '/Users/sam/Desktop/brewlog', when: 'yesterday',
+      catch_: 'This project is local only: only your own sessions land here.',
+      stats: [['5', 'Sessions this week'], ['21', 'Files touched'], ['0', 'Open todos', true]],
+      digest: 'brewlog, memory digest (MemBridge)\n- Brew timer state lives in IndexedDB, not localStorage: Safari clears LS in private mode. (Sam, Jul 12)\nPaste this into any AI to give it project context.',
+      days: [
+        { label: 'Jul 18', cards: [
+          { tile: 'sam', ini: 'S', who: 'You', tool: 'Claude Code', when: '25h ago', share: 'Share with team',
+            title: 'Pour-over preset added, iOS wake-lock fixed',
+            intent: 'Stop the screen sleeping mid-brew',
+            nprompts: 2,
+            summary: 'Added a pour-over preset (4:30 total, bloom at 45s) and fixed the screen sleeping mid-brew on iOS with a wake-lock request tied to the running timer. Timer state stays in IndexedDB so Safari private mode stops eating it.',
+            agent: 'Preset + wake lock',
+            prompts: ['"Add a pour-over preset, 4:30 total, bloom at 45s."', '"The screen keeps sleeping mid-brew on iOS, fix that."'] }
+        ]}
       ]
     },
     'study-buddy': {
       ini: 'ST', name: 'study-buddy', badge: 'Local only', shared: false,
-      path: '/Users/sam/study-buddy',
-      stats: '<b>2</b> sessions this week &nbsp;·&nbsp; <b>8</b> files touched &nbsp;·&nbsp; <b>0</b> open todos',
-      mem: ['<!-- membridge -->',
-        'Flashcards use SM-2 spaced repetition, reviews capped at 40/day. (Sam, Jul 8)',
-        '<!-- /membridge -->'],
-      sessions: [
-        { tile: 'sam', ini: 'S', who: 'Sam', tool: 'Codex', when: '3d ago',
-          text: 'Set up spaced-repetition scheduling for flashcards with a daily review cap.',
-          prompts: ['"Use SM-2 for review scheduling."', '"Cap daily reviews at 40 so it never feels like homework."'] }
+      path: '/Users/sam/study-buddy', when: '3 days ago',
+      catch_: 'This project is local only: only your own sessions land here.',
+      stats: [['2', 'Sessions this week'], ['8', 'Files touched'], ['0', 'Open todos', true]],
+      digest: 'study-buddy, memory digest (MemBridge)\n- Flashcards use SM-2 spaced repetition, reviews capped at 40/day. (Sam, Jul 8)\nPaste this into any AI to give it project context.',
+      days: [
+        { label: 'Jul 18', cards: [
+          { tile: 'sam', ini: 'S', who: 'You', tool: 'Codex', when: '3d ago', share: 'Share with team',
+            title: 'Spaced repetition scheduling for flashcards',
+            intent: 'Make reviews feel light, never like homework',
+            nprompts: 2,
+            summary: 'Flashcards now schedule with SM-2 spaced repetition and daily reviews cap at 40 so the queue never feels like homework. The cap lives in config for later tuning.',
+            agent: 'SM-2 scheduling',
+            prompts: ['"Use SM-2 for review scheduling."', '"Cap daily reviews at 40 so it never feels like homework."'] }
+        ]}
       ]
     }
   };
 
-  function renderProject(key) {
-    var d = PROJ_DATA[key];
+  function renderDetail(key) {
+    var d = PROJ[key];
     if (!d) return;
-    var h = '<button class="pd-back" type="button">← Projects</button>';
-    h += '<div class="pd-head"><span class="proj-tile">' + d.ini + '</span><div>' +
+    var h = '<button class="pd-back" type="button" id="pdBack">‹ Projects</button>';
+    h += '<div class="pd-headrow"><div class="grow">' +
       '<div class="pd-name">' + d.name + ' <span class="proj-badge' + (d.shared ? ' shared' : '') + '">' + d.badge + '</span></div>' +
-      '<div class="pd-path">' + d.path + '</div></div></div>';
-    h += '<div class="pd-stats">' + d.stats + '</div>';
-    h += '<span class="mono-label pd-label">Memory — injected into CLAUDE.md · AGENTS.md</span><div class="pd-mem">';
-    for (var i = 0; i < d.mem.length; i++) {
-      var isMarker = d.mem[i].indexOf('<!--') === 0;
-      h += '<span class="fl' + (isMarker ? ' marker' : '') + '">' + esc(d.mem[i]) + '</span>';
-    }
-    h += '</div><span class="mono-label pd-label">Recent sessions</span>';
-    for (var s = 0; s < d.sessions.length; s++) {
-      var sess = d.sessions[s];
-      var items = '';
-      for (var p = 0; p < sess.prompts.length; p++) {
-        items += '<li><span class="pn">0' + (p + 1) + '</span><em>' + esc(sess.prompts[p]) + '</em></li>';
+      '<div class="pd-path">' + d.path + '</div>' +
+      '<div class="pd-path">' + d.when + '</div></div>' +
+      '<button class="copy-ai" type="button" id="copyAi" data-digest="' + d.digest.replace(/"/g, '&quot;') + '">Copy for AI</button></div>';
+    h += '<span class="catch-pill"><span class="dot"></span>The catch-up</span>';
+    h += '<div class="catch-card"><span class="catch-check">✓</span><div><h4>You\'re caught up here</h4><p>' + d.catch_ + '</p></div></div>';
+    h += '<div class="stat-trio">';
+    d.stats.forEach(function (s) {
+      h += '<div class="stat-card"><span class="n' + (s[2] ? ' blue' : '') + '">' + s[0] + '</span><span class="l">' + s[1] + '</span></div>';
+    });
+    h += '</div>';
+    d.days.forEach(function (day) {
+      h += '<span class="mono-label day-label">' + day.label + '</span>';
+      day.cards.forEach(function (c, i) {
+        var id = key + '-' + i;
+        h += '<div class="act-card"><div class="act-top">' +
+          '<span class="act-tile ' + c.tile + '">' + c.ini + '</span><div class="act-main">' +
+          '<div class="act-who"><span class="who">' + c.who + '</span><span class="tool-chip">' + c.tool + '</span><span class="when">' + c.when + '</span></div>' +
+          '<p class="act-title">' + esc(c.title) + '</p>' +
+          '<p class="intent"><span class="il">Intent</span>' + esc(c.intent) + '</p>' +
+          '<div class="card-links">' +
+          '<button class="expander" type="button" data-target="dt-' + id + '" aria-expanded="false">' + c.nprompts + ' prompts ▾</button>' +
+          (c.share ? '<button class="share-chip" type="button">⇗ ' + c.share + '</button>' : '') +
+          '</div>' +
+          '<div class="detail" id="dt-' + id + '" hidden>' +
+          '<span class="dl">Summary</span><p class="summary">' + esc(c.summary) + '</p>' +
+          '<span class="dl">Agent 1 · ' + esc(c.agent) + '</span>' +
+          '<ol class="prompt-list">' + c.prompts.map(function (p, j) {
+            return '<li><span class="pn">0' + (j + 1) + '</span><em>' + esc(p) + '</em></li>';
+          }).join('') + '</ol></div>' +
+          '</div></div></div>';
+      });
+    });
+    var view = $('view-detail');
+    view.innerHTML = h;
+    showView('detail');
+    $('pdBack').addEventListener('click', function () { showView('projects'); });
+    $('copyAi').addEventListener('click', function () {
+      var btn = this;
+      var text = btn.getAttribute('data-digest').replace(/\\\n/g, '\n');
+      function done(ok) {
+        btn.textContent = ok ? 'Copied ✓' : 'Copy for AI';
+        setTimeout(function () { btn.textContent = 'Copy for AI'; }, 2000);
       }
-      h += '<div class="act-card"><span class="act-tile ' + sess.tile + '">' + sess.ini + '</span><span class="act-main">' +
-        '<p class="act-text">' + esc(sess.text) + '</p>' +
-        '<span class="act-meta"><span class="who">' + sess.who + '</span><span class="tool-chip">' + sess.tool + '</span>' +
-        '<span class="proj">' + d.name + '</span><span class="when">' + sess.when + '</span>' +
-        '<button class="prompts" type="button" aria-expanded="false">' + sess.prompts.length + ' prompts <span class="chev">▾</span></button></span>' +
-        '<ol class="prompt-list" hidden>' + items + '</ol></span></div>';
-    }
-    viewPd.innerHTML = h;
-    showView('project');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else { done(false); }
+    });
   }
 
-  // one delegated listener covers static cards AND rendered project pages
-  appWin.addEventListener('click', function (ev) {
-    var pr = ev.target.closest('.prompts');
-    if (pr) {
-      var list = pr.closest('.act-main').querySelector('.prompt-list');
-      var open = pr.getAttribute('aria-expanded') === 'true';
-      pr.setAttribute('aria-expanded', String(!open));
-      list.hidden = open;
+  /* ---------- day detail data ---------- */
+  var DAYS = {
+    'sam-live': {
+      crumb: 'Activity › You · Today',
+      head: 'Checkout copy swap: "Reserve your spot", mobile spacing pass',
+      cards: [
+        { live: true, when: '12m ago', share: true, open: true,
+          title: 'Checkout copy swap: "Reserve your spot", mobile spacing pass',
+          summary: 'The checkout button now reads "Reserve your spot" instead of "Buy now" across every view, including the mobile sticky footer. Mobile spacing pass is next so the button stays above the fold on small screens. Suite green at 214 of 214 so far, still running.',
+          prompts: ['"Change the checkout button to \'Reserve your spot\'. \'Buy now\' was scaring people off."', '"continue"', '(no prompt captured)', '"Tighten mobile spacing so checkout stays above the fold."', '(file edits)', '"Run the suite and fix whatever breaks."'] }
+      ]
+    },
+    'maya-multi': {
+      crumb: 'Activity › Maya · Today',
+      head: 'Empty-cart rework, config cleanup, retry hardening',
+      cards: [
+        { live: false, when: '86m ago', share: false, open: true,
+          title: 'Empty-cart screen rewritten, save-for-later added',
+          summary: 'Rewrote the empty-cart screen copy to one warm sentence and added a "save for later" link under the items. Mobile bounce on that step was the worst point in the funnel; this is the first of two planned fixes, the second is the checkout button copy Sam picked up tonight.',
+          prompts: ['"Rewrite the empty-cart screen. Warmer, one sentence max."', '"Add a save-for-later link under the items."', '"Show me bounce for the cart step before and after."'] },
+        { live: false, when: '2h ago', share: false, open: false,
+          title: 'Retries hardened: backoff capped at 3',
+          summary: 'Checkout retries moved to exponential backoff capped at 3 so the worst case stays under the payment gateway 10s timeout. Stripe webhook retries now dedupe by event id. Suite green at 214 of 214.',
+          prompts: ['"Switch checkout retries to exponential backoff, cap at 3."', '"Why 3? Document the reasoning in the summary."', '(file edits)', '"Dedupe Stripe webhook retries by event id."'] }
+      ]
+    }
+  };
+
+  function renderDay(key) {
+    var d = DAYS[key];
+    if (!d) return;
+    var h = '<button class="pd-back" type="button" id="dayBack">‹ Activity</button>';
+    h += '<div class="crumb">' + esc(d.crumb) + '</div>';
+    h += '<p class="day-head">' + esc(d.head) + '</p>';
+    d.cards.forEach(function (c, i) {
+      var id = 'day-' + key + '-' + i;
+      h += '<div class="day-card">' +
+        (c.live ? '<span class="working-label">● WORKING NOW</span>' : '') +
+        '<h4>' + esc(c.title) + '</h4>' +
+        '<p class="summary">' + esc(c.summary) + '</p>' +
+        '<div class="card-links">' +
+        '<button class="expander" type="button" data-target="' + id + '" aria-expanded="' + (c.open ? 'true' : 'false') + '">' +
+        (c.open ? 'hide ' + c.prompts.length + ' prompts ▴' : 'show ' + c.prompts.length + ' prompts ▾') + '</button>' +
+        (c.share ? '<button class="share-chip" type="button">⇗ Share with team</button>' : '') +
+        '<span class="when">' + c.when + '</span></div>' +
+        '<div class="detail" id="' + id + '"' + (c.open ? '' : ' hidden') + '>' +
+        '<ol class="prompt-list">' + c.prompts.map(function (pr, j) {
+          var n = (j + 1 < 10 ? '0' : '') + (j + 1);
+          var body = pr.charAt(0) === '(' ? '<span class="ph">' + esc(pr) + '</span>' : '<em>' + esc(pr) + '</em>';
+          return '<li><span class="pn">' + n + '</span>' + body + '</li>';
+        }).join('') + '</ol></div></div>';
+    });
+    var view = $('view-day');
+    view.innerHTML = h;
+    showView('day');
+    $('dayBack').addEventListener('click', function () { showView('activity'); });
+  }
+
+  /* ---------- delegated clicks ---------- */
+  $('appWin').addEventListener('click', function (ev) {
+    var dayT = ev.target.closest('.act-title.link');
+    if (dayT) { renderDay(dayT.getAttribute('data-day')); return; }
+    var pause = ev.target.closest('.pause-btn');
+    if (pause) { pause.textContent = pause.textContent === 'Pause' ? 'Resume' : 'Pause'; return; }
+    var row = ev.target.closest('.proj-row');
+    if (row) { renderDetail(row.getAttribute('data-proj')); return; }
+    var ex = ev.target.closest('.expander');
+    if (ex && ex.getAttribute('data-target')) {
+      var det = $(ex.getAttribute('data-target'));
+      var open = ex.getAttribute('aria-expanded') === 'true';
+      ex.setAttribute('aria-expanded', String(!open));
+      det.hidden = open;
+      ex.textContent = ex.textContent.replace(open ? '▴' : '▾', open ? '▾' : '▴');
       return;
     }
-    if (ev.target.closest('.pd-back')) { showView('projects'); return; }
-    var row = ev.target.closest('.proj-row');
-    if (row) renderProject(row.getAttribute('data-proj'));
+    var share = ev.target.closest('.share-chip');
+    if (share && !share.classList.contains('shared')) {
+      share.classList.add('shared');
+      share.textContent = '✓ Shared';
+      return;
+    }
   });
 
-  /* ---------- copy install ---------- */
-  var COPY_TEXT = 'curl -fsSL https://membridge.me/install.sh | sh';
-  var copyBtn = document.getElementById('copyBtn');
-  copyBtn.addEventListener('click', function () {
+  /* ---------- activity: show all changes ---------- */
+  $('showChanges').addEventListener('click', function () {
+    var open = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', String(!open));
+    document.querySelectorAll('.checks .extra').forEach(function (li) { li.hidden = !open ? false : true; });
+    this.textContent = open ? 'Show all 8 changes ▾' : 'Show fewer ▴';
+  });
+
+  /* ---------- join code copy ---------- */
+  $('joinCopy').addEventListener('click', function () {
+    var btn = this;
     function done(ok) {
-      copyBtn.textContent = ok ? 'copied ✓' : 'select + copy';
-      setTimeout(function () { copyBtn.textContent = 'copy'; }, 2000);
+      btn.textContent = ok ? 'COPIED ✓' : 'COPY';
+      setTimeout(function () { btn.textContent = 'COPY'; }, 2000);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(COPY_TEXT).then(function () { done(true); }, function () { done(false); });
-    } else {
-      done(false);
-    }
+      navigator.clipboard.writeText(btn.getAttribute('data-code')).then(function () { done(true); }, function () { done(false); });
+    } else { done(false); }
   });
+})();
+
+  /* ---------- copy buttons: bare command only, never the $ or output ---------- */
+  var copyBtns = document.querySelectorAll('.copy-btn');
+  for (var cb = 0; cb < copyBtns.length; cb++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        var cmd = btn.getAttribute('data-cmd') || '';
+        function done(ok) {
+          btn.textContent = ok ? 'copied ✓' : 'select + copy';
+          setTimeout(function () { btn.textContent = 'copy'; }, 2000);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(cmd).then(function () { done(true); }, function () { done(false); });
+        } else {
+          done(false);
+        }
+      });
+    })(copyBtns[cb]);
+  }
 
   /* ---------- waitlist ---------- */
   var SUPA_URL = 'https://mefgbiecvoszjorwzkfz.supabase.co';
@@ -1280,11 +1952,11 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       } else if (res.status === 409) {
         setMsg('Already on the list ✓', 'ok');
       } else {
-        setMsg('Something broke on our end — email andrewludwigbrown@gmail.com and we’ll add you by hand.', 'err');
+        setMsg('Something broke on our end: email andrewludwigbrown@gmail.com and we’ll add you by hand.', 'err');
       }
     }).catch(function () {
       btn.disabled = false;
-      setMsg('Couldn’t reach the server — check your connection and try again.', 'err');
+      setMsg('Couldn’t reach the server: check your connection and try again.', 'err');
     });
   });
 })();
