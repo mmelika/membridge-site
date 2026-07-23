@@ -89,7 +89,10 @@ MANUAL
   fi
 fi
 
-# 8. Launch + report
+# 8. Enable launch-at-login (starts on every boot)
+run "'$APP_DEST/Contents/MacOS/${APP_NAME}' --set-login=on >/dev/null 2>&1 || true"
+
+# 9. Launch + report
 run "open '$APP_DEST'"
 say "Done. ${APP_NAME} is installed and opens with no warning."
 if command -v membridge >/dev/null 2>&1; then
