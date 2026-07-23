@@ -10,7 +10,7 @@ SHA256="a8f979d1380e1a20fa8dfc1ceab60fc1ab1ca68100e6aceefd34722753291863"
 REPO="MembridgeAi/membridge"
 APP_NAME="MemBridge"
 APP_DEST="/Applications/${APP_NAME}.app"
-CLI_DEST="/usr/local/bin/membridge"
+if [ -w /opt/homebrew/bin ]; then CLI_DEST="/opt/homebrew/bin/membridge"; else CLI_DEST="$HOME/.local/bin/membridge"; fi
 
 DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1
