@@ -17,7 +17,11 @@
 <meta property="og:title" content="MemBridge - Shared Memory for Claude Code, Codex &amp; AI Coding Tools">
 <meta property="og:description" content="A local-first daemon that syncs context across Claude Code, Codex, and every AI coding tool you use, so what one figures out, the rest already know. 100% on your machine.">
 <meta property="og:image" content="https://membridge.me/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:alt" content="MemBridge: one shared memory across your AI coding tools.">
+<meta property="og:locale" content="en_US">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MemBridge - Shared Memory for Claude Code, Codex &amp; AI Coding Tools">
@@ -28,15 +32,76 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
+  "@id": "https://membridge.me/#software",
   "name": "MemBridge",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "macOS, Linux, Windows",
   "description": "A local-first daemon that syncs memory across Claude Code, Codex, and other AI coding tools by distilling session activity into the context files each tool already reads (CLAUDE.md, AGENTS.md).",
   "url": "https://membridge.me/",
+  "image": "https://membridge.me/og.png",
   "downloadUrl": "https://github.com/MembridgeAi/membridge",
-  "softwareVersion": "0.3.0",
+  "installUrl": "https://membridge.me/#get",
+  "softwareVersion": "0.1.0",
+  "releaseNotes": "https://github.com/MembridgeAi/membridge/blob/master/CHANGELOG.md",
+  "softwareHelp": { "@type": "CreativeWork", "url": "https://github.com/MembridgeAi/membridge#readme" },
+  "license": "https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md",
+  "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "author": { "@type": "Organization", "name": "MemBridge", "url": "https://membridge.me/" }
+  "featureList": [
+    "Automatic memory capture from Claude Code and Codex session logs",
+    "Per-project memory synced into CLAUDE.md and AGENTS.md",
+    "membridge why file:line — the prompt and reasoning behind any line of code",
+    "100% local: binds to 127.0.0.1, no accounts, no telemetry, no API key",
+    "Opt-in team feed of every teammate's AI sessions, end-to-end encrypted",
+    "Plain-markdown memory; membridge remove restores every file exactly"
+  ],
+  "keywords": "AI coding memory, Claude Code, Codex, CLAUDE.md, AGENTS.md, shared context, local-first",
+  "sameAs": [
+    "https://github.com/MembridgeAi/membridge",
+    "https://www.npmjs.com/package/@membridgeai/membridge"
+  ],
+  "author": { "@id": "https://membridge.me/#org" },
+  "publisher": { "@id": "https://membridge.me/#org" }
+}
+</script>
+<!-- Structured data: Organization + WebSite + WebPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://membridge.me/#org",
+      "name": "MemBridge",
+      "url": "https://membridge.me/",
+      "logo": { "@type": "ImageObject", "url": "https://membridge.me/icon-512.png", "width": 512, "height": 512 },
+      "sameAs": [
+        "https://github.com/MembridgeAi",
+        "https://github.com/MembridgeAi/membridge",
+        "https://www.npmjs.com/package/@membridgeai/membridge"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://membridge.me/#website",
+      "url": "https://membridge.me/",
+      "name": "MemBridge",
+      "description": "Shared memory for Claude Code, Codex, and every AI coding tool — local-first, automatic, free.",
+      "publisher": { "@id": "https://membridge.me/#org" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://membridge.me/#webpage",
+      "url": "https://membridge.me/",
+      "name": "MemBridge - Shared Memory for Claude Code, Codex & AI Coding Tools",
+      "isPartOf": { "@id": "https://membridge.me/#website" },
+      "about": { "@id": "https://membridge.me/#software" },
+      "primaryImageOfPage": { "@type": "ImageObject", "url": "https://membridge.me/og.png" },
+      "dateModified": "2026-07-23",
+      "inLanguage": "en"
+    }
+  ]
 }
 </script>
 <!-- Structured data: FAQ -->
@@ -47,12 +112,18 @@
   "mainEntity": [
     { "@type": "Question", "name": "How do I give Claude Code a persistent memory?",
       "acceptedAnswer": { "@type": "Answer", "text": "Run membridge start. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into CLAUDE.md, which Claude Code reads on every startup. Your next session starts already knowing what the last one did." } },
+    { "@type": "Question", "name": "How do I stop my AI coding assistant from losing context between sessions?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Persist the context somewhere the tool re-reads on startup. That is exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into CLAUDE.md and AGENTS.md, so a new session, even in a different tool, picks up where the last one left off instead of starting from zero." } },
     { "@type": "Question", "name": "How do I share context between Claude Code and Codex?",
       "acceptedAnswer": { "@type": "Answer", "text": "The same memory block lands in both CLAUDE.md and AGENTS.md, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring." } },
     { "@type": "Question", "name": "Does MemBridge send my code to the cloud?",
       "acceptedAnswer": { "@type": "Answer", "text": "No. The daemon binds to 127.0.0.1 and solo use makes zero network calls: no accounts, no telemetry, nothing phoning home. You can verify it yourself with one lsof command. Team sync is opt-in and end-to-end encrypted." } },
     { "@type": "Question", "name": "Will it overwrite my CLAUDE.md or AGENTS.md?",
       "acceptedAnswer": { "@type": "Answer", "text": "Never. MemBridge only writes between its own markers, your notes stay byte-for-byte intact, and membridge remove restores every file exactly. It is plain markdown you can read and diff." } },
+    { "@type": "Question", "name": "What is CLAUDE.md?",
+      "acceptedAnswer": { "@type": "Answer", "text": "CLAUDE.md is the markdown file Claude Code automatically reads at the start of every session, a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up." } },
+    { "@type": "Question", "name": "What is AGENTS.md?",
+      "acceptedAnswer": { "@type": "Answer", "text": "AGENTS.md is an open convention for giving coding agents per-repository instructions. Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to CLAUDE.md, which is how context crosses between tools." } },
     { "@type": "Question", "name": "Does it work with Cursor, Gemini CLI, or other AI coding tools?",
       "acceptedAnswer": { "@type": "Answer", "text": "Claude Code and Codex adapters ship built in. Any tool that logs its sessions as JSONL can be wired up with a small config entry, no code required. More first-class adapters are on the roadmap." } },
     { "@type": "Question", "name": "How is MemBridge different from Mem0, claude-mem, and other AI memory tools?",
@@ -66,6 +137,7 @@
   ]
 }
 </script>
+<link rel="alternate" type="text/plain" href="/llms.txt" title="MemBridge — LLM-readable summary">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
@@ -1264,6 +1336,10 @@ node     4821  sam   IPv4  TCP 127.0.0.1:7437 (LISTEN)</span></div>
         <p class="faq-a">Run <code>membridge start</code>. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into <code>CLAUDE.md</code>, which Claude Code reads on every startup. Your next session starts already knowing what the last one did.</p>
       </details>
       <details class="faq-item">
+        <summary>How do I stop my AI coding assistant from losing context between sessions? <span class="fx">+</span></summary>
+        <p class="faq-a">Persist the context somewhere the tool re-reads on startup. That's exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into <code>CLAUDE.md</code> and <code>AGENTS.md</code>, so a new session, even in a different tool, picks up where the last one left off instead of starting from zero.</p>
+      </details>
+      <details class="faq-item">
         <summary>How do I share context between Claude Code and Codex? <span class="fx">+</span></summary>
         <p class="faq-a">The same memory block lands in both <code>CLAUDE.md</code> and <code>AGENTS.md</code>, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring.</p>
       </details>
@@ -1274,6 +1350,14 @@ node     4821  sam   IPv4  TCP 127.0.0.1:7437 (LISTEN)</span></div>
       <details class="faq-item">
         <summary>Will it overwrite my CLAUDE.md or AGENTS.md? <span class="fx">+</span></summary>
         <p class="faq-a">Never. MemBridge only writes between its own <code>&lt;!-- membridge --&gt;</code> markers, your notes stay byte-for-byte intact, and <code>membridge remove</code> restores every file exactly. It's plain markdown you can read and diff.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is CLAUDE.md? <span class="fx">+</span></summary>
+        <p class="faq-a"><code>CLAUDE.md</code> is the markdown file Claude Code automatically reads at the start of every session, a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is AGENTS.md? <span class="fx">+</span></summary>
+        <p class="faq-a"><code>AGENTS.md</code> is an open convention for giving coding agents per-repository instructions. Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to <code>CLAUDE.md</code>, which is how context crosses between tools.</p>
       </details>
       <details class="faq-item">
         <summary>Does it work with Cursor, Gemini CLI, or other AI coding tools? <span class="fx">+</span></summary>

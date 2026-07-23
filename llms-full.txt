@@ -1,0 +1,137 @@
+# MemBridge — full site content for LLMs
+
+> This file contains the complete content of https://membridge.me/ in plain markdown, for AI assistants and crawlers. Short version: https://membridge.me/llms.txt
+
+## What is MemBridge?
+
+MemBridge is a local memory layer for Claude Code, Codex, and every AI tool you code with. It watches your sessions, syncs the context into `CLAUDE.md` and `AGENTS.md` automatically, and can tell you the prompt behind any line of code. 100% on your machine.
+
+Tagline: **Different tools. One brain.**
+
+It is a tiny background daemon — not a platform. Free, source-available, zero npm dependencies, Node 18+. Claude Code and Codex adapters are built in.
+
+## The problem it solves
+
+Every AI coding session starts from zero. You explain your architecture to Claude Code, close the terminal, open Codex, and explain it all again. Each tool keeps its own notes in its own file, and none of them know what the others did. MemBridge ends the re-explaining: what one tool figures out, the rest already know.
+
+## How it works
+
+1. **Tail the session logs.** The daemon watches the JSONL session logs that Claude Code and Codex already write on your machine. Nothing to remember to run; capture is automatic.
+2. **Build a per-project memory.** Each session is distilled into a compact, per-project memory: what was asked, what was done, which files changed, and why. Memory never bleeds between repos.
+3. **Write where tools already read.** The distilled memory lands between `<!-- membridge -->` markers inside `CLAUDE.md` and `AGENTS.md` — the files Claude Code and Codex read natively on startup. No plugins, no MCP wiring, no new file format.
+
+## Why MemBridge over other AI memory tools
+
+There are a lot of AI memory tools. Most make you do the remembering. MemBridge is different in six ways:
+
+- **No save button to forget.** Capture happens by tailing session logs. There is no memory tool the agent has to remember to call, so nothing is lost when it forgets.
+- **No cloud, no API key.** Runs 100% locally with zero external services. No account, no key to bring, no data leaving your machine.
+- **No cross-project bleed.** Memory is scoped per project. Your work repo never leaks into your side project's context.
+- **The reason, not just the author.** `membridge why file:line` shows the session, prompt, and reasoning behind any line of code — the question `git blame` cannot answer.
+- **One memory, every agent.** The same distilled context reaches Claude Code, Codex, and any other tool you wire up. Different tools, one brain.
+- **It's just markdown.** The memory is plain markdown you can read, diff, and edit. `membridge remove` restores every file byte-for-byte.
+
+## The `membridge why` command
+
+Ask any line of code why it exists. `membridge why src/checkout.js:142` returns the AI session that produced that line: the date, the tool, the user's actual prompt, and a summary of the reasoning. It is provenance for AI-written code, accumulated automatically across every tool you use.
+
+## The desktop app
+
+A macOS menu-bar app (Apple Silicon) bundles the daemon and CLI. It shows your projects, recent AI activity as day-by-day cards, team feeds, and settings — including a kill switch, plaintext-off mode, and per-project sharing controls. The dashboard also runs in any browser at `127.0.0.1:7437`.
+
+## Teams: one encrypted feed of every teammate's AI sessions
+
+Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. Each teammate's coding agents read the shared memory too, so the whole team's AI tools stay caught up on what everyone shipped.
+
+- End-to-end encrypted before anything leaves each machine (see the encryption spec in the repo)
+- Invite-only, per-project, and off by default
+- Solo use never syncs anything anywhere
+
+## Privacy and architecture
+
+Local is not a feature; it's the architecture.
+
+- The daemon binds to `127.0.0.1` only
+- Solo use makes zero network calls: no accounts, no telemetry, nothing phoning home
+- Verify it yourself: `lsof -i -P | grep membridge` shows exactly one local listener
+- Team sync is opt-in and end-to-end encrypted
+- No cookies and no analytics on membridge.me either
+
+## Install
+
+Two ways to run it:
+
+**The app (macOS, Apple Silicon)** — menu-bar app plus the `membridge` CLI in one command:
+
+    curl -fsSL https://membridge.me/install.sh | sh
+
+**From source (macOS, Linux, Windows, Node 18+)** — clone it, read it, run it. Zero dependencies, so what you read is what runs:
+
+    git clone https://github.com/MembridgeAi/membridge
+    cd membridge
+    node bin/membridge.js start
+
+Also on npm:
+
+    npm install -g @membridgeai/membridge
+
+## Frequently asked questions
+
+### How do I give Claude Code a persistent memory?
+
+Run `membridge start`. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into `CLAUDE.md`, which Claude Code reads on every startup. Your next session starts already knowing what the last one did.
+
+### How do I stop my AI coding assistant from losing context between sessions?
+
+Persist the context somewhere the tool re-reads on startup. That is exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into `CLAUDE.md` and `AGENTS.md`, so a new session — even in a different tool — picks up where the last one left off instead of starting from zero.
+
+### How do I share context between Claude Code and Codex?
+
+The same memory block lands in both `CLAUDE.md` and `AGENTS.md`, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring.
+
+### Does MemBridge send my code to the cloud?
+
+No. The daemon binds to `127.0.0.1` and solo use makes zero network calls: no accounts, no telemetry, nothing phoning home. You can verify it yourself with one `lsof` command. Team sync is opt-in and end-to-end encrypted.
+
+### Will it overwrite my CLAUDE.md or AGENTS.md?
+
+Never. MemBridge only writes between its own `<!-- membridge -->` markers, your notes stay byte-for-byte intact, and `membridge remove` restores every file exactly. It is plain markdown you can read and diff.
+
+### What is CLAUDE.md?
+
+`CLAUDE.md` is the markdown file Claude Code automatically reads at the start of every session — a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up.
+
+### What is AGENTS.md?
+
+`AGENTS.md` is an open convention for giving coding agents per-repository instructions — Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to `CLAUDE.md`, which is how context crosses between tools.
+
+### Does it work with Cursor, Gemini CLI, or other AI coding tools?
+
+Claude Code and Codex adapters ship built in. Any tool that logs its sessions as JSONL can be wired up with a small config entry, no code required. More first-class adapters are on the roadmap.
+
+### How is MemBridge different from Mem0, claude-mem, and other AI memory tools?
+
+Four ways. MemBridge captures automatically by tailing session logs, so there is no save tool for the agent to forget. Memory is per-project, not one global store that bleeds between repos. It runs 100% locally with no API key or cloud service. And `membridge why file:line` answers a question `git blame` cannot: the reasoning behind any line of code.
+
+### Is MemBridge free?
+
+Yes. MemBridge is free and source-available with zero dependencies. There is no API key to bring and no paid tier. Install it and you have all of it.
+
+### How does a team share one AI memory?
+
+Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. End-to-end encrypted before it leaves each machine, invite-only, off by default.
+
+### Won't Anthropic or OpenAI just build this?
+
+Each can build memory inside its own tool. Neither has a reason to build the bridge across its competitor's, and that neutral spot is exactly where MemBridge lives. The cross-tool provenance it accumulates is the part that compounds.
+
+## Links
+
+- Website: https://membridge.me/
+- GitHub: https://github.com/MembridgeAi/membridge
+- README / docs: https://github.com/MembridgeAi/membridge#readme
+- User guide: https://github.com/MembridgeAi/membridge/blob/master/docs/guide.md
+- Changelog: https://github.com/MembridgeAi/membridge/blob/master/CHANGELOG.md
+- License: https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md
+- Encryption spec: https://github.com/MembridgeAi/membridge/blob/master/docs/ENCRYPTION-SPEC.md
+- npm: https://www.npmjs.com/package/@membridgeai/membridge
