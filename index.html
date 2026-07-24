@@ -726,6 +726,8 @@ nav {
 .path p { color: var(--muted); font-size: 13.5px; margin: 8px 0 12px; }
 .path .term { font-size: 12px; }
 .path .term-body { min-height: 0; padding: 11px 14px 13px; }
+.path .dl-btn { width: 100%; justify-content: center; margin-bottom: 12px; }
+.path .dl-or { font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); margin: 0 0 8px; }
 .strip {
   margin-top: 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
   background: linear-gradient(90deg, var(--tint), #fff); border: 1px solid var(--tint-border);
@@ -1289,7 +1291,12 @@ node     4821  sam   IPv4  TCP 127.0.0.1:7437 (LISTEN)</span></div>
           <span class="path-ico">⌘</span>
           <div><h3>The app</h3><span class="ph-sub">macOS · Apple Silicon</span></div>
         </div>
-        <p>Menu-bar app plus the membridge CLI in one command. No warnings, no ceremony.</p>
+        <p>Menu-bar app plus the membridge CLI. Signed &amp; notarized &mdash; double-click and it opens, no warnings, no terminal.</p>
+        <a class="btn btn-primary dl-btn" href="https://github.com/MembridgeAi/membridge/releases/download/v0.1.6/MemBridge-0.1.6-arm64.dmg">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download for Mac
+        </a>
+        <div class="dl-or">or, in a terminal</div>
         <div class="term">
           <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><button class="copy-btn" data-cmd="curl -fsSL https://membridge.me/install.sh | sh" type="button">copy</button></div>
           <div class="term-body"><span class="t-dim">$ </span>curl -fsSL https://membridge.me/install.sh | sh</div>
