@@ -5,12 +5,12 @@
 #   curl -fsSL https://membridge.me/install.sh | sh -s -- --dry-run
 set -eu
 
-VERSION="0.1.0"
-SHA256="a8f979d1380e1a20fa8dfc1ceab60fc1ab1ca68100e6aceefd34722753291863"
+VERSION="0.1.1"
+SHA256="f77144821ab81dafe554a0440f75983bfbe2a9e905d5bc315cca7176f0d39e0c"
 REPO="MembridgeAi/membridge"
 APP_NAME="MemBridge"
 APP_DEST="/Applications/${APP_NAME}.app"
-if [ -w /opt/homebrew/bin ]; then CLI_DEST="/opt/homebrew/bin/membridge"; else CLI_DEST="$HOME/.local/bin/membridge"; fi
+CLI_DEST="/usr/local/bin/membridge"
 
 DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1
@@ -89,10 +89,7 @@ MANUAL
   fi
 fi
 
-# 8. Enable launch-at-login (starts on every boot)
-run "'$APP_DEST/Contents/MacOS/${APP_NAME}' --set-login=on >/dev/null 2>&1 || true"
-
-# 9. Launch + report
+# 8. Launch + report
 run "open '$APP_DEST'"
 say "Done. ${APP_NAME} is installed and opens with no warning."
 if command -v membridge >/dev/null 2>&1; then
