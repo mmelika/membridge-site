@@ -61,9 +61,9 @@ Local is not a feature; it's the architecture.
 
 Two ways to run it:
 
-**The app (macOS, Apple Silicon)** — menu-bar app plus the `membridge` CLI in one command:
+**The app (macOS, Apple Silicon)** — menu-bar app plus the `membridge` CLI. Signed and notarized, so it opens on a double-click with no warnings and no terminal. Download it from:
 
-    curl -fsSL https://membridge.me/install.sh | sh
+    https://github.com/MembridgeAi/membridge/releases/latest
 
 **From source (macOS, Linux, Windows, Node 18+)** — clone it, read it, run it. Zero dependencies, so what you read is what runs:
 
