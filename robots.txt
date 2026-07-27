@@ -1,7 +1,7 @@
-# membridge.me — everything on this site is public and citable.
+# membridge.app — everything on this site is public and citable.
 # AI crawlers and assistants are explicitly welcome.
-# Machine-readable product summary: https://membridge.me/llms.txt
-# Full site content as one markdown file: https://membridge.me/llms-full.txt
+# Machine-readable product summary: https://membridge.app/llms.txt
+# Full site content as one markdown file: https://membridge.app/llms-full.txt
 
 User-agent: *
 Allow: /
@@ -68,4 +68,4 @@ Allow: /
 User-agent: MistralAI-User
 Allow: /
 
-Sitemap: https://membridge.me/sitemap.xml
+Sitemap: https://membridge.app/sitemap.xml

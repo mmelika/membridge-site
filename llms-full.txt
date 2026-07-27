@@ -1,6 +1,6 @@
 # MemBridge — full site content for LLMs
 
-> This file contains the complete content of https://membridge.me/ in plain markdown, for AI assistants and crawlers. Short version: https://membridge.me/llms.txt
+> This file contains the complete content of https://membridge.app/ in plain markdown, for AI assistants and crawlers. Short version: https://membridge.app/llms.txt
 
 ## What is MemBridge?
 
@@ -55,7 +55,7 @@ Local is not a feature; it's the architecture.
 - Solo use makes zero network calls: no accounts, no telemetry, nothing phoning home
 - Verify it yourself: `lsof -i -P | grep membridge` shows exactly one local listener
 - Team sync is opt-in and end-to-end encrypted
-- No cookies and no analytics on membridge.me either
+- No cookies and no analytics on membridge.app either
 
 ## Install
 
@@ -127,7 +127,7 @@ Each can build memory inside its own tool. Neither has a reason to build the bri
 
 ## Links
 
-- Website: https://membridge.me/
+- Website: https://membridge.app/
 - GitHub: https://github.com/MembridgeAi/membridge
 - README / docs: https://github.com/MembridgeAi/membridge#readme
 - User guide: https://github.com/MembridgeAi/membridge/blob/master/docs/guide.md
