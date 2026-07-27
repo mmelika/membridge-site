@@ -396,6 +396,31 @@ nav {
   box-shadow: 0 32px 80px -32px rgba(16, 24, 43, .25);
 }
 .app-window .mono-label { font-size: 10.5px; }
+/* the app ships light and dark; ☀ in the topbar flips this mock the same way */
+.app-window.dark {
+  --ink: #EAF0FC;
+  --muted: #9AA8C2;
+  --faint: #6B7A99;
+  --bg: #0E1526;
+  --bg-alt: #131C31;
+  --tint: #1A2440;
+  --tint-border: #27345A;
+  --border: #1D2740;
+  --blue: #7FA3FF;
+  --blue-dark: #6B92F5;
+  --green: #4ADE9C;
+  background: var(--bg); color: var(--ink);
+}
+.app-window.dark .proj-row:hover,
+.app-window.dark .act-card { background: var(--bg-alt); }
+.app-window.dark .seg,
+.app-window.dark .mini-select,
+.app-window.dark .chk-pill { background: var(--bg-alt); }
+.app-window.dark .seg button.active { background: var(--tint); box-shadow: none; }
+.app-window.dark .enc-pill,
+.app-window.dark .dist-chip { border-color: #1F4A3A; background: #10241C; }
+.app-window.dark .invite-btn { color: #0E1526; }
+.app-window.dark .app-topbar .dots i { background: var(--border); }
 .app-topbar {
   display: flex; align-items: center; gap: 12px; padding: 12px 18px;
   border-bottom: 1px solid var(--border); flex-wrap: wrap;
@@ -439,9 +464,27 @@ nav {
 .app-h .hb { color: var(--blue); }
 .app-sub { color: var(--faint); font-size: 13.5px; margin: 0 0 18px; }
 
-/* ---- filters (projects) ---- */
+.app-headrow { display: flex; align-items: flex-start; gap: 16px; }
+.app-headrow > div { flex: 1; min-width: 0; }
+.add-proj {
+  cursor: pointer; background: none; color: var(--blue); border: 1px solid var(--tint-border);
+  border-radius: 10px; font: 600 13px var(--sans); padding: 9px 16px; flex: none;
+}
+.add-proj:hover { background: var(--tint); }
+
+/* ---- filters (projects, activity) ---- */
 .filter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
 .filter-row .mono-label { margin-right: 2px; }
+.mini-select {
+  font: 500 12.5px var(--sans); color: var(--ink); cursor: pointer;
+  background: #F3F6FD; border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px;
+}
+.chk-pill {
+  display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+  font: 600 12.5px var(--sans); color: var(--muted);
+  background: #F3F6FD; border: 1px solid var(--border); border-radius: 999px; padding: 5px 13px 5px 10px;
+}
+.chk-pill input { accent-color: var(--blue); margin: 0; }
 .seg { display: inline-flex; background: #F3F6FD; border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
 .seg button {
   border: none; background: none; cursor: pointer; font: 600 12.5px var(--sans);
@@ -451,29 +494,24 @@ nav {
 
 /* ---- project rows ---- */
 .proj-row {
-  display: flex; align-items: center; gap: 14px; padding: 15px 10px;
+  display: block; padding: 17px 14px;
   border: none; border-top: 1px solid var(--border); border-radius: 0;
   background: none; width: 100%; text-align: left; cursor: pointer;
   font: inherit; color: inherit; transition: background .15s ease;
 }
 .proj-row:hover { background: #F7F9FE; }
 .proj-row[hidden] { display: none; }
-.proj-tile {
-  width: 38px; height: 38px; border-radius: 11px; flex: none;
-  background: linear-gradient(135deg, #6C8CFF, var(--blue));
-  color: #fff; font: 700 12px var(--sans); display: flex;
-  align-items: center; justify-content: center; letter-spacing: .04em;
-}
-.proj-main { flex: 1; min-width: 0; }
-.proj-name { font-weight: 600; font-size: 15px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.proj-badge { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.proj-main { min-width: 0; }
+.proj-head { display: flex; align-items: baseline; gap: 10px; }
+.proj-name { font-weight: 600; font-size: 15.5px; flex: 1; min-width: 0; }
+.proj-dots { font-family: var(--mono); font-size: 15px; color: var(--faint); flex: none; letter-spacing: .06em; }
+.proj-row:hover .proj-dots { color: var(--blue); }
+.proj-badge { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-top: 3px; }
 .proj-badge.shared { color: var(--blue); }
-.proj-path { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 2px 0 5px; }
-.proj-stats { display: block; font-size: 12.5px; color: var(--muted); }
+.proj-sum { display: block; font-size: 14px; color: var(--ink); margin: 9px 0 3px; }
+.proj-attr { display: block; font-size: 12.5px; color: var(--faint); }
+.proj-stats { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-top: 11px; }
 .proj-stats b { color: var(--ink); font-weight: 600; }
-.proj-time { font-family: var(--mono); font-size: 11px; color: var(--faint); flex: none; }
-.proj-go { font-family: var(--mono); font-size: 15px; color: var(--faint); flex: none; }
-.proj-row:hover .proj-go { color: var(--blue); }
 
 /* ---- project detail ---- */
 .pd-back, .link-btn {
@@ -516,6 +554,7 @@ nav {
 
 /* ---- day / activity cards ---- */
 .day-label { display: block; margin: 16px 0 10px; }
+.day-label[hidden] { display: none; }
 .act-card { border: 1px solid var(--border); border-radius: 12px; padding: 15px 16px; margin-bottom: 12px; }
 .act-top { display: flex; gap: 12px; }
 .act-tile {
@@ -530,6 +569,11 @@ nav {
 .tool-chip { font-family: var(--mono); font-size: 10.5px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; color: var(--muted); }
 .act-who .proj { font-family: var(--mono); font-size: 11px; color: var(--faint); }
 .act-who .when { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); }
+.dist-chip {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--green); border: 1px solid #BFE3D2; background: #F2FBF7; border-radius: 999px; padding: 2px 8px;
+}
+.act-card[hidden] { display: none; }
 .act-title { font-size: 14.5px; font-weight: 650; line-height: 1.45; margin: 0 0 6px; }
 .act-title.dim { color: var(--faint); font-weight: 500; }
 .intent { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
@@ -631,8 +675,8 @@ nav {
 @media (max-width: 640px) {
   .app-view { padding: 18px 16px 22px; }
   .stat-trio { grid-template-columns: 1fr; }
-  .proj-time { display: none; }
   .enc-pill { display: none; }
+  .app-headrow { flex-direction: column; align-items: stretch; gap: 10px; }
   .act-who .when { margin-left: 0; }
 }
 .app-caption {
@@ -958,13 +1002,19 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       <span class="enc-pill">🔒 ENCRYPTED</span>
       <span class="sync-pill"><span class="dot"></span>SYNCED · <span id="syncAgo">8S</span> AGO</span>
       <button class="invite-btn" id="inviteBtn" type="button">Invite</button>
+      <button class="gear-btn" id="themeBtn" type="button" aria-label="Toggle theme">☀</button>
       <button class="gear-btn" id="gearBtn" type="button" aria-label="Settings">⚙</button>
     </div>
 
     <!-- ================= PROJECTS ================= -->
     <div class="app-view" id="view-projects">
-      <h3 class="app-h">Projects</h3>
-      <p class="app-sub">All caught up across your projects. Click one to open it.</p>
+      <div class="app-headrow">
+        <div>
+          <h3 class="app-h">Projects</h3>
+          <p class="app-sub">All caught up across your projects. Click one to open it.</p>
+        </div>
+        <button class="add-proj" id="addProjBtn" type="button">+ Add a project</button>
+      </div>
       <div class="filter-row">
         <span class="mono-label">Show</span>
         <div class="seg" id="showSeg">
@@ -972,37 +1022,47 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
           <button data-filter="shared" type="button">Shared</button>
           <button data-filter="local" type="button">Local</button>
         </div>
+        <span class="mono-label">Person</span>
+        <select class="mini-select" id="personSel" aria-label="Filter by person">
+          <option value="all">All</option>
+          <option value="sam">You</option>
+          <option value="maya">Maya</option>
+        </select>
+        <span class="mono-label">Sort</span>
+        <div class="seg" id="sortSeg">
+          <button class="active" data-sort="recent" type="button">Recent</button>
+          <button data-sort="name" type="button">Name</button>
+        </div>
       </div>
-      <button class="proj-row" type="button" data-proj="cartful" data-kind="shared">
-        <span class="proj-tile">CA</span>
-        <span class="proj-main">
-          <span class="proj-name">cartful <span class="proj-badge shared">Shared · Sam + Maya</span></span>
-          <span class="proj-path">/Users/sam/cartful</span>
-          <span class="proj-stats"><b>17</b> sessions this week &nbsp;·&nbsp; <b>49</b> files touched &nbsp;·&nbsp; <b>1</b> open todo</span>
-        </span>
-        <span class="proj-time">37m ago</span>
-        <span class="proj-go">›</span>
-      </button>
-      <button class="proj-row" type="button" data-proj="brewlog" data-kind="local">
-        <span class="proj-tile">BR</span>
-        <span class="proj-main">
-          <span class="proj-name">brewlog <span class="proj-badge">Local only</span></span>
-          <span class="proj-path">/Users/sam/Desktop/brewlog</span>
-          <span class="proj-stats"><b>5</b> sessions this week &nbsp;·&nbsp; <b>21</b> files touched &nbsp;·&nbsp; <b>0</b> open todos</span>
-        </span>
-        <span class="proj-time">25h ago</span>
-        <span class="proj-go">›</span>
-      </button>
-      <button class="proj-row" type="button" data-proj="study-buddy" data-kind="local">
-        <span class="proj-tile">ST</span>
-        <span class="proj-main">
-          <span class="proj-name">study-buddy <span class="proj-badge">Local only</span></span>
-          <span class="proj-path">/Users/sam/study-buddy</span>
-          <span class="proj-stats"><b>2</b> sessions this week &nbsp;·&nbsp; <b>8</b> files touched &nbsp;·&nbsp; <b>0</b> open todos</span>
-        </span>
-        <span class="proj-time">3d ago</span>
-        <span class="proj-go">›</span>
-      </button>
+      <div id="projList">
+        <button class="proj-row" type="button" data-proj="cartful" data-kind="shared" data-people="sam maya" data-name="cartful" data-rank="1">
+          <span class="proj-main">
+            <span class="proj-head"><span class="proj-name">cartful</span><span class="proj-dots" aria-hidden="true">⋯</span></span>
+            <span class="proj-badge shared">Member</span>
+            <span class="proj-sum">Checkout copy swap: "Reserve your spot", mobile spacing pass</span>
+            <span class="proj-attr">You · Claude Code · 37m ago</span>
+            <span class="proj-stats">17 sessions, since Jul 10 · Claude Code, Codex</span>
+          </span>
+        </button>
+        <button class="proj-row" type="button" data-proj="brewlog" data-kind="local" data-people="sam" data-name="brewlog" data-rank="2">
+          <span class="proj-main">
+            <span class="proj-head"><span class="proj-name">brewlog</span><span class="proj-dots" aria-hidden="true">⋯</span></span>
+            <span class="proj-badge">Local</span>
+            <span class="proj-sum">Tasting-note import now tolerates half-star ratings</span>
+            <span class="proj-attr">You · Codex · 25h ago</span>
+            <span class="proj-stats">5 sessions, since Jul 14 · Codex</span>
+          </span>
+        </button>
+        <button class="proj-row" type="button" data-proj="study-buddy" data-kind="local" data-people="sam" data-name="study-buddy" data-rank="3">
+          <span class="proj-main">
+            <span class="proj-head"><span class="proj-name">study-buddy</span><span class="proj-dots" aria-hidden="true">⋯</span></span>
+            <span class="proj-badge">Local</span>
+            <span class="proj-sum">No recent sessions</span>
+            <span class="proj-attr">3d ago</span>
+            <span class="proj-stats">2 sessions, since Jul 9 · Claude Code</span>
+          </span>
+        </button>
+      </div>
     </div>
 
     <!-- ================= PROJECT DETAIL ================= -->
@@ -1012,13 +1072,34 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     <div class="app-view" id="view-activity" hidden>
       <h3 class="app-h">Activ<span class="hb">ity</span></h3>
       <p class="app-sub">Every session, every teammate, in plain English.</p>
+      <div class="filter-row">
+        <span class="mono-label">Person</span>
+        <select class="mini-select" id="actPerson" aria-label="Filter activity by person">
+          <option value="all">All</option>
+          <option value="sam">You</option>
+          <option value="maya">Maya</option>
+        </select>
+        <span class="mono-label">Project</span>
+        <select class="mini-select" id="actProject" aria-label="Filter activity by project">
+          <option value="all">All</option>
+          <option value="cartful">cartful</option>
+          <option value="brewlog">brewlog</option>
+        </select>
+        <span class="mono-label">Tool</span>
+        <select class="mini-select" id="actTool" aria-label="Filter activity by tool">
+          <option value="all">All</option>
+          <option value="claude code">Claude Code</option>
+          <option value="codex">Codex</option>
+        </select>
+        <label class="chk-pill"><input type="checkbox" id="actDistilled"> Distilled only</label>
+      </div>
 
-      <span class="mono-label day-label">Today</span>
-      <div class="act-card">
+      <span class="mono-label day-label" data-day-label>Today</span>
+      <div class="act-card" data-person="sam" data-project="cartful" data-tools="claude code" data-distilled="1">
         <div class="act-top">
           <span class="act-tile sam">S</span>
           <div class="act-main">
-            <div class="act-who"><span class="who">You</span><span class="tool-chip">Claude Code</span><span class="proj">cartful</span><span class="when">12m ago</span></div>
+            <div class="act-who"><span class="who">You</span><span class="tool-chip">Claude Code</span><span class="proj">cartful</span><span class="when">12m ago</span><span class="dist-chip">Distilled</span></div>
             <p class="act-title link" data-day="sam-live" title="Open the day view">Checkout copy swap: "Reserve your spot", mobile spacing pass</p>
             <div class="working-row">◐ Swapping checkout button copy across views <span class="working-tag">● WORKING NOW</span></div>
             <p class="meta-line">1 session · 6 prompts · 3 files</p>
@@ -1026,11 +1107,11 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
         </div>
       </div>
 
-      <div class="act-card">
+      <div class="act-card" data-person="maya" data-project="cartful" data-tools="claude code,codex" data-distilled="1">
         <div class="act-top">
           <span class="act-tile maya">M</span>
           <div class="act-main">
-            <div class="act-who"><span class="who">Maya</span><span class="tool-chip">Claude Code</span><span class="tool-chip">Codex</span><span class="proj">cartful</span><span class="when">86m ago</span></div>
+            <div class="act-who"><span class="who">Maya</span><span class="tool-chip">Claude Code</span><span class="tool-chip">Codex</span><span class="proj">cartful</span><span class="when">86m ago</span><span class="dist-chip">Distilled</span></div>
             <p class="act-title link" data-day="maya-multi" title="Open the day view">Empty-cart rework, config cleanup, retry hardening</p>
             <ul class="checks">
               <li>Empty-cart screen rewritten, "save for later" nudge added</li>
@@ -1050,8 +1131,8 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
         </div>
       </div>
 
-      <span class="mono-label day-label">Yesterday</span>
-      <div class="act-card">
+      <span class="mono-label day-label" data-day-label>Yesterday</span>
+      <div class="act-card" data-person="maya" data-project="cartful" data-tools="codex" data-distilled="0">
         <div class="act-top">
           <span class="act-tile maya">M</span>
           <div class="act-main">
@@ -1759,17 +1840,68 @@ node     4821  sam   IPv4  TCP 127.0.0.1:7437 (LISTEN)</span></div>
     jc.classList.add('flash');
   }
 
-  /* ---------- projects filter ---------- */
-  var segBtns = document.querySelectorAll('#showSeg button');
-  segBtns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      segBtns.forEach(function (x) { x.classList.remove('active'); });
-      b.classList.add('active');
-      var f = b.getAttribute('data-filter');
-      document.querySelectorAll('.proj-row').forEach(function (row) {
-        row.hidden = (f !== 'all' && row.getAttribute('data-kind') !== f);
+  /* ---------- theme toggle ---------- */
+  $('themeBtn').addEventListener('click', function () {
+    var dark = $('appWin').classList.toggle('dark');
+    this.textContent = dark ? '☾' : '☀';
+    this.setAttribute('aria-label', dark ? 'Switch to light' : 'Switch to dark');
+  });
+
+  /* ---------- projects: show / person / sort ---------- */
+  var projRows = Array.prototype.slice.call(document.querySelectorAll('.proj-row'));
+  var projShow = 'all', projPerson = 'all';
+  function applyProjects() {
+    projRows.forEach(function (row) {
+      var kindOk = projShow === 'all' || row.getAttribute('data-kind') === projShow;
+      var personOk = projPerson === 'all' || row.getAttribute('data-people').split(' ').indexOf(projPerson) !== -1;
+      row.hidden = !(kindOk && personOk);
+    });
+  }
+  function segWire(sel, onPick) {
+    var btns = document.querySelectorAll(sel + ' button');
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        btns.forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        onPick(b);
       });
     });
+  }
+  segWire('#showSeg', function (b) { projShow = b.getAttribute('data-filter'); applyProjects(); });
+  segWire('#sortSeg', function (b) {
+    var byName = b.getAttribute('data-sort') === 'name';
+    projRows.slice().sort(function (a, c) {
+      return byName
+        ? a.getAttribute('data-name').localeCompare(c.getAttribute('data-name'))
+        : (+a.getAttribute('data-rank')) - (+c.getAttribute('data-rank'));
+    }).forEach(function (r) { $('projList').appendChild(r); });
+  });
+  $('personSel').addEventListener('change', function () { projPerson = this.value; applyProjects(); });
+  $('addProjBtn').addEventListener('click', function () { showView('settings'); });
+
+  /* ---------- activity: person / project / tool / distilled ---------- */
+  var actCards = Array.prototype.slice.call(document.querySelectorAll('#view-activity .act-card'));
+  function applyActivity() {
+    var p = $('actPerson').value, pr = $('actProject').value,
+        tool = $('actTool').value, distOnly = $('actDistilled').checked;
+    actCards.forEach(function (c) {
+      c.hidden = !((p === 'all' || c.getAttribute('data-person') === p)
+        && (pr === 'all' || c.getAttribute('data-project') === pr)
+        && (tool === 'all' || c.getAttribute('data-tools').split(',').indexOf(tool) !== -1)
+        && (!distOnly || c.getAttribute('data-distilled') === '1'));
+    });
+    /* a day heading disappears with the last card under it */
+    document.querySelectorAll('#view-activity [data-day-label]').forEach(function (lbl) {
+      var any = false, n = lbl.nextElementSibling;
+      while (n && n.classList.contains('act-card')) {
+        if (!n.hidden) any = true;
+        n = n.nextElementSibling;
+      }
+      lbl.hidden = !any;
+    });
+  }
+  ['actPerson', 'actProject', 'actTool', 'actDistilled'].forEach(function (id) {
+    $(id).addEventListener('change', applyActivity);
   });
 
   /* ---------- project detail data ---------- */
