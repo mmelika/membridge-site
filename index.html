@@ -474,6 +474,7 @@ nav {
 
 /* ---- filters (projects, activity) ---- */
 .filter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.app-h + .filter-row { margin-top: 18px; }
 .filter-row .mono-label { margin-right: 2px; }
 .mini-select {
   font: 500 12.5px var(--sans); color: var(--ink); cursor: pointer;
@@ -999,7 +1000,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
         <button class="app-tab" data-view="activity" type="button" role="tab" aria-selected="false">Activity</button>
         <button class="app-tab" data-view="team" type="button" role="tab" aria-selected="false">Team</button>
       </div>
-      <span class="enc-pill">🔒 ENCRYPTED</span>
+      <span class="enc-pill">ENCRYPTED</span>
       <span class="sync-pill"><span class="dot"></span>SYNCED · <span id="syncAgo">8S</span> AGO</span>
       <button class="invite-btn" id="inviteBtn" type="button">Invite</button>
       <button class="gear-btn" id="themeBtn" type="button" aria-label="Toggle theme">☀</button>
@@ -1071,7 +1072,6 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     <!-- ================= ACTIVITY ================= -->
     <div class="app-view" id="view-activity" hidden>
       <h3 class="app-h">Activ<span class="hb">ity</span></h3>
-      <p class="app-sub">Every session, every teammate, in plain English.</p>
       <div class="filter-row">
         <span class="mono-label">Person</span>
         <select class="mini-select" id="actPerson" aria-label="Filter activity by person">
@@ -1800,11 +1800,12 @@ node     4821  sam   IPv4  TCP 127.0.0.1:7437 (LISTEN)</span></div>
   function $(id) { return document.getElementById(id); }
   function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
-  /* ---------- sync pill ticker ---------- */
+  /* ---------- sync pill ticker ----------
+     The daemon syncs every 60s, so the pill must never read 60S or higher —
+     it wraps back to a couple of seconds as the next sync lands. */
   var syncS = 8;
   setInterval(function () {
-    syncS += 1;
-    if (syncS > 59) syncS = 2;
+    syncS = syncS >= 59 ? 2 : syncS + 1;
     $('syncAgo').textContent = syncS + 'S';
   }, 1000);
 
