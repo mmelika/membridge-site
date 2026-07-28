@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Context Ledger — What AI Coding Agents Spend Re-Learning Your Codebase | MemBridge</title>
+<meta name="description" content="6,104 real coding-agent sessions, 309 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation. Measure yours with membridge audit.">
+<link rel="canonical" href="https://membridge.app/context-ledger/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#2F4FE0">
+<meta name="author" content="MemBridge">
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://membridge.app/context-ledger/">
+<meta property="og:site_name" content="MemBridge">
+<meta property="og:title" content="The Context Ledger — What AI Coding Agents Spend Re-Learning Your Codebase">
+<meta property="og:description" content="6,104 real coding-agent sessions, 309 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation.">
+<meta property="og:image" content="https://membridge.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Context Ledger — What AI Coding Agents Spend Re-Learning Your Codebase">
+<meta name="twitter:description" content="6,104 real coding-agent sessions, 309 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation.">
+<meta name="twitter:image" content="https://membridge.app/og.png">
+<!-- Structured data: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://membridge.app/context-ledger/#article",
+  "headline": "The Context Ledger: what AI coding agents spend re-learning your codebase",
+  "description": "A baseline study of 6,104 real coding-agent sessions from 309 developers, measured with exact per-request API accounting. The median developer spends 31% of agent tokens on re-orientation.",
+  "url": "https://membridge.app/context-ledger/",
+  "image": "https://membridge.app/og.png",
+  "datePublished": "2026-07-28",
+  "dateModified": "2026-07-28",
+  "inLanguage": "en",
+  "author": { "@id": "https://membridge.app/#org" },
+  "publisher": { "@id": "https://membridge.app/#org" },
+  "isPartOf": { "@id": "https://membridge.app/#website" },
+  "about": { "@id": "https://membridge.app/#software" }
+}
+</script>
+<link rel="alternate" type="text/plain" href="/llms.txt" title="MemBridge — LLM-readable summary">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+:root {
+  --blue: #2F4FE0;
+  --blue-dark: #2440C4;
+  --ink: #10182B;
+  --muted: #5D6B85;
+  --faint: #8A96AC;
+  --bg: #FFFFFF;
+  --bg-alt: #F7F9FE;
+  --tint: #EDF1FD;
+  --tint-border: #D9E2FA;
+  --border: #E6EAF3;
+  --green: #1D8A5F;
+  --green-tint: #F2FBF7;
+  --green-border: #BFE3D2;
+  --green-mid: #A9DCC7;
+  --green-soft: #DFF3EA;
+  --orange: #C97A1E;
+  --amber-tint: #FBF3E3;
+  --amber-border: #EBD7AE;
+  --amber-mid: #F3DFAE;
+  --dark: #0E1526;
+  --dark-border: #1D2740;
+  --term-bg: #0E1526;
+  --term-border: #1D2740;
+  --term-text: #D7E0F2;
+  --term-muted: #6B7A99;
+  --term-blue: #7FA3FF;
+  --radius: 14px;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.65 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+.narrow { max-width: 860px; }
+
+/* ---------- shared bits ---------- */
+.mono-label {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--faint);
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  font: 600 15px/1 var(--sans); border-radius: 12px; padding: 13px 22px;
+  border: 1px solid transparent; transition: background .15s ease, border-color .15s ease;
+  text-decoration: none;
+}
+.btn:hover { text-decoration: none; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-dark); }
+.btn-secondary { background: #fff; color: var(--ink); border-color: var(--border); }
+.btn-secondary:hover { border-color: var(--faint); }
+.btn svg { flex: none; }
+h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; }
+h2 { font-size: clamp(24px, 3.6vw, 31px); line-height: 1.25; margin: 0 0 14px; }
+h3 { font-size: 16.5px; font-weight: 650; margin: 30px 0 8px; }
+.section { padding: 76px 0 64px; }
+p { max-width: 68ch; margin: 0 0 14px; color: var(--muted); font-size: 16px; }
+p b, p strong { color: var(--ink); }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.n-waste { color: var(--orange); }
+.n-save { color: var(--green); }
+code {
+  font-family: var(--mono); font-size: .88em; background: var(--tint);
+  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px;
+  color: var(--ink); white-space: nowrap;
+}
+.note { font-size: 13.5px; color: var(--faint); max-width: 72ch; }
+
+/* evidence tags */
+.tag {
+  display: inline-block; font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; padding: 2px 8px;
+  border-radius: 999px; vertical-align: 3px; margin-left: 9px; white-space: nowrap;
+}
+.t-meas { background: var(--green-tint); color: var(--green); border: 1px solid var(--green-border); }
+.t-assm { background: var(--amber-tint); color: var(--orange); border: 1px solid var(--amber-border); }
+
+/* ---------- nav ---------- */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255, 255, 255, .88); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 650; font-size: 17px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.m-tile { width: 28px; height: 28px; border-radius: 8px; display: block; }
+.nav-links { display: flex; gap: 24px; flex: 1; }
+.nav-links a { color: var(--muted); font-size: 14.5px; font-weight: 500; }
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+.nav-cta { display: flex; gap: 10px; }
+.nav-cta .btn { padding: 9px 16px; font-size: 14px; }
+
+/* ---------- hero ---------- */
+.hero { padding: 72px 0 56px; }
+.hero .mono-label { display: block; margin-bottom: 18px; color: var(--blue); }
+.hero h1 {
+  font-size: clamp(32px, 5vw, 50px); line-height: 1.14; margin: 0 0 22px;
+  max-width: 660px;
+}
+.hero .sub { font-size: 17.5px; max-width: 640px; margin: 0 0 28px; }
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.cmd {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 14px;
+  background: var(--term-bg); border: 1px solid var(--term-border);
+  color: var(--term-text); padding: 13px 18px; border-radius: 12px;
+}
+.cmd b { color: var(--term-blue); font-weight: 500; }
+.cmd-steps { flex-direction: column; align-items: flex-start; gap: 7px; }
+.hero-note { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .04em; margin-top: 14px; }
+
+/* ---------- stat cards ---------- */
+.statgrid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 40px;
+}
+.stat { border: 1px solid var(--border); border-radius: 12px; padding: 15px 17px 13px; background: #fff; }
+.stat b { display: block; font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.stat span { display: block; margin-top: 4px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+
+/* ---------- distribution strip ---------- */
+.strip-chart { position: relative; height: 84px; margin: 34px 0 4px; border-bottom: 1.5px solid var(--ink); max-width: 760px; }
+.smark { position: absolute; bottom: 0; width: 2px; background: var(--faint); height: 22px; }
+.smark i {
+  position: absolute; bottom: 26px; left: -1px; transform: translateX(-50%);
+  font-style: normal; font-family: var(--mono); font-size: 11.5px;
+  white-space: nowrap; color: var(--faint);
+}
+.smark.hero-m { background: var(--orange); height: 46px; }
+.smark.hero-m i { color: var(--orange); font-weight: 600; bottom: 50px; }
+.smark.you { background: var(--green); height: 32px; }
+.smark.you i { color: var(--green); bottom: 36px; }
+.axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 6px; max-width: 760px; }
+
+/* ---------- session-order bars ---------- */
+.fam { display: flex; align-items: flex-end; gap: 12px; height: 150px; margin: 30px 0 6px; max-width: 520px; }
+.fam > div { flex: 1; text-align: center; }
+.fam .col { background: var(--amber-tint); border: 1px solid var(--amber-border); border-bottom: 2px solid var(--orange); border-radius: 4px 4px 0 0; }
+.fam b { display: block; font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--orange); margin-bottom: 5px; }
+.fam span { display: block; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 7px; }
+
+/* ---------- savings section ---------- */
+#savings { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.bar-outer { margin: 34px 0 8px; max-width: 760px; }
+.bar { position: relative; height: 54px; background: #EFF2FA; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg { position: absolute; top: 0; bottom: 0; }
+.brk { position: relative; height: 36px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
+.brk span { position: absolute; top: 10px; white-space: nowrap; }
+.tick { position: absolute; top: 0; height: 8px; border-left: 1px solid var(--faint); }
+
+table { border-collapse: collapse; width: 100%; margin: 24px 0 10px; font-size: 14.5px; background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+table { border-style: hidden; box-shadow: 0 0 0 1px var(--border); }
+th {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 500; color: var(--faint); text-align: left; padding: 11px 16px;
+  border-bottom: 1px solid var(--border); background: #F3F6FD;
+}
+td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--muted); }
+td.n, th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.n { font-family: var(--mono); font-size: 13.5px; color: var(--ink); }
+tr.band td { background: var(--green-tint); }
+tr:last-child td { border-bottom: none; }
+
+.callout {
+  background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--green);
+  border-radius: 12px; padding: 20px 24px; margin: 28px 0; max-width: 74ch;
+}
+.callout p { margin: 0; font-size: 15px; }
+.callout strong { color: var(--ink); }
+
+/* ---------- method ---------- */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.two h2 { font-size: 22px; }
+.two p { font-size: 15px; }
+
+/* ---------- final cta ---------- */
+.finalcta { background: var(--dark); border-top: 1px solid var(--dark-border); }
+.finalcta .wrap { padding-top: 72px; padding-bottom: 76px; }
+.finalcta h2 { color: #fff; font-size: clamp(26px, 4vw, 34px); }
+.finalcta p { color: #9AA8C2; font-size: 17px; max-width: 60ch; }
+.finalcta .cmd { background: rgba(255,255,255,.05); }
+.finalcta .btn-secondary { background: transparent; color: #D7E0F2; border-color: #33405C; }
+.finalcta .btn-secondary:hover { border-color: var(--term-muted); }
+
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
+.foot-inner { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.foot-inner .brand { font-size: 15px; }
+.foot-inner .m-tile { width: 22px; height: 22px; border-radius: 6px; }
+.foot-links { display: flex; gap: 20px; flex: 1; }
+.foot-links a { color: var(--muted); font-size: 13.5px; }
+.foot-note { font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: .04em; }
+.foot-blurb { margin-top: 26px; color: var(--faint); font-size: 13px; line-height: 1.7; max-width: 780px; }
+.foot-blurb code { background: none; border: none; padding: 0; font-size: .9em; color: var(--muted); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .section { padding: 56px 0 48px; }
+  .nav-links { display: none; }
+  .statgrid { grid-template-columns: repeat(2, 1fr); }
+  .two { grid-template-columns: 1fr; gap: 8px; }
+  .foot-links { flex-wrap: wrap; gap: 12px 18px; }
+}
+@media (max-width: 640px) {
+  .brk { height: 58px; }
+  .brk span.row2 { top: 32px; }
+}
+@media (max-width: 520px) {
+  .hero { padding: 52px 0 44px; }
+  .statgrid { grid-template-columns: 1fr 1fr; }
+  .cmd { font-size: 12.5px; padding: 12px 14px; }
+  .brk span { font-size: 10.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="mgrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3E63F0"/><stop offset="1" stop-color="#16219B"/>
+    </linearGradient>
+    <symbol id="mlogo" viewBox="0 0 32 32">
+      <rect x="1" y="1" width="30" height="30" rx="8.5" fill="url(#mgrad)" stroke="#4A78FF" stroke-width="1.6"/>
+      <path d="M9 22.5 V11 L16 18 L23 11 V22.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5 16.5 H27" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">
+      <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
+      MemBridge
+    </a>
+    <div class="nav-links">
+      <a href="#findings">Findings</a>
+      <a href="#savings">What's recoverable</a>
+      <a href="#method">Method</a>
+      <a href="/#get">Download</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary" href="https://github.com/MembridgeAi/membridge" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        Star on GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap narrow">
+    <span class="mono-label">The Context Ledger &middot; 2026 baseline study</span>
+    <h1>Your AI coding agents keep re-learning your codebase. Here's the bill.</h1>
+    <p class="sub">We measured 6,104 real coding-agent sessions from 309 developers using exact per-request API accounting &mdash; the token counts the vendors themselves report, reconciled to 100% of billed volume. Not a survey, not a simulation of synthetic tasks: real work, exactly priced.</p>
+    <div class="cta-row" id="audit">
+      <span class="cmd cmd-steps">
+        <span><b>$</b> npm install -g @membridgeai/membridge</span>
+        <span><b>$</b> membridge audit</span>
+      </span>
+      <a class="btn btn-primary" href="/#get">Or download the app</a>
+    </div>
+    <p class="hero-note">The audit ships with MemBridge: install it, then <b style="color:var(--muted);font-weight:500">membridge audit</b> prints your number. It reads the session logs your agents already keep. Nothing leaves your machine.</p>
+    <div class="statgrid">
+      <div class="stat"><b>6,104</b><span>sessions analyzed</span></div>
+      <div class="stat"><b>309</b><span>developers</span></div>
+      <div class="stat"><b>211</b><span>production repos</span></div>
+      <div class="stat"><b>76.3B</b><span>tokens, billed volume</span></div>
+      <div class="stat"><b>$56,666</b><span>spend, exactly accounted</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="findings">
+  <div class="wrap narrow">
+    <span class="mono-label" style="display:block;margin-bottom:14px">Finding 1</span>
+    <h2>The median developer burns <span class="num n-waste">31%</span> of agent tokens on re-orientation<span class="tag t-meas">measured</span></h2>
+    <p>Re-orientation is your agent re-reading, re-searching, and re-deriving context in a codebase it has already worked in. Across the 174 developers with five or more sessions, the median share of billed tokens spent this way is 31.2%, and nine in ten developers sit above 16%. At the corpus level, re-orientation accounts for <span class="num n-waste">$14,524</span> of the $56,666 measured &mdash; 26% of everything spent.</p>
+    <div class="strip-chart" aria-hidden="true">
+      <div class="smark" style="left:5.7%"><i>min 3.6</i></div>
+      <div class="smark you" style="left:21.5%"><i>our own repos 13.5</i></div>
+      <div class="smark hero-m" style="left:49.5%"><i>median 31.2</i></div>
+      <div class="smark" style="left:99.8%"><i style="transform:translateX(-100%)">max 62.9</i></div>
+    </div>
+    <div class="axis"><span>0%</span><span>re-orientation share of billed tokens, per developer</span><span>63%</span></div>
+    <p class="note" style="margin-top:16px">We measured ourselves first. Our own repositories sit near the population's 10th percentile &mdash; more efficient than roughly nine in ten developers we measured &mdash; and we still burn 13.5%. We built MemBridge because even the efficient end of this chart is paying a permanent tax.</p>
+
+    <h2 style="margin-top:56px">In repos with history, <span class="num n-waste">53%</span> of file reads repeat an earlier session's work<span class="tag t-meas">measured</span></h2>
+    <p>Median across the 96 repositories with enough session history to measure, ranging as high as 81%. Your agent's breakthroughs from this morning are invisible to the session you open after lunch, and everything your teammate's agent figured out is gone. The waste is worst exactly where teams work together.</p>
+
+    <h2 style="margin-top:56px">And it never goes away on its own<span class="tag t-meas">measured</span></h2>
+    <p>Orientation share is essentially flat with repo experience: a developer's twentieth session in a repo re-orients nearly as much as their first. Agents do not learn their way around your codebase. Without a memory layer, the tax is permanent.</p>
+    <div class="fam" role="img" aria-label="Orientation share by session order within a repo: first session 25.3 percent, sessions two to four 26.0, five to nine 26.0, ten to nineteen 27.7, twenty plus 21.4">
+      <div><b>25.3</b><div class="col" style="height:91px"></div><span>1st</span></div>
+      <div><b>26.0</b><div class="col" style="height:94px"></div><span>2&ndash;4</span></div>
+      <div><b>26.0</b><div class="col" style="height:94px"></div><span>5&ndash;9</span></div>
+      <div><b>27.7</b><div class="col" style="height:100px"></div><span>10&ndash;19</span></div>
+      <div><b>21.4</b><div class="col" style="height:77px"></div><span>20+</span></div>
+    </div>
+    <p class="note">Median re-orientation % of billed volume by session order within (developer, repo).</p>
+  </div>
+</section>
+
+<section class="section" id="savings">
+  <div class="wrap narrow">
+    <span class="mono-label" style="display:block;margin-bottom:14px">What's recoverable</span>
+    <h2>Shared memory recovers <span class="num n-save">6&ndash;8%</span> of total agent spend, net of its own cost</h2>
+    <p>We modeled savings the hard way: only orientation that is measurably redundant counts, every token is priced at actual cache rates, and the memory layer is charged for the context it injects. The result is a band, not a point, because the model's one assumption &mdash; the replacement cost of injected memory, r &mdash; is stated rather than hidden.</p>
+
+    <div class="bar-outer" aria-label="Decomposition of measured spend">
+      <div class="bar">
+        <div class="seg" style="left:0;width:24.3%;background:var(--amber-tint);border-right:1.5px solid var(--orange)"></div>
+        <div class="seg" style="left:0;width:8.3%;background:var(--amber-mid);border-right:1.5px solid var(--orange)"></div>
+        <div class="seg" style="left:0;width:7.5%;background:var(--green-soft)"></div>
+        <div class="seg" style="left:0;width:6.6%;background:var(--green-mid)"></div>
+      </div>
+      <div class="brk">
+        <div class="tick" style="left:6.6%"></div><span style="left:0;color:var(--green)">net recoverable 5.8&ndash;7.5%</span>
+        <div class="tick" style="left:8.3%"></div><span class="row2" style="left:26%">gross 8.3%</span>
+        <div class="tick" style="left:24.3%"></div><span style="left:40%">ceiling 24.3%</span>
+        <span style="right:0">total spend</span>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>Tier</th><th class="n">On this corpus</th><th class="n">Of total spend</th></tr></thead>
+      <tbody>
+        <tr><td>Ceiling: all re-orientation eliminated (not achievable &mdash; first visits are real work)</td><td class="n">$13,776</td><td class="n">24.3%</td></tr>
+        <tr><td>Gross: all measurably redundant orientation eliminated</td><td class="n">$4,692</td><td class="n">8.3%</td></tr>
+        <tr class="band"><td>Net, memory cost r = 10% <span class="tag t-assm">stated assumption</span></td><td class="n">$4,223</td><td class="n">7.5%</td></tr>
+        <tr class="band"><td>Net, r = 20% <span class="tag t-assm">stated assumption</span></td><td class="n">$3,753</td><td class="n">6.6%</td></tr>
+        <tr class="band"><td>Net, r = 30% <span class="tag t-assm">stated assumption</span></td><td class="n">$3,284</td><td class="n">5.8%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout"><p><strong>The number survived its own stress test.</strong> This band was first computed on 20 developers. Recomputed on a corpus fourteen times larger, it reproduced unchanged &mdash; even though orientation share doubled between the two, because the increase is first-time reading no memory can recover, and the model knows the difference. We'd rather publish a number that holds than a bigger one that doesn't.</p></div>
+
+    <h3>What that means at scale</h3>
+    <p>For a developer using agents heavily, that band is <span class="num">$1,900&ndash;$5,200</span> a year in tokens alone. For a 50-person agent-first engineering org paying three or four vendors at once, it's a real line item. Extrapolated to the roughly $10B enterprise coding-agent market at the measured 26% orientation rate, the industry is burning on the order of $2.5B a year re-deriving what its agents already knew<span class="tag t-assm">extrapolation</span> &mdash; measured rate times cited market size, stated exactly as that.</p>
+    <p>And the dollars are the smaller half. The median session spends its first several turns re-orienting before it touches a file: minutes of a developer watching a spinner, several times a day. MemBridge collapses that to one or two. Tokens are what the audit prints; time is what you feel by Wednesday.</p>
+  </div>
+</section>
+
+<section class="section" id="method">
+  <div class="wrap narrow">
+    <span class="mono-label" style="display:block;margin-bottom:14px">Method &amp; data</span>
+    <div class="two">
+      <div>
+        <h2>How the numbers are made</h2>
+        <p>Every API request reports its exact context size: input, cache-creation, and cache-read tokens. The growth between consecutive requests, minus the model's own output, is exactly what the agent's tool results injected between them. Summing gives total billed volume; each block's cost is its size times its residency, priced at published rates with cache multipliers. The ledger reconciles to 100% of billed volume by construction, and sessions that fail reconciliation are excluded and counted, never approximated.</p>
+        <p>Classification is deliberately conservative: only unambiguous read-only inspection counts as orientation, so every waste figure here is a floor.</p>
+      </div>
+      <div>
+        <h2>Where the data comes from</h2>
+        <p>Real sessions, no telemetry of ours: the SWE-chat research corpus of consenting open-source developers (Stanford SALT, used under ODC-BY; Baumann et al., 2026, arXiv:2604.20779), public Entire checkpoint data from open-source repositories, and our own transcripts. All figures published here are aggregates under anonymous labels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section finalcta" id="get">
+  <div class="wrap narrow">
+    <h2>Your number is sitting in your logs right now.</h2>
+    <p>The audit is part of MemBridge: install it, run <code style="background:rgba(255,255,255,.07);border-color:var(--dark-border);color:var(--term-text)">membridge audit</code>, and it reads the session files your agents already keep on disk and prints what re-orientation cost you this year. One command, local only. Then MemBridge &mdash; one shared memory across the AI coding tools you already use &mdash; makes the number go down.</p>
+    <div class="cta-row" style="margin-top:26px">
+      <span class="cmd"><b>$</b> npm install -g @membridgeai/membridge &amp;&amp; membridge audit</span>
+    </div>
+    <div class="cta-row" style="margin-top:18px">
+      <a class="btn btn-primary" style="background:#fff;color:var(--ink)" href="/#get">Get MemBridge</a>
+      <a class="btn btn-secondary" href="/feedback.html">Talk to us about your team</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <a class="brand" href="/">
+      <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
+      MemBridge
+    </a>
+    <div class="foot-links">
+      <a href="/#why">Why MemBridge</a>
+      <a href="/#demo">Claude Code + Codex sync</a>
+      <a href="/#faq">FAQ</a>
+      <a href="https://github.com/MembridgeAi/membridge" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/MembridgeAi/membridge#readme" target="_blank" rel="noopener">Docs</a>
+    </div>
+    <span class="foot-note">&copy; 2026 MemBridge &middot; The Context Ledger, 2026 baseline</span>
+  </div>
+  <div class="wrap foot-blurb">
+    Data: SWE-chat (ODC-BY, Baumann et al. 2026) &middot; public Entire checkpoints &middot; our own repos. All figures are aggregates under anonymous labels; the full method, including what was excluded and why, is described above.
+  </div>
+</footer>
+
+</body>
+</html>
