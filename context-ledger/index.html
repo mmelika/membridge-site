@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Context Ledger — What AI Coding Agents Spend Re-Learning Your Codebase | MemBridge</title>
-<meta name="description" content="6,104 real coding-agent sessions, 309 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation. Measure yours with membridge audit.">
+<meta name="description" content="6,104 real coding-agent sessions, 310 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation, and 53% of file reads repeat work an earlier session already did.">
 <link rel="canonical" href="https://membridge.app/context-ledger/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#2F4FE0">
@@ -14,17 +14,17 @@
 <meta property="og:url" content="https://membridge.app/context-ledger/">
 <meta property="og:site_name" content="MemBridge">
 <meta property="og:title" content="The Context Ledger — What AI Coding Agents Spend Re-Learning Your Codebase">
-<meta property="og:description" content="6,104 real coding-agent sessions, 309 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation.">
+<meta property="og:description" content="6,104 real coding-agent sessions, 310 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation.">
 <meta property="og:image" content="https://membridge.app/og-context-ledger.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/png">
-<meta property="og:image:alt" content="The Context Ledger: your AI agents burn 31% of tokens re-learning your codebase. 6,104 sessions, 309 developers, 76.3B tokens.">
+<meta property="og:image:alt" content="The Context Ledger: your AI agents burn 31% of tokens re-learning your codebase. 6,104 sessions, 310 developers, 76.3B tokens.">
 <meta property="og:locale" content="en_US">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Context Ledger — What AI Coding Agents Spend Re-Learning Your Codebase">
-<meta name="twitter:description" content="6,104 real coding-agent sessions, 309 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation.">
+<meta name="twitter:description" content="6,104 real coding-agent sessions, 310 developers, 76B tokens, exactly accounted. The median developer burns 31% of agent tokens on re-orientation.">
 <meta name="twitter:image" content="https://membridge.app/og-context-ledger.png">
 <!-- Structured data: Article -->
 <script type="application/ld+json">
@@ -33,7 +33,7 @@
   "@type": "Article",
   "@id": "https://membridge.app/context-ledger/#article",
   "headline": "The Context Ledger: what AI coding agents spend re-learning your codebase",
-  "description": "A baseline study of 6,104 real coding-agent sessions from 309 developers, measured with exact per-request API accounting. The median developer spends 31% of agent tokens on re-orientation.",
+  "description": "A baseline study of 6,104 real coding-agent sessions from 310 developers, measured with exact per-request API accounting. The median developer spends 31% of agent tokens on re-orientation.",
   "url": "https://membridge.app/context-ledger/",
   "image": "https://membridge.app/og-context-ledger.png",
   "datePublished": "2026-07-28",
@@ -319,18 +319,17 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
   <div class="wrap narrow">
     <span class="mono-label">The Context Ledger &middot; 2026 baseline study</span>
     <h1>Your AI coding agents keep re-learning your codebase. Here's the bill.</h1>
-    <p class="sub">We measured 6,104 real coding-agent sessions from 309 developers using exact per-request API accounting &mdash; the token counts the vendors themselves report, reconciled to 100% of billed volume. Not a survey, not a simulation of synthetic tasks: real work, exactly priced.</p>
+    <p class="sub">We measured 6,104 real coding-agent sessions from 310 developers using exact per-request API accounting &mdash; the token counts the vendors themselves report, reconciled to 100% of billed volume. Not a survey, not a simulation of synthetic tasks: real work, exactly priced.</p>
     <div class="cta-row" id="audit">
       <span class="cmd cmd-steps">
-        <span><b>$</b> npm install -g @membridgeai/membridge</span>
-        <span><b>$</b> membridge audit</span>
-      </span>
+            <span><b>$</b> npm install -g @membridgeai/membridge</span>
+          </span>
       <a class="btn btn-primary" href="/#get">Or download the app</a>
     </div>
-    <p class="hero-note">The audit ships with MemBridge: install it, then <b style="color:var(--muted);font-weight:500">membridge audit</b> prints your number. It reads the session logs your agents already keep. Nothing leaves your machine.</p>
+    <p class="hero-note">MemBridge keeps the same ledger for your own repos: it reads the session logs your agents already write, and the app shows the tokens it avoided, per project. Nothing leaves your machine.</p>
     <div class="statgrid">
       <div class="stat"><b>6,104</b><span>sessions analyzed</span></div>
-      <div class="stat"><b>309</b><span>developers</span></div>
+      <div class="stat"><b>310</b><span>developers</span></div>
       <div class="stat"><b>211</b><span>production repos</span></div>
       <div class="stat"><b>76.3B</b><span>tokens, billed volume</span></div>
       <div class="stat"><b>$56,666</b><span>spend, exactly accounted</span></div>
@@ -428,9 +427,9 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
 <section class="section finalcta" id="get">
   <div class="wrap narrow">
     <h2>Your number is sitting in your logs right now.</h2>
-    <p>The audit is part of MemBridge: install it, run <code style="background:rgba(255,255,255,.07);border-color:var(--dark-border);color:var(--term-text)">membridge audit</code>, and it reads the session files your agents already keep on disk and prints what re-orientation cost you this year. One command, local only. Then MemBridge &mdash; one shared memory across the AI coding tools you already use &mdash; makes the number go down.</p>
+    <p>MemBridge reads the session files your agents already keep on disk, and keeps a running ledger of the tokens it avoided on repeat reads &mdash; per project, on your own machine. Then it makes that number go down: one shared memory across the AI coding tools your team already uses.</p>
     <div class="cta-row" style="margin-top:26px">
-      <span class="cmd"><b>$</b> npm install -g @membridgeai/membridge &amp;&amp; membridge audit</span>
+      <span class="cmd"><b>$</b> npm install -g @membridgeai/membridge</span>
     </div>
     <div class="cta-row" style="margin-top:18px">
       <a class="btn btn-primary" style="background:#fff;color:var(--ink)" href="/#get">Get MemBridge</a>
@@ -446,9 +445,9 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       MemBridge
     </a>
     <div class="foot-links">
-      <a href="/#why">Why MemBridge</a>
-      <a href="/#demo">Claude Code + Codex sync</a>
-      <a href="/#faq">FAQ</a>
+      <a href="/#live">Why MemBridge</a>
+      <a href="/#app">Claude Code + Codex sync</a>
+      <a href="/#get">FAQ</a>
       <a href="https://github.com/MembridgeAi/membridge" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/MembridgeAi/membridge#readme" target="_blank" rel="noopener">Docs</a>
     </div>
