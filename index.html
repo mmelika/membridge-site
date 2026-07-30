@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shared Memory for Claude Code, Codex &amp; AI Coding Tools</title>
-<meta name="description" content="Sync memory across Claude Code, Codex and every AI coding tool. Automatic capture, per-project context in CLAUDE.md and AGENTS.md, 100% local. Free.">
+<title>Shared Team Memory for Claude Code, Codex &amp; AI Agents</title>
+<meta name="description" content="Your teammates' AI agents already know what yours figured out. MemBridge shares decisions, gotchas and files touched across Claude Code and Codex, end-to-end encrypted.">
 <meta name="keywords" content="Claude Code memory, Codex memory, CLAUDE.md, AGENTS.md, AI coding tools, shared context, local-first, AI agent memory, cross-tool context sync, membridge">
 <link rel="canonical" href="https://membridge.app/">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -14,8 +14,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://membridge.app/">
 <meta property="og:site_name" content="MemBridge">
-<meta property="og:title" content="MemBridge - Shared Memory for Claude Code, Codex &amp; AI Coding Tools">
-<meta property="og:description" content="A local-first daemon that syncs context across Claude Code, Codex, and every AI coding tool you use, so what one figures out, the rest already know. 100% on your machine.">
+<meta property="og:title" content="MemBridge - Shared Team Memory for AI Coding Agents">
+<meta property="og:description" content="Your teammates' AI agents already know what yours figured out. MemBridge shares decisions, gotchas and files touched across Claude Code and Codex, end-to-end encrypted.">
 <meta property="og:image" content="https://membridge.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,8 +24,8 @@
 <meta property="og:locale" content="en_US">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MemBridge - Shared Memory for Claude Code, Codex &amp; AI Coding Tools">
-<meta name="twitter:description" content="A local-first daemon that syncs context across the AI coding tools you already use. Automatic, per-project, 100% on your machine.">
+<meta name="twitter:title" content="MemBridge - Shared Team Memory for AI Coding Agents">
+<meta name="twitter:description" content="Your teammates' AI agents already know what yours figured out. MemBridge shares decisions, gotchas and files touched across Claude Code and Codex, end-to-end encrypted.">
 <meta name="twitter:image" content="https://membridge.app/og.png">
 <!-- Structured data: SoftwareApplication -->
 <script type="application/ld+json">
@@ -110,30 +110,62 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "How do I give Claude Code a persistent memory?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Run membridge start. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into CLAUDE.md, which Claude Code reads on every startup. Your next session starts already knowing what the last one did." } },
-    { "@type": "Question", "name": "How do I stop my AI coding assistant from losing context between sessions?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Persist the context somewhere the tool re-reads on startup. That is exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into CLAUDE.md and AGENTS.md, so a new session, even in a different tool, picks up where the last one left off instead of starting from zero." } },
-    { "@type": "Question", "name": "How do I share context between Claude Code and Codex?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The same memory block lands in both CLAUDE.md and AGENTS.md, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring." } },
-    { "@type": "Question", "name": "Does MemBridge send my code to the cloud?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. The daemon binds to 127.0.0.1 and solo use makes zero network calls: no accounts, no telemetry, nothing phoning home. You can verify it yourself with one lsof command. Team sync is opt-in and end-to-end encrypted." } },
-    { "@type": "Question", "name": "Will it overwrite my CLAUDE.md or AGENTS.md?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Never. MemBridge only writes between its own markers, your notes stay byte-for-byte intact, and membridge remove restores every file exactly. It is plain markdown you can read and diff." } },
-    { "@type": "Question", "name": "What is CLAUDE.md?",
-      "acceptedAnswer": { "@type": "Answer", "text": "CLAUDE.md is the markdown file Claude Code automatically reads at the start of every session, a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up." } },
-    { "@type": "Question", "name": "What is AGENTS.md?",
-      "acceptedAnswer": { "@type": "Answer", "text": "AGENTS.md is an open convention for giving coding agents per-repository instructions. Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to CLAUDE.md, which is how context crosses between tools." } },
-    { "@type": "Question", "name": "Does it work with Cursor, Gemini CLI, or other AI coding tools?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Claude Code and Codex adapters ship built in. Any tool that logs its sessions as JSONL can be wired up with a small config entry, no code required. More first-class adapters are on the roadmap." } },
-    { "@type": "Question", "name": "How is MemBridge different from Mem0, claude-mem, and other AI memory tools?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Four ways. MemBridge captures automatically by tailing session logs, so there is no save tool for the agent to forget. Memory is per-project, not one global store that bleeds between repos. It runs 100% locally with no API key or cloud service. And membridge why file:line answers a question git blame cannot: the reasoning behind any line of code." } },
-    { "@type": "Question", "name": "Is MemBridge free?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. MemBridge is free and source-available with zero dependencies. There is no API key to bring and no paid tier. Install it and you have all of it." } },
-    { "@type": "Question", "name": "How does a team share one AI memory?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. End-to-end encrypted before it leaves each machine, invite-only, off by default." } },
-    { "@type": "Question", "name": "Won't Anthropic or OpenAI just build this?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Each can build memory inside its own tool. Neither has a reason to build the bridge across its competitor's, and that neutral spot is exactly where MemBridge lives. The cross-tool provenance it accumulates is the part that compounds." } }
+    {
+      "@type": "Question",
+      "name": "Does our code leave the machine?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. MemBridge reads your agent sessions locally and writes memory to disk on the same machine. Nothing is sent anywhere until you turn on team sync, and even then it is what your sessions concluded \u2014 decisions, summaries, file paths \u2014 never your source code. Team sync is end-to-end encrypted, so the backend stores ciphertext it has no key for."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to secrets that show up in a session?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They are stripped before anything is written to disk or sent to your team. MemBridge matches the shapes of AWS, GitHub, Google, Slack, OpenAI and Anthropic keys, JWTs, PEM blocks, connection strings with inline credentials, and bearer tokens, plus a high-entropy catch-all for the ones nobody has a pattern for. Redaction runs at every boundary, including on data arriving back from your teammates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from maintaining CLAUDE.md ourselves?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A hand-written context file is the startup half of this, and it only stays useful while somebody keeps editing it. MemBridge writes that file for you from what your sessions actually concluded. The two things it does that a file cannot: deliver a teammate's decision into a session that is already running, and answer a question against months of your team's history that no file would still contain."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which tools does it work with?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Claude Code and Codex are first class, and they share one memory, so switching tools mid-task doesn't reset anything. It registers itself over MCP with whichever agents it finds installed. Other agents that write session logs can be pointed at with a config entry."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when someone leaves the team?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Removing them revokes access to every shared project immediately and mints a new team encryption key sealed only to the people who remain, so their copy stops being able to read anything new. Membership and sharing changes are all recorded in an audit trail."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can people keep some work private?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, at three levels. Verbatim prompts stay on your machine by default \u2014 only summaries and file paths sync unless someone opts in. Any project can be kept private, and shared projects have per-person access. A developer can pause capture entirely for a project without affecting anyone else."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do people have to change how they work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It watches the sessions your team already runs and writes to the instruction files your agents already read. Nobody writes documentation for it, and nobody has to remember to record anything."
+      }
+    }
   ]
 }
 </script>
@@ -143,2060 +175,1352 @@
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
-:root {
-  --blue: #2F4FE0;
-  --blue-dark: #2440C4;
-  --pink: #C23B9E;
-  --pink-grad: #E86CC8;
-  --blue-grad-a: #4A78FF;
-  --ink: #10182B;
-  --muted: #5D6B85;
-  --faint: #8A96AC;
-  --bg: #FFFFFF;
-  --bg-alt: #F7F9FE;
-  --tint: #EDF1FD;
-  --tint-border: #D9E2FA;
-  --border: #E6EAF3;
-  --green: #1D8A5F;
-  --orange: #C97A1E;
-  --dark: #0E1526;
-  --dark-border: #1D2740;
-  --term-bg: #0E1526;
-  --term-border: #1D2740;
-  --term-text: #D7E0F2;
-  --term-muted: #6B7A99;
-  --term-green: #4ADE9C;
-  --term-blue: #7FA3FF;
-  --term-amber: #F5C97B;
-  --radius: 14px;
-  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0; background: var(--bg); color: var(--ink);
-  font: 16px/1.6 var(--sans);
-  -webkit-font-smoothing: antialiased;
-}
-a { color: var(--blue); text-decoration: none; }
-a:hover { text-decoration: underline; }
-.wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  /* ------------------------------------------------------------------
+     Tokens lifted from membridge.app so this mock sits inside the
+     existing identity rather than proposing a new one. The page commits
+     to the white ground deliberately — no dark variant, matching the
+     current site's presentation.
+     ------------------------------------------------------------------ */
+  :root {
+    color-scheme: light;
+    --bg: #FFFFFF;
+    --bg-alt: #F7F9FE;
+    --panel: #FFFFFF;
+    --ink: #10182B;
+    --muted: #5D6B85;
+    --faint: #8A96AC;
+    --border: #E6EAF3;
+    --border-strong: #D7E0F2;
+    --blue: #2F4FE0;
+    --blue-dark: #2440C4;
+    --blue-soft: #F3F6FD;
+    --blue-grad-a: #4A78FF;
+    --green: #1D8A5F;
+    --green-soft: #F2FBF7;
+    --amber: #C97A1E;
+    --pink: #C23B9E;
+    --term-bg: #0E1526;
+    --term-ink: #EAF0FC;
+    --term-amber: #F5C97B;
+    --term-faint: #6B7A99;
+    --radius: 14px;
+    --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --shell-max: 1080px;
+  }
 
-/* ---------- shared bits ---------- */
-.mono-label {
-  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
-  letter-spacing: .14em; text-transform: uppercase; color: var(--faint);
-}
-.pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--blue);
-  background: var(--tint); border: 1px solid var(--tint-border);
-  border-radius: 999px; padding: 6px 14px; white-space: nowrap;
-}
-.pill .dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--blue);
-  box-shadow: 0 0 0 3px rgba(59, 91, 232, .15);
-}
-.btn {
-  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-  font: 600 15px/1 var(--sans); border-radius: 12px; padding: 13px 22px;
-  border: 1px solid transparent; transition: background .15s ease, border-color .15s ease;
-  text-decoration: none;
-}
-.btn:hover { text-decoration: none; }
-.btn-primary { background: var(--blue); color: #fff; }
-.btn-primary:hover { background: var(--blue-dark); }
-.btn-secondary { background: #fff; color: var(--ink); border-color: var(--border); }
-.btn-secondary:hover { border-color: var(--faint); }
-.btn svg { flex: none; }
-h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; }
-h2 { font-size: clamp(26px, 4vw, 34px); line-height: 1.2; margin: 0 0 12px; }
-.section { padding: 88px 0; }
-.section-head { max-width: 560px; margin-bottom: 44px; }
-.section-head p { color: var(--muted); margin: 0; font-size: 16.5px; }
-.section-head .mono-label { display: block; margin-bottom: 14px; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--shell-max); margin: 0 auto; padding: 0 24px; }
 
-/* ---------- nav ---------- */
-nav {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(255, 255, 255, .88); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 650; font-size: 17px; color: var(--ink); }
-.brand:hover { text-decoration: none; }
-.m-tile { width: 28px; height: 28px; border-radius: 8px; display: block; }
-.nav-links { display: flex; gap: 24px; flex: 1; }
-.nav-links a { color: var(--muted); font-size: 14.5px; font-weight: 500; }
-.nav-links a:hover { color: var(--ink); text-decoration: none; }
-.nav-cta { display: flex; gap: 10px; }
-.nav-cta .btn { padding: 9px 16px; font-size: 14px; }
+  /* Sections alternate ground, matching the site's existing rhythm. */
+  .section { padding: 84px 0; border-top: 1px solid var(--border); }
+  .section.alt { background: var(--bg-alt); }
+  .section:first-of-type { border-top: 0; }
 
-/* ---------- hero ---------- */
-.hero { padding: 84px 0 72px; }
-.hero .pill { margin-bottom: 26px; }
-.hero h1 {
-  font-size: clamp(34px, 5.6vw, 56px); line-height: 1.12; margin: 0 0 22px;
-  max-width: 720px;
-}
-.hero h1 em { font-style: italic; color: var(--blue); }
-.hero .sub {
-  font-size: 18px; color: var(--muted); max-width: 600px; margin: 0 0 30px;
-}
-.hero .sub + .sub { margin-top: 14px; }
-.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
-.hero-note { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .04em; }
-.hero .sub code {
-  font-family: var(--mono); font-size: .86em; background: var(--tint);
-  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px;
-  color: var(--ink); white-space: nowrap;
-}
-.hero-cap { font-size: 14.5px; color: var(--muted); margin: 40px 0 -22px; }
-.hero-cap em { font-style: italic; color: var(--blue); font-weight: 600; }
-.hero-cap code {
-  font-family: var(--mono); font-size: .86em; background: var(--tint);
-  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px; color: var(--ink);
-}
+  h1, h2, h3 { text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+  h1 { font-size: clamp(2.1rem, 5.2vw, 3.4rem); line-height: 1.08; font-weight: 680; }
+  h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.15; font-weight: 660; }
+  h3 { font-size: 1.06rem; font-weight: 640; }
+  /* The site's signature: a serif italic phrase inside a sans headline. */
+  h1 em, h2 em { font-family: var(--serif); font-style: italic; font-weight: 500; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  .lede { font-size: 1.14rem; color: var(--muted); max-width: 60ch; }
+  .eyebrow {
+    font-size: .72rem; font-weight: 640; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--blue);
+  }
+  .stack { display: flex; flex-direction: column; gap: 18px; }
+  .stack .eyebrow + h2 { margin-top: -8px; }
+  .stack h2 + .lede { margin-top: -4px; }
+  .stack-sm { display: flex; flex-direction: column; gap: 10px; }
 
-/* ---------- terminals ---------- */
-.term {
-  background: var(--term-bg); border: 1px solid var(--term-border);
-  border-radius: var(--radius); overflow: hidden;
-  box-shadow: 0 24px 60px -24px rgba(16, 24, 43, .35);
-  font-family: var(--mono); font-size: 13px; line-height: 1.7;
-  color: var(--term-text);
-}
-.term-bar {
-  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
-  border-bottom: 1px solid var(--term-border); background: rgba(255,255,255,.02);
-}
-.term-bar .dots { display: flex; gap: 6px; }
-.term-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: #2A3554; display: block; }
-.term-bar .title { font-size: 11.5px; color: var(--term-muted); letter-spacing: .06em; margin-left: 6px; }
-.term-body { padding: 16px 18px 18px; min-height: 150px; white-space: pre-wrap; word-break: break-word; }
-.term-body .ln { display: block; }
-.t-prompt { color: var(--term-blue); }
-.t-dim { color: var(--term-muted); }
-.t-ok { color: var(--term-green); }
-.t-mem { color: var(--term-amber); }
-.caret {
-  display: inline-block; width: 7px; height: 15px; background: var(--term-blue);
-  vertical-align: -2px; animation: blink 1s steps(1) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-.hero-term { max-width: 720px; margin-top: 44px; }
-.hero-term .term-body { height: 196px; min-height: 0; overflow: hidden; }
-.replay {
-  background: none; border: none; cursor: pointer; padding: 4px 8px;
-  font-family: var(--mono); font-size: 11px; color: var(--term-muted);
-  letter-spacing: .08em; margin-left: auto;
-}
-.replay:hover { color: var(--term-text); }
+  /* ---------- nav ---------- */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 20px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 660; letter-spacing: -0.01em; }
+  .mark { width: 21px; height: 21px; flex: none; display: block; }
+  .nav-links { display: flex; gap: 22px; align-items: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: .93rem; }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
 
-/* ---------- sync demo ---------- */
-#demo { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.demo-stage { position: relative; max-width: 780px; margin: 0 auto; }
-.wires { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-.wires path { fill: none; stroke: var(--blue); stroke-width: 1.8; opacity: 0; stroke-linejoin: round; }
-.wires .ghost { stroke: var(--tint-border); opacity: 1; }
-.wires circle { fill: var(--blue); opacity: 0; }
-.drow { position: relative; z-index: 1; display: flex; justify-content: center; }
-.pcard {
-  position: relative; z-index: 1; width: min(480px, 100%); margin: 0 auto 7px;
-  display: flex; align-items: center; gap: 11px;
-  background: #fff; border: 1px solid var(--border); border-radius: 12px;
-  padding: 7px 12px; box-shadow: 0 8px 22px -14px rgba(16,24,43,.18);
-}
-.pav { width: 30px; height: 30px; border-radius: 10px; flex: none; color: #fff; font: 700 13px var(--sans); display: flex; align-items: center; justify-content: center; }
-.pav.sam { background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
-.pav.maya { background: linear-gradient(135deg, #6C8CFF, var(--blue)); }
-.pname { font-weight: 650; font-size: 14.5px; }
-.pname small { display: block; font-weight: 500; font-size: 11.5px; color: var(--muted); }
-.ptool { margin-left: auto; text-align: right; }
-.ptool .tchip { font-family: var(--mono); font-size: 10px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; color: var(--muted); display: inline-block; }
-.ptool .ptime { display: block; font-family: var(--mono); font-size: 10px; color: var(--faint); margin-top: 4px; letter-spacing: .05em; }
-.demo-stage .term { width: min(480px, 100%); font-size: 11.5px; }
-.demo-stage .term.acc-sam { border-top: 3px solid var(--pink); }
-.demo-stage .term.acc-maya { border-top: 3px solid var(--blue); }
-.demo-stage .term-bar { padding: 7px 11px; }
-/* fixed height: exactly 3 lines, nothing below ever moves while typing */
-.demo-stage .term-body { padding: 10px 13px 12px; height: 78px; min-height: 0; overflow: hidden; }
-.mwrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.bigm {
-  width: 44px; height: 44px; position: relative; z-index: 2;
-  filter: drop-shadow(0 8px 18px rgba(47, 79, 224, .4));
-}
-.mwrap.pulse .bigm { animation: pulse 1s ease infinite; }
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.09); }
-}
-.ring {
-  position: absolute; top: 22px; left: 50%; width: 44px; height: 44px;
-  margin: -22px 0 0 -22px; border-radius: 13px; border: 2px solid var(--blue);
-  opacity: 0; z-index: 1; pointer-events: none;
-}
-.ring.go { animation: ringout .8s ease forwards; }
-@keyframes ringout {
-  0% { opacity: .5; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.85); }
-}
-.mstatus {
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--faint); min-height: 15px; text-align: center;
-  background: rgba(247, 249, 254, .85); padding: 1px 7px; border-radius: 999px;
-}
-.mstatus.active { color: var(--blue); }
-.mrow { height: 80px; align-items: center; }
-.frag {
-  position: absolute; z-index: 4; left: 0; top: 0; opacity: 0;
-  font-family: var(--mono); font-size: 9.5px; color: var(--blue);
-  background: #fff; border: 1px solid var(--tint-border); border-radius: 999px;
-  padding: 1px 7px; white-space: nowrap; pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-.files { gap: clamp(20px, 6vw, 64px); padding: 2px 0; align-items: stretch; }
-.file-card {
-  width: min(260px, 45%); background: #fff; border: 1px solid var(--border); border-radius: 10px;
-  box-shadow: 0 12px 30px -18px rgba(16, 24, 43, .2); overflow: hidden;
-}
-.file-tab {
-  display: flex; align-items: center; gap: 8px; padding: 6px 10px;
-  border-bottom: 1px solid var(--border); background: #FBFCFF;
-}
-.file-tab .fname { font-family: var(--mono); font-size: 10.5px; font-weight: 600; color: var(--ink); }
-.file-tab .fnew {
-  margin-left: auto; font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--blue); opacity: 0; transition: opacity .4s ease;
-}
-.file-tab .fnew.on { opacity: 1; }
-.file-body { padding: 7px 11px 8px; font-family: var(--mono); font-size: 9.5px; line-height: 1.55; }
-.file-body .fl { display: block; color: var(--faint); }
-.fl.marker { color: var(--blue); opacity: .75; }
-.fl.mem { color: var(--ink); border-left: 2px solid var(--tint-border); padding-left: 7px; }
-.fl.new { opacity: 0; transform: translateY(3px); transition: opacity .35s ease, transform .35s ease; }
-.fl.new.on { opacity: 1; transform: none; border-left-color: var(--blue); animation: memflash 1.5s ease; }
-@keyframes memflash {
-  0% { background: var(--tint); }
-  100% { background: transparent; }
-}
-.gap { height: 26px; }
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 10px; font-size: .95rem; font-weight: 600;
+    text-decoration: none; border: 1px solid transparent; cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, transform .2s ease;
+  }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-primary:hover { background: var(--blue-dark); box-shadow: 0 4px 14px rgba(47,79,224,.28); }
+  .btn-ghost { border-color: var(--border-strong); color: var(--ink); background: var(--panel); }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+  .btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-/* ---------- app showcase (full clickable demo) ---------- */
-.app-window {
-  max-width: 960px; margin: 0 auto;
-  background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-  box-shadow: 0 32px 80px -32px rgba(16, 24, 43, .25);
-}
-.app-window .mono-label { font-size: 10.5px; }
-/* the app ships light and dark; ☀ in the topbar flips this mock the same way */
-.app-window.dark {
-  --ink: #EAF0FC;
-  --muted: #9AA8C2;
-  --faint: #6B7A99;
-  --bg: #0E1526;
-  --bg-alt: #131C31;
-  --tint: #1A2440;
-  --tint-border: #27345A;
-  --border: #1D2740;
-  --blue: #7FA3FF;
-  --blue-dark: #6B92F5;
-  --green: #4ADE9C;
-  background: var(--bg); color: var(--ink);
-}
-.app-window.dark .proj-row:hover,
-.app-window.dark .act-card { background: var(--bg-alt); }
-.app-window.dark .seg,
-.app-window.dark .mini-select,
-.app-window.dark .chk-pill { background: var(--bg-alt); }
-.app-window.dark .seg button.active { background: var(--tint); box-shadow: none; }
-.app-window.dark .enc-pill,
-.app-window.dark .dist-chip { border-color: #1F4A3A; background: #10241C; }
-.app-window.dark .invite-btn { color: #0E1526; }
-.app-window.dark .app-topbar .dots i { background: var(--border); }
-.app-topbar {
-  display: flex; align-items: center; gap: 12px; padding: 12px 18px;
-  border-bottom: 1px solid var(--border); flex-wrap: wrap;
-}
-.app-topbar .dots { display: flex; gap: 6px; }
-.app-topbar .dots i { width: 11px; height: 11px; border-radius: 50%; background: #E3E8F2; display: block; }
-.app-brand { display: flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 15px; font-weight: 600; }
-.app-brand .m-tile { width: 24px; height: 24px; border-radius: 7px; display: block; }
-.app-tabs { display: flex; gap: 4px; margin-left: 8px; }
-.app-tab {
-  background: none; border: none; cursor: pointer; font: 500 13.5px var(--sans);
-  color: var(--muted); padding: 8px 11px 10px; border-radius: 8px; position: relative;
-}
-.app-tab:hover { color: var(--ink); }
-.app-tab.active { color: var(--blue); font-weight: 600; }
-.app-tab.active::after {
-  content: ''; position: absolute; left: 11px; right: 11px; bottom: 2px;
-  height: 2px; border-radius: 2px; background: var(--blue);
-}
-.enc-pill {
-  display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--green);
-  border: 1px solid #BFE3D2; background: #F2FBF7; border-radius: 999px; padding: 5px 11px;
-}
-.sync-pill {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--blue);
-  background: var(--tint); border: 1px solid var(--tint-border); border-radius: 999px; padding: 5px 11px;
-  white-space: nowrap;
-}
-.sync-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 3px rgba(47,79,224,.14); }
-.invite-btn {
-  cursor: pointer; background: var(--blue); color: #fff; border: none; border-radius: 10px;
-  font: 600 13px var(--sans); padding: 8px 16px;
-}
-.invite-btn:hover { background: var(--blue-dark); }
+  /* ---------- hero ---------- */
+  .hero { padding: 60px 0 76px; }
+  .hero-grid { display: grid; gap: 44px; align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 940px) { .hero-grid { grid-template-columns: 1.02fr 1fr; gap: 56px; } }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .hero-note { font-size: .86rem; color: var(--faint); }
+  .hero-note code {
+    font-family: var(--mono); font-size: .84em; background: var(--bg-alt);
+    border: 1px solid var(--border); padding: 2px 6px; border-radius: 6px;
+  }
 
-.app-view { padding: 26px 30px 30px; min-height: 560px; }
-.app-view[hidden] { display: none; }
-.app-h { font-family: var(--serif); font-size: 30px; font-weight: 500; margin: 0 0 2px; }
-.app-h .hb { color: var(--blue); }
-.app-sub { color: var(--faint); font-size: 13.5px; margin: 0 0 18px; }
+  /* ---------- the live hand-off demo ---------- */
+  .demo {
+    background: var(--term-bg); border-radius: var(--radius);
+    border: 1px solid var(--border-strong);
+    overflow: hidden; font-family: var(--mono); font-size: .8rem;
+    color: var(--term-ink); box-shadow: 0 18px 44px rgba(16,24,43,.13);
+  }
+  .demo-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.08);
+    color: var(--term-faint); font-size: .74rem;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.16); }
+  .demo-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 9px; min-height: 268px; }
+  .who { color: var(--term-faint); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+  .line { display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .line .caret { color: var(--blue-grad-a); flex: none; }
+  .line.dim { color: var(--term-faint); }
+  .typed::after {
+    content: '▋'; margin-left: 1px; color: var(--term-amber);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
 
-.app-headrow { display: flex; align-items: flex-start; gap: 16px; }
-.app-headrow > div { flex: 1; min-width: 0; }
-.add-proj {
-  cursor: pointer; background: none; color: var(--blue); border: 1px solid var(--tint-border);
-  border-radius: 10px; font: 600 13px var(--sans); padding: 9px 16px; flex: none;
-}
-.add-proj:hover { background: var(--tint); }
+  .inject {
+    border: 1px solid rgba(122,163,255,.42);
+    background: rgba(47,79,224,.16);
+    border-radius: 10px; padding: 10px 12px; margin-top: 4px;
+    display: flex; flex-direction: column; gap: 5px;
+    opacity: 0; transform: translateY(6px);
+  }
+  .inject.show { animation: memflash 1.5s ease forwards; }
+  @keyframes memflash {
+    0%   { opacity: 0; transform: translateY(6px); box-shadow: 0 0 0 0 rgba(122,163,255,.5); }
+    18%  { opacity: 1; transform: translateY(0);   box-shadow: 0 0 0 7px rgba(122,163,255,0); }
+    100% { opacity: 1; transform: translateY(0);   box-shadow: 0 0 0 0 rgba(122,163,255,0); }
+  }
+  .inject-head {
+    display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+    color: var(--term-amber); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase;
+  }
+  .inject-body { color: var(--term-ink); line-height: 1.5; }
+  .inject-from { color: var(--term-faint); font-size: .74rem; }
+  .replay {
+    margin-top: 2px; align-self: flex-start; background: none; border: 0;
+    color: var(--term-faint); font-family: var(--mono); font-size: .74rem;
+    cursor: pointer; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px;
+  }
+  .replay:hover { color: var(--term-ink); }
 
-/* ---- filters (projects, activity) ---- */
-.filter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
-.app-h + .filter-row { margin-top: 18px; }
-.filter-row .mono-label { margin-right: 2px; }
-.mini-select {
-  font: 500 12.5px var(--sans); color: var(--ink); cursor: pointer;
-  background: #F3F6FD; border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px;
-}
-.chk-pill {
-  display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
-  font: 600 12.5px var(--sans); color: var(--muted);
-  background: #F3F6FD; border: 1px solid var(--border); border-radius: 999px; padding: 5px 13px 5px 10px;
-}
-.chk-pill input { accent-color: var(--blue); margin: 0; }
-.seg { display: inline-flex; background: #F3F6FD; border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
-.seg button {
-  border: none; background: none; cursor: pointer; font: 600 12.5px var(--sans);
-  color: var(--muted); border-radius: 999px; padding: 5px 13px;
-}
-.seg button.active { background: #fff; color: var(--blue); box-shadow: 0 1px 4px rgba(16,24,43,.08); }
+  /* ---------- moment cards ---------- */
+  .moments { display: grid; gap: 18px; grid-template-columns: 1fr; margin-top: 34px; }
+  @media (min-width: 860px) { .moments { grid-template-columns: repeat(3, 1fr); } }
+  .moment {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 10px;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .moment:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .moment.lead:hover { border-color: var(--blue); }
+  .moment .when {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .moment p { color: var(--muted); font-size: .95rem; }
+  .moment.lead { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-soft); }
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+    font-size: .72rem; font-weight: 640; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--blue); background: var(--blue-soft);
+    border: 1px solid var(--border-strong); border-radius: 999px; padding: 3px 9px;
+  }
 
-/* ---- project rows ---- */
-.proj-row {
-  display: block; padding: 17px 14px;
-  border: none; border-top: 1px solid var(--border); border-radius: 0;
-  background: none; width: 100%; text-align: left; cursor: pointer;
-  font: inherit; color: inherit; transition: background .15s ease;
-}
-.proj-row:hover { background: #F7F9FE; }
-.proj-row[hidden] { display: none; }
-.proj-main { min-width: 0; }
-.proj-head { display: flex; align-items: baseline; gap: 10px; }
-.proj-name { font-weight: 600; font-size: 15.5px; flex: 1; min-width: 0; }
-.proj-dots { font-family: var(--mono); font-size: 15px; color: var(--faint); flex: none; letter-spacing: .06em; }
-.proj-row:hover .proj-dots { color: var(--blue); }
-.proj-badge { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-top: 3px; }
-.proj-badge.shared { color: var(--blue); }
-.proj-sum { display: block; font-size: 14px; color: var(--ink); margin: 9px 0 3px; }
-.proj-attr { display: block; font-size: 12.5px; color: var(--faint); }
-.proj-stats { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-top: 11px; }
-.proj-stats b { color: var(--ink); font-weight: 600; }
+  /* ---------- ask-your-agent demo ---------- */
+  .ask { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .ask-you {
+    display: flex; align-items: center; gap: 10px; padding: 16px 18px;
+    border-bottom: 1px solid var(--border); font-size: 1.02rem;
+  }
+  .ask-av { width: 24px; height: 24px; border-radius: 50%; overflow: hidden; flex: none; display: block; }
+  .ask-av svg { width: 100%; height: 100%; display: block; }
+  .ask-q { color: var(--ink); }
+  .ask-caret { color: var(--blue); animation: blink 1s steps(1) infinite; }
+  .ask-caret.off { opacity: 0; animation: none; }
 
-/* ---- project detail ---- */
-.pd-back, .link-btn {
-  background: none; border: none; cursor: pointer; color: var(--blue);
-  font: 600 13px var(--sans); padding: 0; display: inline-block;
-}
-.pd-back { padding-bottom: 14px; display: block; }
-.pd-headrow { display: flex; align-items: flex-start; gap: 14px; }
-.pd-headrow .grow { flex: 1; min-width: 0; }
-.pd-name { font-family: var(--serif); font-size: 26px; font-weight: 500; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.pd-path { font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-top: 2px; }
-.copy-ai {
-  cursor: pointer; background: var(--blue); color: #fff; border: none; border-radius: 10px;
-  font: 600 13px var(--sans); padding: 9px 16px; flex: none;
-}
-.copy-ai:hover { background: var(--blue-dark); }
-.catch-pill {
-  display: inline-flex; align-items: center; gap: 8px; margin: 18px 0 10px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--blue); background: var(--tint); border: 1px solid var(--tint-border);
-  border-radius: 999px; padding: 5px 13px;
-}
-.catch-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
-.catch-card {
-  display: flex; align-items: center; gap: 14px;
-  border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 16px;
-}
-.catch-check {
-  width: 40px; height: 40px; border-radius: 12px; flex: none; color: #fff;
-  background: linear-gradient(135deg, #6C8CFF, var(--blue));
-  display: flex; align-items: center; justify-content: center; font-size: 17px;
-}
-.catch-card h4 { margin: 0; font-size: 15.5px; }
-.catch-card p { margin: 1px 0 0; color: var(--muted); font-size: 13px; }
-.stat-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
-.stat-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px 12px; }
-.stat-card .n { font-family: var(--serif); font-size: 28px; line-height: 1.1; }
-.stat-card .n.blue { color: var(--blue); }
-.stat-card .l { display: block; margin-top: 4px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  .ask-work {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 11px 18px; border-bottom: 1px solid var(--border);
+    background: var(--bg-alt); font-size: .86rem; color: var(--muted);
+  }
+  .ask-spin {
+    width: 12px; height: 12px; flex: none; border-radius: 50%;
+    border: 2px solid var(--border-strong); border-top-color: var(--blue);
+    animation: askSpin .7s linear infinite;
+  }
+  @keyframes askSpin { to { transform: rotate(360deg); } }
+  .ask-call { margin-left: auto; font-family: var(--mono); font-size: .78rem; color: var(--faint); }
+  .ask-call .fn { color: var(--blue); }
+  .ask-call .st { color: var(--green); }
 
-/* ---- day / activity cards ---- */
-.day-label { display: block; margin: 16px 0 10px; }
-.day-label[hidden] { display: none; }
-.act-card { border: 1px solid var(--border); border-radius: 12px; padding: 15px 16px; margin-bottom: 12px; }
-.act-top { display: flex; gap: 12px; }
-.act-tile {
-  width: 27px; height: 27px; border-radius: 8px; flex: none; margin-top: 2px;
-  color: #fff; font: 700 11px var(--sans); display: flex; align-items: center; justify-content: center;
-}
-.act-tile.sam { background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
-.act-tile.maya { background: linear-gradient(135deg, #6C8CFF, var(--blue)); }
-.act-main { flex: 1; min-width: 0; }
-.act-who { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin-bottom: 3px; }
-.act-who .who { font-weight: 600; color: var(--ink); }
-.tool-chip { font-family: var(--mono); font-size: 10.5px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; color: var(--muted); }
-.act-who .proj { font-family: var(--mono); font-size: 11px; color: var(--faint); }
-.act-who .when { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); }
-.dist-chip {
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--green); border: 1px solid #BFE3D2; background: #F2FBF7; border-radius: 999px; padding: 2px 8px;
-}
-.act-card[hidden] { display: none; }
-.act-title { font-size: 14.5px; font-weight: 650; line-height: 1.45; margin: 0 0 6px; }
-.act-title.dim { color: var(--faint); font-weight: 500; }
-.intent { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
-.intent .il { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-right: 7px; }
-.working-row { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
-.working-tag { margin-left: auto; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--orange); white-space: nowrap; }
-.meta-line { font-size: 12.5px; color: var(--faint); }
-.checks { list-style: none; margin: 4px 0 8px; padding: 0; display: grid; gap: 5px; }
-.checks li { display: flex; gap: 8px; font-size: 13px; color: var(--muted); }
-.checks li::before { content: '✓'; color: var(--green); flex: none; }
-.checks li.extra[hidden] { display: none; }
-.card-links { display: flex; align-items: center; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
-.expander { background: none; border: none; cursor: pointer; color: var(--blue); font: 600 12.5px var(--sans); padding: 0; }
-.share-chip {
-  cursor: pointer; background: #fff; border: 1px solid var(--border); border-radius: 999px;
-  font: 600 12px var(--sans); color: var(--muted); padding: 4px 12px;
-}
-.share-chip:hover { border-color: var(--blue); color: var(--blue); }
-.share-chip.shared { color: var(--green); border-color: #BFE3D2; cursor: default; }
-.card-links .when { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); }
-.detail[hidden] { display: none; }
-.detail { border-top: 1px dashed var(--border); margin-top: 10px; padding-top: 10px; }
-.detail .dl { display: block; margin-bottom: 6px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
-.detail .summary { font-size: 13.5px; color: var(--muted); margin: 0 0 10px; }
-.prompt-list { margin: 0; padding: 0 0 2px; list-style: none; display: grid; gap: 7px; }
-.prompt-list li { display: flex; gap: 10px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
-.prompt-list .pn { font-family: var(--mono); font-size: 10.5px; color: var(--blue); flex: none; padding-top: 2px; }
-.prompt-list em { font-style: italic; }
-.prompt-list .ph { color: var(--faint); }
+  .ask-found {
+    padding: 9px 18px; border-bottom: 1px solid var(--border);
+    font-size: .82rem; color: var(--faint);
+  }
+  .ask-answer {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 16px 18px; background: var(--blue-soft); border-top: 1px solid var(--border-strong);
+    font-size: .97rem; color: var(--ink); line-height: 1.6;
+  }
+  .ask-answer b { font-weight: 660; }
+  .ask-mark { width: 20px; height: 20px; flex: none; display: block; margin-top: 2px; }
+  .ask-mark svg { width: 100%; height: 100%; display: block; }
+  .ask-replay {
+    display: block; margin: 0 0 0 auto; padding: 9px 18px;
+    background: none; border: 0; color: var(--faint);
+    font-family: var(--mono); font-size: .76rem; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .ask-replay:hover { color: var(--ink); }
+  .ask .hit { opacity: 0; transform: translateY(6px); }
+  .ask .hit.in { animation: hitIn .34s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes hitIn { to { opacity: 1; transform: none; } }
+  .ask-step { opacity: 0; transform: translateY(4px); }
+  .ask-step.in { animation: hitIn .3s ease forwards; }
+  @media (prefers-reduced-motion: reduce) {
+    .ask-caret, .ask-spin { animation: none; }
+    .ask .hit, .ask .hit.in, .ask-step, .ask-step.in { opacity: 1; transform: none; animation: none; }
+  }
 
-/* ---- team view ---- */
-.team-eyebrow { color: var(--blue); display: block; margin-bottom: 8px; }
-.team-name { font-family: var(--serif); font-size: 40px; font-weight: 500; margin: 0 0 4px; }
-.team-sub { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
-.members-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 22px; }
-.members-head {
-  display: flex; align-items: center; justify-content: space-between;
-  background: #F3F6FD; padding: 10px 16px;
-}
-.member-row { display: flex; align-items: center; gap: 13px; padding: 14px 16px; border-top: 1px solid var(--border); }
-.member-av {
-  width: 38px; height: 38px; border-radius: 11px; flex: none; color: #fff;
-  font: 700 14px var(--sans); display: flex; align-items: center; justify-content: center;
-}
-.member-av.maya { background: linear-gradient(135deg, #6C8CFF, var(--blue)); }
-.member-av.sam { background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
-.member-main { flex: 1; }
-.member-name { font-weight: 600; font-size: 14.5px; }
-.member-name small { font-weight: 400; color: var(--muted); }
-.member-sub { font-size: 12.5px; color: var(--faint); }
-.role-pill { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; border-radius: 999px; padding: 4px 12px; }
-.role-pill.owner { color: var(--blue); background: var(--tint); border: 1px solid var(--tint-border); }
-.role-pill.member { color: var(--muted); border: 1px solid var(--border); }
-.join-label { color: var(--blue); display: block; margin-bottom: 8px; }
-.join-card {
-  background: var(--dark); border: 1px solid var(--dark-border); border-radius: 12px;
-  padding: 18px 20px 14px; color: #D7E0F2;
-}
-.join-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.join-code { font-family: var(--mono); font-size: 15px; letter-spacing: .02em; flex: 1; min-width: 240px; }
-.join-copy {
-  cursor: pointer; background: rgba(255,255,255,.08); border: 1px solid var(--dark-border);
-  border-radius: 9px; color: #D7E0F2; font-family: var(--mono); font-size: 11px;
-  letter-spacing: .1em; padding: 9px 18px;
-}
-.join-copy:hover { border-color: #6B7A99; }
-.join-note { margin: 12px 0 0; font-size: 12.5px; color: #6B7A99; }
-.team-perm { margin-top: 12px; font-size: 12.5px; color: var(--faint); }
-.flash { animation: joinflash 1.2s ease; }
-.gear-btn {
-  width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border);
-  background: #fff; cursor: pointer; font-size: 15px; color: var(--muted);
-  display: flex; align-items: center; justify-content: center; flex: none;
-}
-.gear-btn:hover { color: var(--ink); border-color: var(--faint); }
-.gear-btn.active { color: var(--blue); border-color: var(--tint-border); background: var(--tint); }
-.act-title.link { cursor: pointer; }
-.act-title.link:hover { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.crumb { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin: 4px 0 8px; }
-.day-head { font-size: 20px; font-weight: 700; line-height: 1.35; margin: 0 0 14px; }
-.day-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
-.working-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--orange); display: block; margin-bottom: 6px; }
-.day-card h4 { margin: 0 0 8px; font-size: 15.5px; }
-.day-card .summary { font-size: 13.5px; color: var(--muted); margin: 0 0 10px; }
-.set-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 8px 0 22px; }
-.set-row { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-top: 1px solid var(--border); }
-.set-row:first-child { border-top: none; }
-.set-row .grow { flex: 1; min-width: 0; }
-.set-name { font-weight: 600; font-size: 14px; display: flex; align-items: baseline; gap: 9px; }
-.set-path { display: block; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 1px; }
-.pause-btn { background: none; border: none; color: var(--blue); font: 600 12.5px var(--sans); cursor: pointer; flex: none; }
-.tools-foot { padding: 11px 16px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: .05em; }
-.set-check { width: 15px; height: 15px; accent-color: var(--blue); flex: none; cursor: pointer; }
-.set-spacer { width: 15px; flex: none; }
-.manage-btn { cursor: pointer; background: var(--tint); border: 1px solid var(--tint-border); color: var(--blue); border-radius: 10px; font: 600 13px var(--sans); padding: 8px 14px; flex: none; }
-.acct-av { width: 38px; height: 38px; border-radius: 11px; flex: none; color: #fff; font: 700 14px var(--sans); display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--pink-grad), var(--pink)); }
-@keyframes joinflash { 0% { box-shadow: 0 0 0 3px rgba(47,79,224,.55); } 100% { box-shadow: 0 0 0 0 rgba(47,79,224,0); } }
+  /* ---------- search example ---------- */
+  .query {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .query-line {
+    display: flex; align-items: center; gap: 10px; padding: 15px 18px;
+    border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: .9rem;
+  }
+  .query-line .q { color: var(--ink); }
+  .query-line .agent { color: var(--faint); font-size: .78rem; margin-left: auto; flex: none; }
+  .q-caret { color: var(--blue); margin-left: 1px; animation: blink 1s steps(1) infinite; }
+  .q-caret.off { opacity: 0; animation: none; }
+  .query-meta {
+    padding: 8px 18px; border-bottom: 1px solid var(--border); background: var(--bg-alt);
+    font-size: .8rem; color: var(--faint); min-height: 34px;
+  }
+  .query-meta b { font-family: var(--mono); color: var(--muted); font-weight: 600; }
+  .hit { opacity: 0; transform: translateY(6px); }
+  .hit.in { animation: hitIn .34s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes hitIn { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hit, .hit.in { opacity: 1; transform: none; animation: none; }
+    .q-caret { animation: none; }
+  }
+  .hit {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 6px;
+    transition: background .15s ease;
+  }
+  .hit:hover { background: var(--bg-alt); }
+  .hit:last-child { border-bottom: 0; }
+  .hit-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: .82rem; color: var(--faint); }
+  .hit-who { color: var(--ink); font-weight: 620; }
+  .hit-score {
+    font-family: var(--mono); font-size: .74rem; color: var(--blue);
+    background: var(--blue-soft); border-radius: 5px; padding: 1px 6px; margin-left: auto;
+  }
+  .hit-text { font-size: .95rem; color: var(--ink); }
+  .hit-fields { display: flex; flex-wrap: wrap; gap: 6px; }
+  .field {
+    font-family: var(--mono); font-size: .7rem; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; background: var(--bg-alt);
+  }
 
-@media (max-width: 640px) {
-  .app-view { padding: 18px 16px 22px; }
-  .stat-trio { grid-template-columns: 1fr; }
-  .enc-pill { display: none; }
-  .app-headrow { flex-direction: column; align-items: stretch; gap: 10px; }
-  .act-who .when { margin-left: 0; }
-}
-.app-caption {
-  text-align: center; font-family: var(--mono); font-size: 12px;
-  color: var(--faint); margin-top: 22px; letter-spacing: .03em;
-}
-.app-caption code {
-  font-size: 11.5px; background: var(--tint); border: 1px solid var(--tint-border);
-  border-radius: 5px; padding: 1px 6px; color: var(--ink);
-}
+  /* ------------------------------------------------------------------
+     The app, matched to what ships on master today — including the
+     visual refresh: two-tier radius (--r 7px for rows and buttons,
+     --r-sm 4px for chips and indicators), the real type and spacing
+     scales, and the rule that only avatars are true circles. Status
+     dots are deliberately rounded squares, not circles.
+     ------------------------------------------------------------------ */
+  .a-app {
+    --bgx: #FAFAFA; --p: #FFFFFF; --p2: #F1F5F9;
+    --tx: #0F172A; --tx2: #64748B; --tx3: #94A3B8;
+    --ln: #E2E8F0; --ln2: #CBD5E1;
+    --ac: #0052FF; --ac2: #4D7CFF; --acd: rgba(0,82,255,.07);
+    --ok: #0D9673; --okd: rgba(13,150,115,.08);
+    --r: 7px; --r-sm: 4px;
+    --fs-2xs: 9px; --fs-xs: 10px; --fs-sm: 11px; --fs-base: 12px;
+    --fs-md: 12.5px; --fs-lg: 14px; --fs-xl: 19px;
+    --fw-n: 400; --fw-m: 600; --fw-b: 700;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+    margin-top: 30px; border: 1px solid var(--ln); border-radius: 10px;
+    background: var(--p); overflow: hidden; color: var(--tx);
+    font-family: var(--sans); font-size: var(--fs-base); line-height: 1.5;
+    box-shadow: 0 22px 54px rgba(16,24,43,.11), 0 2px 6px rgba(16,24,43,.04);
+  }
+  .a-shell { display: flex; min-height: 560px; }
 
-/* ---------- how it works ---------- */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.step {
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 26px 26px 24px;
-}
-.step .num {
-  font-family: var(--mono); font-size: 12px; color: var(--blue);
-  letter-spacing: .12em; display: block; margin-bottom: 14px;
-}
-.step h3 { font-size: 17px; margin: 0 0 8px; font-weight: 650; }
-.step p { margin: 0; color: var(--muted); font-size: 14.5px; }
-.step code, .trust-item code, .section-head code {
-  font-family: var(--mono); font-size: .88em; background: var(--tint);
-  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px;
-  color: var(--ink); white-space: nowrap;
-}
+  /* rail */
+  .a-rail {
+    width: 170px; flex: none; background: var(--p);
+    border-right: 1px solid var(--ln);
+    display: flex; flex-direction: column; padding: 12px 10px;
+  }
+  .a-logo {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 2px; font-weight: var(--fw-m); font-size: 13px;
+  }
+  .a-logo svg { width: 18px; height: 18px; flex: none; display: block; }
+  .a-team {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    margin: 12px 0; padding: 6px 8px; font: inherit;
+    background: var(--p2); border: 1px solid var(--ln);
+    border-radius: var(--r); font-weight: var(--fw-m);
+    font-size: var(--fs-sm); color: var(--tx); cursor: pointer; text-align: left;
+  }
+  .a-team .nmx { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .a-team .chev { margin-left: auto; color: var(--tx3); font-size: var(--fs-xs); }
+  .a-nav { margin-top: var(--sp-2); display: flex; flex-direction: column; }
+  /* border-left matches the active bar's width so the row never shifts */
+  .a-nav button {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    padding: 7px 9px; margin: 1px 0; font: inherit; font-size: var(--fs-sm);
+    color: var(--tx2); background: none; text-align: left; cursor: pointer;
+    border: 0; border-left: 3px solid transparent; border-radius: var(--r);
+    font-weight: var(--fw-n);
+    transition: background-color .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .a-nav button .ico { width: 14px; text-align: center; flex: none; font-size: var(--fs-xs); }
+  .a-nav button:hover { background: var(--p2); }
+  .a-nav button.on {
+    border-left-color: var(--ac); background: var(--acd);
+    color: var(--ac); font-weight: var(--fw-m);
+  }
+  .a-nav button:focus-visible { outline: 2px solid var(--ac); outline-offset: -2px; }
+  .a-grp {
+    margin: var(--sp-5) 8px var(--sp-1); color: var(--tx3);
+    font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .06em;
+    font-weight: var(--fw-m);
+  }
+  .a-me {
+    margin-top: auto; display: flex; align-items: center; gap: 8px;
+    padding: 8px 8px 0; border-top: 1px solid var(--ln);
+    color: var(--tx2); font-size: var(--fs-sm);
+  }
+  /* Indicators are rounded squares on purpose — circles are avatars only. */
+  .a-dot {
+    width: 7px; height: 7px; border-radius: var(--r-sm);
+    background: var(--tx3); flex: none;
+  }
+  .a-dot.live { background: var(--ok); animation: aPulse 2.4s ease-in-out infinite; }
+  @keyframes aPulse { 50% { opacity: .45; } }
 
-/* ---------- trust ---------- */
-#team { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.trust-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.trust-row.cols3 { grid-template-columns: repeat(3, 1fr); }
-#team .trust-item { border-top-color: var(--blue); }
-.soon-tag {
-  font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--blue); background: var(--tint); border: 1px solid var(--tint-border);
-  border-radius: 999px; padding: 1px 6px; margin-left: 6px; vertical-align: 2px;
-}
+  /* main */
+  .a-main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--p); }
+  .a-head {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 8px;
+    padding: var(--sp-4); border-bottom: 1px solid var(--ln);
+  }
+  .a-head h3 {
+    font-size: var(--fs-xl); font-weight: var(--fw-b);
+    letter-spacing: -0.01em; margin: 0;
+  }
+  .a-head .date { display: block; margin-top: 3px; color: var(--tx3); font-size: var(--fs-sm); }
+  .a-head .right { display: flex; gap: 6px; align-items: center; }
+  .a-btn {
+    padding: 5px 12px; font: inherit; font-size: var(--fs-sm); font-weight: var(--fw-m);
+    border: 1px solid var(--ac); background: var(--ac); color: #fff;
+    border-radius: var(--r); cursor: pointer;
+  }
+  .a-btn:hover { background: var(--ac2); border-color: var(--ac2); }
+  .a-btn.g { background: transparent; border-color: var(--ln2); color: var(--tx2); }
+  .a-btn.g:hover { background: var(--p2); }
 
-/* ---------- why / differentiation ---------- */
-#why { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.why-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 22px 20px; }
-.why-card .wk { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 12px; }
-.why-card h3 { font-size: 16px; margin: 0 0 7px; font-weight: 650; }
-.why-card p { margin: 0; color: var(--muted); font-size: 14px; }
-.why-card code {
-  font-family: var(--mono); font-size: .88em; background: var(--tint);
-  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px; color: var(--ink); white-space: nowrap;
-}
-@media (max-width: 820px) { .why-grid { grid-template-columns: 1fr; } }
+  .a-stats { display: flex; border-top: 1px solid var(--ln); border-bottom: 1px solid var(--ln); }
+  .a-stat { flex: 1; padding: var(--sp-3); border-left: 1px solid var(--ln); }
+  .a-stat:first-child { border-left: 0; }
+  .a-stat b {
+    display: block; font-size: var(--fs-xl); font-weight: var(--fw-b); line-height: 1.2;
+    font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+  }
+  .a-stat:first-child b { color: var(--ac2); }
+  .a-stat span {
+    display: block; margin-top: 3px; font-size: var(--fs-xs);
+    letter-spacing: .04em; text-transform: uppercase; color: var(--tx2);
+  }
 
-/* ---------- faq ---------- */
-.faq-list { max-width: 780px; margin-top: 6px; }
-.faq-item { border-top: 1px solid var(--border); }
-.faq-item:last-child { border-bottom: 1px solid var(--border); }
-.faq-item summary {
-  list-style: none; cursor: pointer; padding: 18px 2px; gap: 16px;
-  font: 600 16.5px var(--sans); color: var(--ink);
-  display: flex; justify-content: space-between; align-items: center;
-}
-.faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary .fx { color: var(--blue); font-size: 21px; line-height: 1; flex: none; transition: transform .2s ease; }
-.faq-item[open] summary .fx { transform: rotate(45deg); }
-.faq-item .faq-a { margin: -4px 2px 20px; color: var(--muted); font-size: 15px; max-width: 70ch; }
-.faq-item .faq-a code {
-  font-family: var(--mono); font-size: .88em; background: var(--tint);
-  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px; color: var(--ink);
-}
-.faq-item .faq-a a { font-weight: 500; }
-.faq-more { margin-top: 22px; font-size: 14.5px; color: var(--muted); }
-.proof { max-width: 660px; margin-top: 44px; }
-.proof-label { color: var(--blue); }
-.proof-term { margin-top: 10px; }
-.proof-term .term-body { min-height: 0; }
-.proof-term .t-dim, .proof-term .t-out { user-select: none; -webkit-user-select: none; }
-.t-out { color: var(--term-muted); }
-.proof-line { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
-.trust-item { border-top: 2px solid var(--tint-border); padding-top: 16px; }
-.trust-item .mono-label { color: var(--blue); display: block; margin-bottom: 8px; }
-.trust-item p { margin: 0; color: var(--muted); font-size: 14px; }
+  /* Section labels own real space above them — that gap is what separates
+     one group from the next, rather than uniform row padding. */
+  .a-sect {
+    padding: var(--sp-5) var(--sp-4) var(--sp-2);
+    color: var(--tx3); font-size: var(--fs-xs); font-weight: var(--fw-m);
+    text-transform: uppercase; letter-spacing: .06em;
+  }
+  .a-view { display: none; }
+  .a-view.on { display: block; animation: aSettle .26s cubic-bezier(.2,.7,.3,1); }
+  @keyframes aSettle { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
-/* ---------- get it ---------- */
-#get { background: var(--bg-alt); border-top: 1px solid var(--border); }
-.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.path { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
-.path-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.path-ico {
-  width: 38px; height: 38px; border-radius: 11px; flex: none;
-  background: var(--tint); border: 1px solid var(--tint-border);
-  display: flex; align-items: center; justify-content: center; font-size: 17px;
-}
-.path h3 { margin: 0; font-size: 16px; font-weight: 650; }
-.ph-sub { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
-.path p { color: var(--muted); font-size: 13.5px; margin: 8px 0 12px; }
-.path .term { font-size: 12px; }
-.path .term-body { min-height: 0; padding: 11px 14px 13px; }
-.path .dl-btn { width: 100%; justify-content: center; margin-bottom: 12px; }
-.path .dl-plat { font-size: 12px; color: var(--faint); margin: 10px 0 0; }
-.path .dl-plat code { font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.strip {
-  margin-top: 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
-  background: linear-gradient(90deg, var(--tint), #fff); border: 1px solid var(--tint-border);
-  border-radius: 14px; padding: 16px 22px;
-}
-.strip .npm { font-family: var(--mono); font-size: 13px; color: var(--ink); }
-.strip .npm .soon-tag { margin-left: 8px; vertical-align: 2px; }
-.strip .s-copy { flex: 1; min-width: 200px; }
-.strip .s-copy p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
-.strip .wl-form { flex: 1.1; min-width: 300px; max-width: none; }
-.copy-btn {
-  margin-left: auto; cursor: pointer;
-  background: rgba(255,255,255,.06); border: 1px solid var(--term-border);
-  border-radius: 8px; color: var(--term-muted); padding: 5px 10px;
-  font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
-}
-.copy-btn:hover { color: var(--term-text); border-color: var(--term-muted); }
-.wl-form { display: flex; gap: 10px; max-width: 440px; }
-.wl-form input[type="email"] {
-  flex: 1; min-width: 0; font: 15px var(--sans); color: var(--ink);
-  background: #fff; border: 1px solid var(--border); border-radius: 12px;
-  padding: 13px 16px; outline: none;
-}
-.wl-form input[type="email"]:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59, 91, 232, .12); }
-.wl-form input[type="email"]::placeholder { color: var(--faint); }
-.hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
-.wl-msg { font-size: 14px; margin-top: 12px; min-height: 22px; }
-.wl-msg.ok { color: #1D8A5F; }
-.wl-msg.err { color: #C2453A; }
-.wl-fine { font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-top: 6px; letter-spacing: .03em; }
+  .a-live { border-bottom: 1px solid var(--ln); }
+  .a-entry {
+    display: grid; grid-template-columns: auto 1fr auto; column-gap: var(--sp-3);
+    padding: 9px var(--sp-4); align-items: start;
+  }
+  .a-entry + .a-entry { border-top: 1px solid var(--ln); }
+  .a-av-wrap { display: flex; align-items: center; gap: 7px; padding-top: 1px; }
+  .a-nm { font-weight: var(--fw-m); white-space: nowrap; font-size: var(--fs-md); }
+  .a-proj { color: var(--tx3); font-family: var(--mono); font-size: var(--fs-xs); margin-left: 9px; }
+  .a-time { color: var(--tx3); font-size: var(--fs-xs); font-family: var(--mono); white-space: nowrap; padding-top: 3px; }
+  .a-intent {
+    grid-column: 2; color: var(--tx2); margin-top: 3px; font-size: var(--fs-base);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .a-intent .k {
+    color: var(--tx3); font-size: var(--fs-2xs); text-transform: uppercase;
+    letter-spacing: .07em; margin-right: 7px; font-weight: var(--fw-m);
+  }
 
-/* ---------- footer ---------- */
-footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
-.foot-inner { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.foot-inner .brand { font-size: 15px; }
-.foot-inner .m-tile { width: 22px; height: 22px; border-radius: 6px; }
-.foot-links { display: flex; gap: 20px; flex: 1; }
-.foot-links a { color: var(--muted); font-size: 13.5px; }
-.foot-note { font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: .04em; }
-.foot-blurb { margin-top: 26px; color: var(--faint); font-size: 13px; line-height: 1.7; max-width: 780px; }
-.foot-blurb code { font-family: var(--mono); font-size: .9em; color: var(--muted); }
+  .a-pitem { display: flex; align-items: flex-start; gap: var(--sp-5); padding: 11px var(--sp-4); border-bottom: 1px solid var(--ln); }
+  .a-pitem:last-child { border-bottom: 0; }
+  .a-pleft { flex: 1; min-width: 0; }
+  .a-prow { display: flex; align-items: center; gap: 8px; }
+  .a-prow .nm { font-weight: var(--fw-m); font-size: var(--fs-md); }
+  .a-brow { margin-top: 4px; color: var(--tx2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .a-brow .by { color: var(--tx3); }
+  .a-pright { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  .a-mline { display: flex; align-items: center; gap: var(--sp-3); }
+  .a-metric { color: var(--tx2); font-size: var(--fs-xs); white-space: nowrap; font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
-/* ---------- responsive ---------- */
-@media (max-width: 900px) {
-  .section { padding: 64px 0; }
-  .files { gap: 12px; }
-  .file-card { width: 48%; }
-  .file-body { font-size: 8.5px; }
-  .mrow { height: 66px; }
-  .gap { height: 22px; }
-  .frag { display: none; }
-  .demo-stage .term-body { height: 96px; }
-  .hero-term .term-body { height: 268px; }
-  .steps, .trust-row { grid-template-columns: 1fr; }
-  .paths { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-  .foot-links { flex-wrap: wrap; gap: 12px 18px; }
-}
-@media (max-width: 520px) {
-  .wl-form { flex-direction: column; }
-  .hero { padding: 56px 0 48px; }
-  .pill { white-space: normal; line-height: 1.5; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .caret, .bridge-col.pulse .bridge-tile { animation: none; }
-}
+  .a-av { width: 20px; height: 20px; border-radius: 50%; flex: none; display: block; overflow: hidden; background: var(--ln); }
+  .a-av svg { width: 100%; height: 100%; display: block; }
+  .a-av.inv { opacity: .45; filter: grayscale(.5); }
+  .a-faces { display: flex; }
+  .a-faces .a-av { width: 18px; height: 18px; margin-left: -6px; border: 1.5px solid var(--p); box-sizing: border-box; }
+  .a-faces .a-av:first-child { margin-left: 0; }
+
+  .a-tag {
+    font-size: var(--fs-2xs); font-weight: var(--fw-m); text-transform: uppercase;
+    letter-spacing: .06em; color: var(--tx3); border: 1px solid var(--ln2); padding: 1px 6px;
+  }
+  .a-chip {
+    display: inline-flex; align-items: center; border-radius: var(--r-sm);
+    padding: 2px 6px; font-size: var(--fs-sm); white-space: nowrap;
+  }
+  .a-chip.ok { background: var(--okd); color: var(--ok); }
+  .a-chip.mut { background: var(--p2); color: var(--tx3); }
+
+  .a-spark { display: flex; align-items: flex-end; gap: 3px; height: 14px; }
+  .a-spark i { width: 4px; border-radius: 1px; background: var(--ac); display: block; opacity: .85; }
+  .a-spark.q i { background: var(--tx3); opacity: .5; }
+
+  .a-tbl { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+  .a-tbl th {
+    text-align: left; font-weight: var(--fw-m); color: var(--tx3); font-size: var(--fs-xs);
+    text-transform: uppercase; letter-spacing: .06em; padding: 0 10px 8px 0; white-space: nowrap;
+  }
+  .a-tbl th:first-child, .a-tbl td:first-child { padding-left: var(--sp-4); }
+  .a-tbl th.c, .a-tbl td.c { text-align: center; width: 62px; padding-right: 0; }
+  .a-th-who { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .a-th-who .a-av { width: 20px; height: 20px; }
+  .a-th-who span:last-child { font-size: var(--fs-xs); letter-spacing: 0; text-transform: none; color: var(--tx2); }
+  .a-tbl td { padding: 9px 10px 9px 0; border-top: 1px solid var(--ln); }
+  .a-tbl tr:hover td { background: var(--p2); }
+  .a-yes { color: var(--ok); font-weight: var(--fw-b); }
+  .a-no { color: var(--tx3); }
+  .a-dis { color: var(--ln2); }
+  .a-scroll { overflow-x: auto; }
+
+  .a-prob { display: flex; gap: var(--sp-3); padding: 11px var(--sp-4); border-bottom: 1px solid var(--ln); }
+  .a-prob:last-child { border-bottom: 0; }
+  .a-ph { font-weight: var(--fw-m); }
+  .a-ps { font-family: var(--mono); font-size: var(--fs-xs); color: var(--tx3); margin-top: 2px; }
+  .a-note { padding: var(--sp-3) var(--sp-4) var(--sp-4); font-size: var(--fs-xs); color: var(--tx3); }
+  .a-hint {
+    margin-left: 6px; color: var(--tx3); font-size: var(--fs-xs);
+    font-weight: var(--fw-n); text-transform: none; letter-spacing: 0;
+  }
+  .a-srow {
+    display: flex; align-items: center; gap: var(--sp-4);
+    padding: 10px var(--sp-4); border-bottom: 1px solid var(--ln);
+  }
+  .a-srow:last-of-type { border-bottom: 0; }
+  /* Privacy rows carry a quiet accent rule — the group a buyer scans for. */
+  .a-srow.hi { border-left: 2px solid var(--ac); background: var(--acd); }
+  .a-slab { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .a-slab b { font-weight: var(--fw-m); font-size: var(--fs-md); }
+  .a-slab i { font-style: normal; color: var(--tx2); font-size: var(--fs-sm); }
+  .a-sval { flex: none; display: flex; align-items: center; gap: var(--sp-2); }
+  .a-mono { font-family: var(--mono); font-size: var(--fs-xs); color: var(--tx2); white-space: nowrap; }
+  .a-sbtn {
+    padding: 3px 9px; font: inherit; font-size: var(--fs-xs); font-weight: var(--fw-m);
+    border: 1px solid var(--ln2); background: transparent; color: var(--tx2);
+    border-radius: var(--r); cursor: pointer;
+  }
+  .a-sbtn:hover { background: var(--p2); }
+
+  @media (prefers-reduced-motion: reduce) { .a-dot.live { animation: none; } }
+  @media (max-width: 760px) {
+    .a-rail { display: none; }
+    .a-stats { flex-wrap: wrap; }
+    .a-stat { flex: 1 1 50%; }
+  }
+
+  /* The app is the section's subject, so it gets a wider gutter than the
+     reading column — otherwise it floats in whitespace. */
+  .wrap-wide { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+  @media (max-width: 1340px) { .wrap-wide { max-width: 100%; } }
+
+  /* ---------- feature list ---------- */
+  .feats { display: grid; gap: 14px 30px; grid-template-columns: 1fr; margin-top: 26px; }
+  @media (min-width: 780px) { .feats { grid-template-columns: 1fr 1fr; } }
+  .feat { display: flex; gap: 11px; align-items: flex-start; }
+  .feat .ck { color: var(--green); flex: none; font-weight: 700; line-height: 1.5; }
+  .feat p { font-size: .93rem; color: var(--muted); }
+  .feat b { color: var(--ink); font-weight: 620; }
+
+  /* ---------- trust ---------- */
+  .trust { display: grid; gap: 16px; grid-template-columns: 1fr; margin-top: 26px; }
+  @media (min-width: 780px) { .trust { grid-template-columns: repeat(3, 1fr); } }
+  .tcard {
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; background: var(--panel); display: flex; flex-direction: column; gap: 8px;
+  }
+  .tcard h3 { font-size: .98rem; }
+  .tcard p { font-size: .9rem; color: var(--muted); }
+
+  /* ---------- install ---------- */
+  .install {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    background: var(--term-bg); color: var(--term-ink);
+    border-radius: var(--radius); padding: 16px 18px; font-family: var(--mono); font-size: .92rem;
+  }
+  .install .sig { color: var(--term-faint); flex: none; }
+  .install .cmd { flex: 1; min-width: 220px; overflow-x: auto; white-space: nowrap; }
+  .copy {
+    background: rgba(255,255,255,.09); color: var(--term-ink); border: 0;
+    border-radius: 8px; padding: 7px 13px; font-family: var(--sans); font-size: .82rem;
+    font-weight: 600; cursor: pointer; transition: background .15s ease; flex: none;
+  }
+  .copy:hover { background: rgba(255,255,255,.17); }
+
+  /* ---------- faq ---------- */
+  .faq { margin-top: 24px; display: flex; flex-direction: column; }
+  .faq details { border-bottom: 1px solid var(--border); padding: 15px 0; }
+  .faq summary {
+    cursor: pointer; font-weight: 620; font-size: .98rem; list-style: none;
+    display: flex; justify-content: space-between; gap: 16px; align-items: baseline;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; color: var(--faint); font-family: var(--mono); flex: none; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq p { margin-top: 9px; color: var(--muted); font-size: .93rem; max-width: 68ch; }
+
+  .cta-band { background: var(--bg-alt); }
+  .cta-band .lede { max-width: 56ch; }
+  footer { padding: 40px 0 56px; color: var(--faint); font-size: .85rem; border-top: 1px solid var(--border); }
+
+  /* reveal on scroll, matching the site's existing .35s ease feel */
+  .rv { opacity: 0; transform: translateY(12px); transition: opacity .35s ease, transform .35s ease; }
+  .rv.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .rv { opacity: 1; transform: none; }
+    .moment:hover { transform: none; }
+    .inject { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="mgrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#3E63F0"/><stop offset="1" stop-color="#16219B"/>
+  </linearGradient>
+  <symbol id="mlogo" viewBox="0 0 32 32">
+    <rect x="1" y="1" width="30" height="30" rx="8.5" fill="url(#mgrad)" stroke="#4A78FF" stroke-width="1.6"/>
+    <path d="M9 22.5 V11 L16 18 L23 11 V22.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5 16.5 H27" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="mgrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3E63F0"/><stop offset="1" stop-color="#16219B"/>
-    </linearGradient>
-    <symbol id="mlogo" viewBox="0 0 32 32">
-      <rect x="1" y="1" width="30" height="30" rx="8.5" fill="url(#mgrad)" stroke="#4A78FF" stroke-width="1.6"/>
-      <path d="M9 22.5 V11 L16 18 L23 11 V22.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M5 16.5 H27" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-    </symbol>
-  </defs>
-</svg>
+  <!-- Demo team avatars. Consistent construction across all five: a wide
+       shoulder dome that meets the crop edge, one head circle at a fixed
+       position, then hair drawn behind and in front. No facial features —
+       at 18px they would turn to mud, and faceless reads as considered
+       rather than unfinished. -->
+  <symbol id="avP" viewBox="0 0 40 40">
+    <rect width="40" height="40" fill="#D3E4FF"/>
+    <path d="M10 17c0-6.6 4.3-10.2 10-10.2S30 10.4 30 17v11h-3.3V18c0-3-2.9-4.5-6.7-4.5S13.3 15 13.3 18v10H10z" fill="#241A12"/>
+    <path d="M2 40c0-7.9 8.1-13.4 18-13.4S38 32.1 38 40z" fill="#2F4FE0"/>
+    <path d="M10.2 24.6c0-4 1.2-6 3.1-6v9.6c0 1.6-3.1 1.6-3.1-3.6zM29.8 24.6c0-4-1.2-6-3.1-6v9.6c0 1.6 3.1 1.6 3.1-3.6z" fill="#241A12"/>
+    <circle cx="20" cy="15.9" r="7.9" fill="#8D5524"/>
+    <path d="M12.1 14.6c.5-4.7 3.7-7.2 7.9-7.2s7.4 2.5 7.9 7.2c-2-2.5-4.6-3.6-7.9-3.6s-5.9 1.1-7.9 3.6z" fill="#241A12"/>
+  </symbol>
+  <symbol id="avM" viewBox="0 0 40 40">
+    <rect width="40" height="40" fill="#E2DBFF"/>
+    <path d="M2 40c0-7.9 8.1-13.4 18-13.4S38 32.1 38 40z" fill="#5B3FD1"/>
+    <circle cx="20" cy="15.9" r="7.9" fill="#C68642"/>
+    <path d="M12.2 14.4C12.9 9.5 16.1 7 20 7s7.1 2.5 7.8 7.4c-2.2-2.1-4.7-3.1-7.8-3.1s-5.6 1-7.8 3.1z" fill="#33261A"/>
+    <path d="M12.4 14.2c.3 2.2.5 3.6.1 4.9-.5-.2-.9-1-1-2.2-.1-1.2.2-2.2.9-2.7zM27.6 14.2c-.3 2.2-.5 3.6-.1 4.9.5-.2.9-1 1-2.2.1-1.2-.2-2.2-.9-2.7z" fill="#33261A"/>
+  </symbol>
+  <symbol id="avJ" viewBox="0 0 40 40">
+    <rect width="40" height="40" fill="#C9F2E2"/>
+    <path d="M2 40c0-7.9 8.1-13.4 18-13.4S38 32.1 38 40z" fill="#0D9673"/>
+    <path d="M20 4.8c6.2 0 10.4 4.1 10.4 9.7 0 3-1.1 4.9-2.5 4.9-1.1 0-1.1-1.9-1.8-3.6-1.3-3-3.5-4.4-6.1-4.4s-4.8 1.4-6.1 4.4c-.7 1.7-.7 3.6-1.8 3.6-1.4 0-2.5-1.9-2.5-4.9C9.6 8.9 13.8 4.8 20 4.8z" fill="#1C1109"/>
+    <circle cx="20" cy="16.4" r="7.9" fill="#5C3317"/>
+    <path d="M12.4 15.1c.6-4.4 3.7-6.8 7.6-6.8s7 2.4 7.6 6.8c-2-2.3-4.5-3.3-7.6-3.3s-5.6 1-7.6 3.3z" fill="#1C1109"/>
+  </symbol>
+  <symbol id="avS" viewBox="0 0 40 40">
+    <rect width="40" height="40" fill="#FFE3CE"/>
+    <path d="M2 40c0-7.9 8.1-13.4 18-13.4S38 32.1 38 40z" fill="#C77414"/>
+    <circle cx="20" cy="15.9" r="7.9" fill="#E0AC69"/>
+    <path d="M12.1 15.2c0-5.2 3.5-8.2 8-8.2 3.9 0 7 2.3 7.7 6.1-1.4.6-2.6.2-3.6-.9-1.6 2.4-6.4 3-12.1 3z" fill="#7A4A18"/>
+  </symbol>
+  <symbol id="avD" viewBox="0 0 40 40">
+    <rect width="40" height="40" fill="#FFDCEE"/>
+    <path d="M10.4 17c0-6.4 4.2-10 9.6-10s9.6 3.6 9.6 10v8.4c0 1.4-1.2 1.8-2 .7-.9-1.2-1.1-3.6-1.1-6.9 0-2.7-2.8-4-6.5-4s-6.5 1.3-6.5 4c0 3.3-.2 5.7-1.1 6.9-.8 1.1-2 .7-2-.7z" fill="#7A4A1E"/>
+    <path d="M2 40c0-7.9 8.1-13.4 18-13.4S38 32.1 38 40z" fill="#C23B9E"/>
+    <circle cx="20" cy="16.1" r="7.9" fill="#F1C27D"/>
+    <path d="M20 7.6c-4.3 0-7.5 2.8-7.9 7.6 1.9-1.9 4-3.5 6.4-4.4.6 1.6 1.9 2.9 3.6 3.6 1.9.8 3.9 1.4 5.8 2.4-.2-5.6-3.5-9.2-7.9-9.2z" fill="#7A4A1E"/>
+  </symbol>
+</defs></svg>
 
-<nav>
-  <div class="wrap nav-inner">
-    <a class="brand" href="#">
-      <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
-      MemBridge
-    </a>
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg> MemBridge</div>
     <div class="nav-links">
-      <a href="#demo">Demo</a>
+      <a href="#live">Live hand-off</a>
+      <a href="#search">Team search</a>
       <a href="#app">The app</a>
-      <a href="#why">Why</a>
-      <a href="#team">Teams</a>
-      <a href="#privacy">Privacy</a>
-      <a href="#get">Download</a>
-      <a href="#faq">FAQ</a>
-      <a href="/context-ledger/">Research</a>
+      <a href="#trust">Privacy</a>
+      <a href="#get">Get it</a>
     </div>
-    <div class="nav-cta">
-      <a class="btn btn-secondary" href="https://github.com/MembridgeAi/membridge" target="_blank" rel="noopener">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-        Star on GitHub
-      </a>
-    </div>
-  </div>
-</nav>
+  </nav>
+</div>
 
-<header class="hero">
+<!-- ================= HERO ================= -->
+<section class="section hero">
   <div class="wrap">
-    <span class="pill"><span class="dot"></span>100% local &middot; source-available &middot; zero dependencies</span>
-    <h1>Stop re-explaining your codebase to <em>every AI tool.</em></h1>
-    <p class="sub">You explain your architecture to Claude Code on Monday. Tuesday you explain it again to Codex. Every agent starts from zero, every session, and the decisions you already made evaporate when the window closes.</p>
-    <p class="sub">MemBridge watches your sessions and writes what matters into the files every tool already reads. The next agent you open already knows. 100% on your machine.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-primary" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-arm64.dmg">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.73 2.23-4.04 2.33-4.1-1.27-1.86-3.25-2.12-3.95-2.14-1.68-.17-3.28 1-4.13 1-.85 0-2.16-.98-3.56-.95-1.83.03-3.52 1.06-4.46 2.7-1.9 3.3-.49 8.19 1.36 10.87.9 1.31 1.98 2.78 3.39 2.73 1.36-.05 1.87-.88 3.52-.88 1.64 0 2.11.88 3.55.85 1.47-.02 2.4-1.34 3.3-2.66 1.04-1.52 1.47-2.99 1.49-3.07-.03-.01-2.86-1.1-2.89-4.35zM14.33 4.15c.75-.9 1.25-2.16 1.11-3.4-1.08.04-2.38.72-3.15 1.62-.69.8-1.29 2.07-1.13 3.29 1.2.09 2.42-.61 3.17-1.51z"/></svg>
-        Download for Mac
-      </a>
-      <a class="btn btn-secondary" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-win.zip">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449 9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699m10.949-8.099H24V24l-12.9-1.801"/></svg>
-        Download for Windows
-      </a>
-    </div>
-    <p class="hero-note">Intel Mac or Linux: npm install -g @membridgeai/membridge</p>
-
-    <p class="hero-cap">And the part <code>git blame</code> can't do: ask any line <em>why</em> it exists.</p>
-    <div class="term hero-term">
-      <div class="term-bar">
-        <span class="dots"><i></i><i></i><i></i></span>
-        <span class="title">~/cartful</span>
-        <button class="replay" id="whyReplay" type="button">↻ replay</button>
-      </div>
-      <div class="term-body" id="whyBody"></div>
-    </div>
-  </div>
-</header>
-
-<section class="section" id="demo">
-  <div class="wrap">
-    <div class="section-head" style="margin-bottom: 18px;">
-      <span class="mono-label">The demo</span>
-      <h2>Two sessions. Zero re-explaining.</h2>
-      <p><b>Sam</b> makes a call in Claude Code tonight. MemBridge writes it into the shared memory both AI tools read, <b>CLAUDE.md</b> and <b>AGENTS.md</b>. When <b>Maya</b> opens Codex tomorrow, it already knows.</p>
-    </div>
-
-    <div class="demo-stage" id="demoStage">
-      <svg class="wires" id="wires" aria-hidden="true"></svg>
-
-      <div class="pcard">
-        <span class="pav sam">S</span>
-        <span class="pname">Sam <small>working late in cartful</small></span>
-        <span class="ptool"><span class="tchip">Claude Code</span><span class="ptime">TONIGHT · 11:42 PM</span></span>
-      </div>
-      <div class="drow">
-        <div class="term acc-sam" id="topT"><div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">~/cartful</span><button class="replay" id="syncReplay" type="button">↻ replay</button></div><div class="term-body" id="topBody"></div></div>
-      </div>
-
-      <div class="drow mrow">
-        <div class="mwrap" id="mwrap"><span class="ring" id="mring"></span><svg class="bigm" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg><span class="mstatus" id="mstatus">watching…</span></div>
-      </div>
-
-      <div class="drow files">
-        <div class="file-card" id="fileL">
-          <div class="file-tab"><span class="fname">CLAUDE.md</span><span class="fnew">amended</span></div>
-          <div class="file-body">
-            <span class="fl"># cartful, dev notes</span>
-            <span class="fl marker">&lt;!-- membridge --&gt;</span>
-            <span class="fl mem">Free plan caps at 3. (Maya, Jul 15)</span>
-            <span class="fl mem new">Checkout button: "Reserve your spot",</span>
-            <span class="fl mem new">not "Buy now". (Sam, Jul 17)</span>
-            <span class="fl marker">&lt;!-- /membridge --&gt;</span>
-          </div>
+    <div class="hero-grid">
+      <div class="stack">
+        <span class="eyebrow">For engineering teams</span>
+        <h1>Your teammates' agents already know <em>what yours figured out.</em></h1>
+        <p class="lede">
+          MemBridge watches every Claude Code and Codex session on your team, distills what each one
+          worked out, and gets it to everyone else's agents. At startup, mid-session, and on demand.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#get">Get MemBridge</a>
+          <a class="btn btn-ghost" href="#live">See the hand-off</a>
         </div>
-        <div class="file-card" id="fileR">
-          <div class="file-tab"><span class="fname">AGENTS.md</span><span class="fnew">amended</span></div>
-          <div class="file-body">
-            <span class="fl"># Agent instructions</span>
-            <span class="fl marker">&lt;!-- membridge --&gt;</span>
-            <span class="fl mem">Free plan caps at 3. (Maya, Jul 15)</span>
-            <span class="fl mem new">Checkout button: "Reserve your spot",</span>
-            <span class="fl mem new">not "Buy now". (Sam, Jul 17)</span>
-            <span class="fl marker">&lt;!-- /membridge --&gt;</span>
-          </div>
+        <p class="hero-note">
+          One command, about two minutes, no account. <code>npm i -g @membridgeai/membridge</code>
+        </p>
+      </div>
+
+      <div class="demo" id="demo">
+        <div class="demo-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span style="margin-left:6px">your session · Thursday 09:41</span>
         </div>
-      </div>
-
-      <div class="drow gap"></div>
-
-      <div class="pcard">
-        <span class="pav maya">M</span>
-        <span class="pname">Maya <small>picking it up fresh</small></span>
-        <span class="ptool"><span class="tchip">Codex</span><span class="ptime">NEXT MORNING · 9:04 AM</span></span>
-      </div>
-      <div class="drow">
-        <div class="term acc-maya" id="botT"><div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">~/cartful</span></div><div class="term-body" id="botBody"></div></div>
+        <div class="demo-body" id="demoBody">
+          <div class="who">Claude Code · api-gateway</div>
+          <div class="line"><span class="caret">›</span><span id="ask" class="typed"></span></div>
+          <div class="line dim" id="readLine" hidden><span class="caret">·</span><span>Read services/auth/rotate.ts</span></div>
+          <div class="inject" id="inject" hidden>
+            <div class="inject-head"><span>◆ teammate decision</span></div>
+            <div class="inject-body">JWT rotation happens in vault, never in app config. The app path was tried in March and reverted.</div>
+            <div class="inject-from">Priya · Codex · Tuesday · services/auth/rotate.ts</div>
+          </div>
+          <div class="line dim" id="afterLine" hidden><span class="caret">·</span><span>Continuing with the vault path.</span></div>
+          <button class="replay" id="replay" hidden>replay</button>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="app">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="mono-label">The app</span>
-      <h2>Don't want the terminal? There's an app.</h2>
-      <p>Your team did things while you were gone. The dashboard shows you exactly what: project by project, session by session, down to the word-for-word prompts.</p>
-    </div>
+<!-- ================= THE THREE MOMENTS ================= -->
+<section class="section alt" id="live">
+  <div class="wrap stack rv">
+    <span class="eyebrow">How it reaches your agents</span>
+    <h2>Three moments, and <em>two of them are ours alone.</em></h2>
+    <p class="lede">
+      Most memory tools stop at writing a file. The useful part is what happens after the session
+      has already started, and months later when nobody remembers who did it.
+    </p>
 
-  <div class="app-window" id="appWin">
-    <div class="app-topbar">
-      <span class="dots"><i></i><i></i><i></i></span>
-      <span class="app-brand">
-        <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
-        MemBridge
-      </span>
-      <div class="app-tabs" role="tablist" aria-label="Dashboard views">
-        <button class="app-tab active" data-view="projects" type="button" role="tab" aria-selected="true">Projects</button>
-        <button class="app-tab" data-view="activity" type="button" role="tab" aria-selected="false">Activity</button>
-        <button class="app-tab" data-view="team" type="button" role="tab" aria-selected="false">Team</button>
+    <div class="moments">
+      <div class="moment">
+        <span class="when">At startup</span>
+        <h3>Every session opens briefed</h3>
+        <p>
+          What the team's agents worked out gets written into the instruction files your agents
+          already read, attributed by person. Nobody writes a doc. Nobody re-explains the architecture.
+        </p>
       </div>
-      <span class="enc-pill">ENCRYPTED</span>
-      <span class="sync-pill"><span class="dot"></span>SYNCED · <span id="syncAgo">8S</span> AGO</span>
-      <button class="invite-btn" id="inviteBtn" type="button">Invite</button>
-      <button class="gear-btn" id="themeBtn" type="button" aria-label="Toggle theme">☀</button>
-      <button class="gear-btn" id="gearBtn" type="button" aria-label="Settings">⚙</button>
-    </div>
 
-    <!-- ================= PROJECTS ================= -->
-    <div class="app-view" id="view-projects">
-      <div class="app-headrow">
+      <div class="moment lead">
+        <span class="when">Mid-session</span>
+        <span class="tag">Nobody else does this</span>
+        <h3>A teammate's decision lands while you work</h3>
+        <p>
+          Your agent opens a file a teammate's agent made a call about, and that call enters the
+          running session. Once, exactly when it matters. No doc, no Slack, no human relaying it.
+        </p>
+      </div>
+
+      <div class="moment lead">
+        <span class="when">On demand</span>
+        <span class="tag">Nobody else does this</span>
+        <h3>Your agent searches the whole team's history</h3>
+        <p>
+          A ranked search over what every agent on the team has actually done, exposed over MCP so
+          any agent can query it directly. The useful answer is usually months old.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SEARCH ================= -->
+<section class="section" id="search">
+  <div class="wrap stack rv">
+    <span class="eyebrow">Team search</span>
+    <h2>Ask the question you'd have <em>interrupted someone with.</em></h2>
+    <p class="lede">
+      Not keyword matching over a digest. It ranks across the decisions people made, the gotchas they
+      hit, what they were trying to do and the files they touched, filterable by teammate, project,
+      file or date, over your team's full synced history.
+    </p>
+
+    <div class="ask" id="askDemo">
+      <div class="ask-you">
+        <span class="ask-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules"><use href="#avJ"/></svg></span>
+        <span class="ask-q" id="askQ"></span><span class="ask-caret" id="askCaret">▋</span>
+      </div>
+
+      <div class="ask-work" id="askWork" hidden>
+        <span class="ask-spin" aria-hidden="true"></span>
+        <span class="ask-work-t">Searching your team's memory</span>
+        <span class="ask-call"><span class="fn">search_memory</span>(<span class="st">"auth rotation"</span>) · mcp</span>
+      </div>
+
+      <div class="ask-found" id="askFound" hidden>3 results from 2 teammates, across 4 months</div>
+      <div id="askHits"></div>
+
+      <div class="ask-answer" id="askAnswer" hidden>
+        <span class="ask-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg></span>
         <div>
-          <h3 class="app-h">Projects</h3>
-          <p class="app-sub">All caught up across your projects. Click one to open it.</p>
-        </div>
-        <button class="add-proj" id="addProjBtn" type="button">+ Add a project</button>
-      </div>
-      <div class="filter-row">
-        <span class="mono-label">Show</span>
-        <div class="seg" id="showSeg">
-          <button class="active" data-filter="all" type="button">All</button>
-          <button data-filter="shared" type="button">Shared</button>
-          <button data-filter="local" type="button">Local</button>
-        </div>
-        <span class="mono-label">Person</span>
-        <select class="mini-select" id="personSel" aria-label="Filter by person">
-          <option value="all">All</option>
-          <option value="sam">You</option>
-          <option value="maya">Maya</option>
-        </select>
-        <span class="mono-label">Sort</span>
-        <div class="seg" id="sortSeg">
-          <button class="active" data-sort="recent" type="button">Recent</button>
-          <button data-sort="name" type="button">Name</button>
+          <b>Priya settled this on 14 June.</b> JWT rotation happens in vault, never in app config —
+          the app-config path was tried in March and reverted after an incident. Marcus then moved
+          session refresh behind the gateway so the SDK never sees a raw token. You tried per-service
+          key caching in May and abandoned it, because rotation invalidation got unmanageable.
         </div>
       </div>
-      <div id="projList">
-        <button class="proj-row" type="button" data-proj="cartful" data-kind="shared" data-people="sam maya" data-name="cartful" data-rank="1">
-          <span class="proj-main">
-            <span class="proj-head"><span class="proj-name">cartful</span><span class="proj-dots" aria-hidden="true">⋯</span></span>
-            <span class="proj-badge shared">Member</span>
-            <span class="proj-sum">Checkout copy swap: "Reserve your spot", mobile spacing pass</span>
-            <span class="proj-attr">You · Claude Code · 37m ago</span>
-            <span class="proj-stats">17 sessions, since Jul 10 · Claude Code, Codex</span>
-          </span>
-        </button>
-        <button class="proj-row" type="button" data-proj="brewlog" data-kind="local" data-people="sam" data-name="brewlog" data-rank="2">
-          <span class="proj-main">
-            <span class="proj-head"><span class="proj-name">brewlog</span><span class="proj-dots" aria-hidden="true">⋯</span></span>
-            <span class="proj-badge">Local</span>
-            <span class="proj-sum">Tasting-note import now tolerates half-star ratings</span>
-            <span class="proj-attr">You · Codex · 25h ago</span>
-            <span class="proj-stats">5 sessions, since Jul 14 · Codex</span>
-          </span>
-        </button>
-        <button class="proj-row" type="button" data-proj="study-buddy" data-kind="local" data-people="sam" data-name="study-buddy" data-rank="3">
-          <span class="proj-main">
-            <span class="proj-head"><span class="proj-name">study-buddy</span><span class="proj-dots" aria-hidden="true">⋯</span></span>
-            <span class="proj-badge">Local</span>
-            <span class="proj-sum">Flashcard scheduler switched to spaced repetition</span>
-            <span class="proj-attr">You · Claude Code · 3d ago</span>
-            <span class="proj-stats">2 sessions, since Jul 9 · Claude Code</span>
-          </span>
-        </button>
-      </div>
+      <button class="ask-replay" id="askReplay" hidden type="button">replay</button>
     </div>
 
-    <!-- ================= PROJECT DETAIL ================= -->
-    <div class="app-view" id="view-detail" hidden></div>
+    <p class="hero-note" style="margin-top:4px">
+      Ranked by relevance, not recency. Work from months ago surfaces when it answers the question.
+    </p>
+  </div>
+</section>
 
-    <!-- ================= ACTIVITY ================= -->
-    <div class="app-view" id="view-activity" hidden>
-      <h3 class="app-h">Activ<span class="hb">ity</span></h3>
-      <div class="filter-row">
-        <span class="mono-label">Person</span>
-        <select class="mini-select" id="actPerson" aria-label="Filter activity by person">
-          <option value="all">All</option>
-          <option value="sam">You</option>
-          <option value="maya">Maya</option>
-        </select>
-        <span class="mono-label">Project</span>
-        <select class="mini-select" id="actProject" aria-label="Filter activity by project">
-          <option value="all">All</option>
-          <option value="cartful">cartful</option>
-          <option value="brewlog">brewlog</option>
-        </select>
-        <span class="mono-label">Tool</span>
-        <select class="mini-select" id="actTool" aria-label="Filter activity by tool">
-          <option value="all">All</option>
-          <option value="claude code">Claude Code</option>
-          <option value="codex">Codex</option>
-        </select>
-        <label class="chk-pill"><input type="checkbox" id="actDistilled"> Distilled only</label>
-      </div>
+<!-- ================= THE APP ================= -->
+<section class="section alt" id="app">
+  <div class="wrap-wide stack rv">
+    <span class="eyebrow">The app</span>
+    <h2>What the team looks like <em>from the outside.</em></h2>
+    <p class="lede">
+      Every agent session across your team, who can see which project, and where knowledge is
+      concentrated in one person's head.
+    </p>
 
-      <span class="mono-label day-label" data-day-label>Today</span>
-      <div class="act-card" data-person="sam" data-project="cartful" data-tools="claude code" data-distilled="1">
-        <div class="act-top">
-          <span class="act-tile sam">S</span>
-          <div class="act-main">
-            <div class="act-who"><span class="who">You</span><span class="tool-chip">Claude Code</span><span class="proj">cartful</span><span class="when">12m ago</span><span class="dist-chip">Distilled</span></div>
-            <p class="act-title link" data-day="sam-live" title="Open the day view">Checkout copy swap: "Reserve your spot", mobile spacing pass</p>
-            <div class="working-row">◐ Swapping checkout button copy across views <span class="working-tag">● WORKING NOW</span></div>
-            <p class="meta-line">1 session · 6 prompts · 3 files</p>
+    <div class="a-app" id="aApp">
+      <div class="a-shell">
+        <div class="a-rail">
+          <div class="a-logo"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>MemBridge</div>
+          <button type="button" class="a-team"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Acme Platform"><use href="#avP"/></svg></span><span class="nmx">Acme Platform</span><span class="chev">▾</span></button>
+          <div class="a-nav" role="tablist">
+            <button type="button" role="tab" class="on" data-v="today"><span class="ico">⌂</span> Today</button>
+            <button type="button" role="tab" data-v="projects"><span class="ico">▦</span> Projects</button>
+            <div class="a-grp">Team</div>
+            <button type="button" role="tab" data-v="members"><span class="ico">◎</span> Members</button>
+            <button type="button" role="tab" data-v="insights"><span class="ico">✦</span> Insights</button>
+            <div class="a-grp">You</div>
+            <button type="button" role="tab" data-v="settings"><span class="ico">⚙</span> Settings</button>
           </div>
+          <div class="a-me"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span> Jules <span class="a-dot live" style="margin-left:auto"></span></div>
         </div>
-      </div>
 
-      <div class="act-card" data-person="maya" data-project="cartful" data-tools="claude code,codex" data-distilled="0">
-        <div class="act-top">
-          <span class="act-tile maya">M</span>
-          <div class="act-main">
-            <div class="act-who"><span class="who">Maya</span><span class="tool-chip">Claude Code</span><span class="tool-chip">Codex</span><span class="proj">cartful</span><span class="when">86m ago</span></div>
-            <p class="act-title link" data-day="maya-multi" title="Open the day view">Empty-cart rework, config cleanup, retry hardening</p>
-            <ul class="checks">
-              <li>Empty-cart screen rewritten, "save for later" nudge added</li>
-              <li>Free plan cap moved into config, no more magic number</li>
-              <li>Retries: exponential backoff capped at 3, gateway 10s limit respected</li>
-              <li>Baseline test suite green at 214 of 214</li>
-              <li class="extra" hidden>Cart drawer optimistic updates now roll back on 5xx</li>
-              <li class="extra" hidden>Mobile checkout spacing tightened, button stays above the fold</li>
-              <li class="extra" hidden>Stripe webhook retries deduped by event id</li>
-              <li class="extra" hidden>Session summaries now sync within 60 seconds</li>
-            </ul>
-            <div class="card-links">
-              <button class="expander" id="showChanges" type="button" aria-expanded="false">Show all 8 changes ▾</button>
-              <span class="meta-line">19 sessions · 94 prompts · 8 files</span>
+        <div class="a-main">
+          <div class="a-head">
+            <div><h3 id="aTitle">Today</h3><span class="date" id="aDate">Thursday, 30 July</span></div>
+            <span class="right">
+              <span class="a-chip ok">✓ synced 2m ago</span>
+              <button type="button" class="a-btn">Invite</button>
+            </span>
+          </div>
+
+          <!-- ---------- Today ---------- -->
+          <div class="a-view on" data-view="today">
+            <div class="a-stats">
+              <div class="a-stat"><b>2</b><span>live now</span></div>
+              <div class="a-stat"><b>23</b><span>sessions today</span></div>
+              <div class="a-stat"><b>18</b><span>updates shared</span></div>
+              <div class="a-stat"><b>4/4</b><span>members synced</span></div>
+            </div>
+            <div class="a-sect">Happening now</div>
+            <div class="a-live">
+              <div class="a-entry">
+                <span class="a-av-wrap"><span class="a-dot live"></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span></span>
+                <span><span class="a-nm">Priya · Codex</span><span class="a-proj">api-gateway</span></span>
+                <span class="a-time">14m</span>
+                <div class="a-intent"><span class="k">Intent</span>rotate the vault credentials for tenant onboarding</div>
+              </div>
+              <div class="a-entry">
+                <span class="a-av-wrap"><span class="a-dot live"></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus Bell"><use href="#avM"/></svg></span></span>
+                <span><span class="a-nm">Marcus · Claude Code</span><span class="a-proj">web</span></span>
+                <span class="a-time">3m</span>
+                <div class="a-intent"><span class="k">Intent</span>port the checkout flow off the legacy SDK</div>
+              </div>
+            </div>
+            <div class="a-sect">Projects · this week</div>
+            <div class="a-pitem">
+              <div class="a-pleft">
+                <div class="a-prow"><span class="nm">api-gateway</span><span class="a-tag">Shared</span>
+                  <span class="a-faces"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus Bell"><use href="#avM"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam Ortiz"><use href="#avS"/></svg></span></span></div>
+                <div class="a-brow">Fixed proration on mid-cycle plan changes <span class="by">— Jules, 2h</span></div>
+              </div>
+              <div class="a-pright">
+                <div class="a-mline"><span class="a-metric">14 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
+                <div class="a-spark"><i style="height:5px"></i><i style="height:9px"></i><i style="height:6px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:11px"></i><i style="height:7px"></i></div>
+              </div>
+            </div>
+            <div class="a-pitem">
+              <div class="a-pleft">
+                <div class="a-prow"><span class="nm">billing</span><span class="a-tag">Shared</span>
+                  <span class="a-faces"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam Ortiz"><use href="#avS"/></svg></span></span></div>
+                <div class="a-brow">Added a retry budget to the webhook dispatcher <span class="by">— Sam, yesterday</span></div>
+              </div>
+              <div class="a-pright">
+                <div class="a-mline"><span class="a-metric">6 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
+                <div class="a-spark q"><i style="height:4px"></i><i style="height:6px"></i><i style="height:3px"></i><i style="height:7px"></i><i style="height:5px"></i><i style="height:2px"></i><i style="height:4px"></i></div>
+              </div>
+            </div>
+            <div class="a-pitem">
+              <div class="a-pleft">
+                <div class="a-prow"><span class="nm">infra-secrets</span><span class="a-tag">Private</span>
+                  <span class="a-faces"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span></span></div>
+                <div class="a-brow">Rotated the signing keys after the March incident <span class="by">— Priya, 3d</span></div>
+              </div>
+              <div class="a-pright">
+                <div class="a-mline"><span class="a-metric">4 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
+                <div class="a-spark q"><i style="height:3px"></i><i style="height:2px"></i><i style="height:5px"></i><i style="height:3px"></i><i style="height:4px"></i><i style="height:2px"></i><i style="height:3px"></i></div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <span class="mono-label day-label" data-day-label>Yesterday</span>
-      <div class="act-card" data-person="maya" data-project="cartful" data-tools="codex" data-distilled="0">
-        <div class="act-top">
-          <span class="act-tile maya">M</span>
-          <div class="act-main">
-            <div class="act-who"><span class="who">Maya</span><span class="tool-chip">Codex</span><span class="proj">cartful</span><span class="when">22h ago</span></div>
-            <p class="act-title link" data-day="maya-multi" title="Open the day view">Coupon stacking rules pinned down before the sale</p>
-            <ul class="checks">
-              <li>One coupon per cart, the larger discount wins on a tie</li>
-              <li>Expired codes now fail at validation, not at payment</li>
-            </ul>
-            <p class="meta-line">1 session · 9 prompts · 4 files</p>
+          <!-- ---------- Projects ---------- -->
+          <div class="a-view" data-view="projects">
+            <div class="a-sect">Who sees what</div>
+            <div class="a-scroll">
+              <table class="a-tbl">
+                <thead><tr>
+                  <th scope="col">Project</th><th scope="col">Sessions · 7d</th><th scope="col">Sync</th>
+
+                  <th scope="col" class="c"><span class="a-th-who"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya"><use href="#avP"/></svg></span><span>Priya</span></span></th>
+                  <th scope="col" class="c"><span class="a-th-who"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus"><use href="#avM"/></svg></span><span>Marcus</span></span></th>
+                  <th scope="col" class="c"><span class="a-th-who"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules"><use href="#avJ"/></svg></span><span>Jules</span></span></th>
+                  <th scope="col" class="c"><span class="a-th-who"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam"><use href="#avS"/></svg></span><span>Sam</span></span></th>
+                </tr></thead>
+                <tbody>
+                  <tr><td>api-gateway</td><td class="a-metric">14</td><td><span class="a-chip ok">✓ up to date</span></td>
+                      <td class="c a-yes">✓</td><td class="c a-yes">✓</td><td class="c a-yes">✓</td><td class="c a-yes">✓</td></tr>
+                  <tr><td>web</td><td class="a-metric">9</td><td><span class="a-chip ok">✓ up to date</span></td>
+                      <td class="c a-yes">✓</td><td class="c a-yes">✓</td><td class="c a-yes">✓</td><td class="c a-no">·</td></tr>
+                  <tr><td>billing</td><td class="a-metric">6</td><td><span class="a-chip ok">✓ up to date</span></td>
+                      <td class="c a-no">·</td><td class="c a-no">·</td><td class="c a-yes">✓</td><td class="c a-no">·</td></tr>
+                  <tr><td>infra-secrets <span class="a-tag">Private</span></td><td class="a-metric">4</td><td><span class="a-chip mut">not shared</span></td>
+                      <td class="c a-dis">–</td><td class="c a-dis">–</td><td class="c a-dis">–</td><td class="c a-dis">–</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="a-note">Tick a cell to grant or revoke, without opening the project. A private project cannot be granted until it is shared. Every change lands in the audit trail.</p>
+          </div>
+
+          <!-- ---------- Members ---------- -->
+          <div class="a-view" data-view="members">
+            <div class="a-sect">Pending invites</div>
+            <div class="a-pitem">
+              <div class="a-pleft"><div class="a-prow">
+                <span class="a-av inv"><svg viewBox="0 0 40 40" role="img" aria-label="Dana, invited"><use href="#avD"/></svg></span>
+                <span class="nm">dana@acme.dev</span><span class="a-tag">Invited</span></div>
+                <div class="a-brow">Expires in 6 days</div></div>
+              <div class="a-pright"><div class="a-mline"><button type="button" class="a-btn g">Resend</button></div></div>
+            </div>
+            <div class="a-sect">Members · 4 people</div>
+            <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span></span>
+              <span><span class="a-nm">Priya Raman</span><span class="a-proj">owner · 4 projects</span></span>
+              <span class="a-chip ok">✓ key verified</span></div>
+            <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus Bell"><use href="#avM"/></svg></span></span>
+              <span><span class="a-nm">Marcus Bell</span><span class="a-proj">admin · 3 projects</span></span>
+              <span class="a-chip ok">✓ key verified</span></div>
+            <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span></span>
+              <span><span class="a-nm">Jules Okafor</span><span class="a-proj">member · 3 projects</span></span>
+              <span class="a-chip ok">✓ key verified</span></div>
+            <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam Ortiz"><use href="#avS"/></svg></span></span>
+              <span><span class="a-nm">Sam Ortiz</span><span class="a-proj">member · 1 project</span></span>
+              <span class="a-chip ok">✓ key verified</span></div>
+            <div class="a-sect">Audit · last 30 days</div>
+            <div class="a-prob"><span class="a-chip mut">Jul 28</span><span style="flex:1"><div class="a-ph">Marcus granted Jules access to billing</div></span></div>
+            <div class="a-prob"><span class="a-chip mut">Jul 24</span><span style="flex:1"><div class="a-ph">Priya changed Marcus to admin</div></span></div>
+          </div>
+
+          <!-- ---------- Insights ---------- -->
+          <div class="a-view" data-view="insights">
+            <div class="a-stats">
+              <div class="a-stat"><b>412</b><span>sessions</span></div>
+              <div class="a-stat"><b>61%</b><span>repeat opens answered by memory</span></div>
+              <div class="a-stat"><b>4/4</b><span>members syncing</span></div>
+              <div class="a-stat"><b>1,284</b><span>memory entries shared</span></div>
+            </div>
+            <div class="a-sect">Knowledge concentration · only one person has touched it</div>
+            <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span></span>
+              <span><span class="a-nm">Priya Raman</span><span class="a-proj">infra-secrets · 38 sessions, nobody else</span></span>
+              <span class="a-chip mut">1 person</span></div>
+            <div class="a-sect">Activity by person · last 30 days</div>
+            <div class="a-entry">
+              <span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya"><use href="#avP"/></svg></span></span>
+              <span><span class="a-nm">Priya Raman</span><span class="a-proj">142 sessions · 138 shared a summary</span></span>
+              <span class="a-metric">34%</span>
+            </div>
+            <div class="a-entry">
+              <span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus"><use href="#avM"/></svg></span></span>
+              <span><span class="a-nm">Marcus Bell</span><span class="a-proj">118 sessions · 115 shared a summary</span></span>
+              <span class="a-metric">29%</span>
+            </div>
+            <div class="a-entry">
+              <span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules"><use href="#avJ"/></svg></span></span>
+              <span><span class="a-nm">Jules Okafor</span><span class="a-proj">96 sessions · 94 shared a summary</span></span>
+              <span class="a-metric">23%</span>
+            </div>
+            <div class="a-entry">
+              <span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam"><use href="#avS"/></svg></span></span>
+              <span><span class="a-nm">Sam Ortiz</span><span class="a-proj">56 sessions · 55 shared a summary</span></span>
+              <span class="a-metric">14%</span>
+            </div>
+            <div class="a-sect">Cross-tool reach</div>
+            <div class="a-entry">
+              <span class="a-av-wrap"><span class="a-dot live"></span></span>
+              <span><span class="a-nm">Claude Code</span><span class="a-proj">248 sessions</span></span>
+              <span class="a-metric">60%</span>
+            </div>
+            <div class="a-entry">
+              <span class="a-av-wrap"><span class="a-dot live"></span></span>
+              <span><span class="a-nm">Codex</span><span class="a-proj">164 sessions</span></span>
+              <span class="a-metric">40%</span>
+            </div>
+            <p class="a-note">One memory across both, so switching tools mid-task doesn't reset anything.</p>
+          </div>
+
+          <!-- ---------- Settings ---------- -->
+          <div class="a-view" data-view="settings">
+            <div class="a-sect">Memory delivery
+              <span class="a-hint">how agents on this machine receive project memory</span></div>
+            <div class="a-srow">
+              <span class="a-slab"><b>Context block</b><i>Written into the instruction files your agents already read</i></span>
+              <span class="a-sval"><span class="a-mono">CLAUDE.md · AGENTS.md</span><span class="a-chip ok">✓ installed</span></span>
+            </div>
+            <div class="a-srow">
+              <span class="a-slab"><b>Recall on read</b><i>Answers a repeat file open from memory instead of re-reading it</i></span>
+              <span class="a-sval"><span class="a-chip ok">✓ serving</span></span>
+            </div>
+            <div class="a-srow">
+              <span class="a-slab"><b>Session summaries</b><i>The agent writes up what it worked out when a session ends</i></span>
+              <span class="a-sval"><span class="a-chip ok">✓ installed</span></span>
+            </div>
+            <div class="a-srow">
+              <span class="a-slab"><b>MCP server</b><i>Lets any agent query this project's memory directly</i></span>
+              <span class="a-sval"><span class="a-mono">claude code · codex · cursor</span><span class="a-chip ok">✓ registered</span></span>
+            </div>
+
+            <div class="a-sect">Privacy</div>
+            <div class="a-srow hi">
+              <span class="a-slab"><b>Share plaintext with team</b><i>Off means teammates' apps decrypt locally; nothing readable is stored on the server</i></span>
+              <span class="a-sval"><span class="a-chip ok">✓ end-to-end</span></span>
+            </div>
+            <div class="a-srow hi">
+              <span class="a-slab"><b>Share verbatim prompts</b><i>Summaries and file paths sync; what you typed stays on this machine</i></span>
+              <span class="a-sval"><span class="a-chip mut">off</span><button type="button" class="a-sbtn">Edit</button></span>
+            </div>
+            <div class="a-srow hi">
+              <span class="a-slab"><b>Redaction patterns</b><i>Built-in key, token and credential shapes, plus your own</i></span>
+              <span class="a-sval"><span class="a-mono">34 built-in · 2 custom</span><button type="button" class="a-sbtn">Edit</button></span>
+            </div>
+            <div class="a-srow hi">
+              <span class="a-slab"><b>Excluded folders</b><i>Never watched, never synced</i></span>
+              <span class="a-sval"><span class="a-mono">~/clients · ~/personal</span><button type="button" class="a-sbtn">Edit</button></span>
+            </div>
+
+            <div class="a-sect">Daemon</div>
+            <div class="a-srow">
+              <span class="a-slab"><b>Running</b><i>Local only, bound to 127.0.0.1</i></span>
+              <span class="a-sval"><span class="a-mono">v0.1.7 · port 7437</span><span class="a-chip ok">✓ running</span></span>
+            </div>
+            <p class="a-note">Nothing leaves this machine except what you have explicitly shared with your team, encrypted.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ================= TEAM ================= -->
-    <div class="app-view" id="view-team" hidden>
-      <span class="mono-label team-eyebrow">Team</span>
-      <h3 class="team-name">cartful</h3>
-      <p class="team-sub">2 members · created July 2026 · you are a member</p>
-
-      <div class="members-card">
-        <div class="members-head">
-          <span class="mono-label">Members</span>
-          <button class="link-btn" id="inviteSomeone" type="button">+ Invite someone</button>
-        </div>
-        <div class="member-row">
-          <span class="member-av maya">M</span>
-          <span class="member-main">
-            <span class="member-name">Maya</span>
-            <span class="member-sub">joined July 2026</span>
-          </span>
-          <span class="role-pill owner">OWNER</span>
-        </div>
-        <div class="member-row">
-          <span class="member-av sam">S</span>
-          <span class="member-main">
-            <span class="member-name">Sam <small>· you</small></span>
-            <span class="member-sub">joined July 2026</span>
-          </span>
-          <span class="role-pill member">MEMBER</span>
-        </div>
-      </div>
-
-      <span class="mono-label join-label">Join code</span>
-      <div class="join-card" id="joinCard">
-        <div class="join-row">
-          <span class="join-code">7a2c91d4-5e78-4007-abec-d7b89ca61ec4</span>
-          <button class="join-copy" id="joinCopy" type="button" data-code="7a2c91d4-5e78-4007-abec-d7b89ca61ec4">COPY</button>
-        </div>
-        <p class="join-note">Anyone with this code joins as a member. Regenerating invalidates the old code.</p>
-      </div>
-      <p class="team-perm">You're a member. Only the owner can rename the team, change roles, or manage the join code.</p>
-    </div>
-
-    <!-- ================= DAY DETAIL ================= -->
-    <div class="app-view" id="view-day" hidden></div>
-
-    <!-- ================= SETTINGS ================= -->
-    <div class="app-view" id="view-settings" hidden>
-      <h3 class="app-h">Settings</h3>
-      <p class="app-sub">Watched projects, team, account.</p>
-
-      <span class="mono-label">Watched projects</span>
-      <div class="set-card">
-        <div class="set-row">
-          <input class="set-check" type="checkbox" id="selAll">
-          <label for="selAll" style="font-size:13.5px; color: var(--muted); cursor: pointer;">Select all local</label>
-        </div>
-        <div class="set-row">
-          <span class="set-spacer"></span>
-          <span class="grow"><span class="set-name">cartful <span class="proj-badge shared">Shared</span></span><span class="set-path">/Users/sam/cartful</span></span>
-          <button class="pause-btn" type="button">Pause</button>
-        </div>
-        <div class="set-row">
-          <input class="set-check loc" type="checkbox">
-          <span class="grow"><span class="set-name">brewlog <span class="proj-badge">Local only</span></span><span class="set-path">/Users/sam/Desktop/brewlog</span></span>
-          <button class="pause-btn" type="button">Pause</button>
-        </div>
-        <div class="set-row">
-          <input class="set-check loc" type="checkbox">
-          <span class="grow"><span class="set-name">study-buddy <span class="proj-badge">Local only</span></span><span class="set-path">/Users/sam/study-buddy</span></span>
-          <button class="pause-btn" type="button">Pause</button>
-        </div>
-        <div class="tools-foot">Tools detected: Claude Code ✓ · Codex ✓</div>
-      </div>
-
-      <span class="mono-label">Team</span>
-      <div class="set-card">
-        <div class="set-row">
-          <span class="grow"><span class="set-name">cartful</span><span class="set-path" style="font-family: var(--sans); font-size: 12.5px;">2 members · roles, invites and renaming live on the Team screen</span></span>
-          <button class="manage-btn" id="manageTeam" type="button">Manage team →</button>
-        </div>
-      </div>
-
-      <span class="mono-label">Account</span>
-      <div class="set-card">
-        <div class="set-row">
-          <span class="acct-av">S</span>
-          <span class="grow"><span class="set-name">sam@cartful.dev</span><span class="set-path" style="font-family: var(--sans); font-size: 12.5px;">Signed in via email</span></span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <p class="app-caption">Ships with the daemon: <code>membridge dashboard</code> opens it. Menu-bar app on macOS.</p>
+    <p class="hero-note" style="margin-top:14px">
+      Click through the sidebar. This is the shipped interface, not a rendering of one — live
+      rows show the ask a session opened with, never a guess at what it is doing.
+    </p>
   </div>
 </section>
 
-<section class="section" id="why">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="mono-label">Why MemBridge</span>
-      <h2>There are a lot of AI memory tools. Most make you do the remembering.</h2>
-      <p>MemBridge is built on a different bet: the memory should capture itself, stay local, and live in the files your tools already read. Here's what that buys you.</p>
+<!-- ================= FEATURES ================= -->
+<section class="section">
+  <div class="wrap stack rv">
+    <span class="eyebrow">What your team gets</span>
+    <h2>Everything else it does <em>while nobody is watching.</em></h2>
+    <div class="feats">
+      <div class="feat"><span class="ck">✓</span><p><b>Cross-tool memory.</b> Claude Code and Codex share one store. Switching tools doesn't reset context.</p></div>
+      <div class="feat"><span class="ck">✓</span><p><b>Auto-registers over MCP.</b> Finds the agents you have installed and wires itself in.</p></div>
+      <div class="feat"><span class="ck">✓</span><p><b>Ask why about any file.</b> Which session touched this line, by whom, and the reasoning behind it.</p></div>
+      <div class="feat"><span class="ck">✓</span><p><b>Per-project access control.</b> Pick exactly who sees which project, changed in one grid.</p></div>
+      <div class="feat"><span class="ck">✓</span><p><b>One-command onboarding.</b> A new teammate joins with a single invite link.</p></div>
+      <div class="feat"><span class="ck">✓</span><p><b>Roles and an audit trail.</b> Owner, admin, member. Every membership and sharing change recorded.</p></div>
+      <div class="feat"><span class="ck">✓</span><p><b>Health at a glance.</b> Who's syncing, whose keys are verified, and anything that quietly stopped reaching the team.</p></div>
+      <div class="feat"><span class="ck">✓</span><p><b>Runs local.</b> A daemon on each machine. No agent of ours in your CI, no repo upload.</p></div>
     </div>
-    <div class="why-grid">
-      <div class="why-card">
-        <span class="wk">01 · Zero-effort capture</span>
-        <h3>No save button to forget</h3>
-        <p>The daemon tails your Claude Code and Codex sessions and distills them on its own. No "remember this" tool to call, no notes to maintain. Forgetting to save is the thing that kills every other memory tool.</p>
+  </div>
+</section>
+
+<!-- ================= TRUST ================= -->
+<section class="section alt" id="trust">
+  <div class="wrap stack rv">
+    <span class="eyebrow">Privacy</span>
+    <h2>The server <em>can't read your team's work.</em></h2>
+    <div class="trust">
+      <div class="tcard">
+        <h3>End-to-end encrypted</h3>
+        <p>Team sync is encrypted on by default. Keys are generated on each laptop and never leave it, so the backend stores ciphertext it cannot open.</p>
       </div>
-      <div class="why-card">
-        <span class="wk">02 · Local by architecture</span>
-        <h3>No cloud, no API key</h3>
-        <p>It runs where your code already lives. Binds to <code>127.0.0.1</code>, zero network calls in solo use, no account, no telemetry. Nothing to trust because nothing leaves.</p>
+      <div class="tcard">
+        <h3>Prompts stay local</h3>
+        <p>Summaries and file paths sync. Your verbatim prompts stay on your machine unless you opt in, per session or per project.</p>
       </div>
-      <div class="why-card">
-        <span class="wk">03 · Per-project memory</span>
-        <h3>No cross-project bleed</h3>
-        <p>Memory is scoped to each repo, not one global blob. What you decided in <code>cartful</code> never leaks into the next project's context.</p>
-      </div>
-      <div class="why-card">
-        <span class="wk">04 · Provenance built in</span>
-        <h3>The reason, not just the author</h3>
-        <p><code>membridge why file:line</code> surfaces the prompt and decision behind any line of code. <code>git blame</code> tells you who; MemBridge tells you why. No other memory tool does this.</p>
-      </div>
-      <div class="why-card">
-        <span class="wk">05 · Cross-tool by design</span>
-        <h3>One memory, every agent</h3>
-        <p>Claude Code and Codex are built in; anything that logs JSONL plugs in via config. The neutral bridge no single vendor will build across its rivals.</p>
-      </div>
-      <div class="why-card">
-        <span class="wk">06 · Plain, reversible files</span>
-        <h3>It's just markdown</h3>
-        <p>Memory lands between markers in <code>CLAUDE.md</code> / <code>AGENTS.md</code>: readable, diffable, and <code>membridge remove</code> restores everything byte-for-byte. No lock-in, no black box.</p>
+      <div class="tcard">
+        <h3>Keys rotate on exit</h3>
+        <p>Removing someone mints a new team key sealed only to the people who remain. Secrets are stripped before anything is written or sent.</p>
       </div>
     </div>
   </div>
 </section>
 
-
-<section class="section" id="team">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="mono-label">Teams</span>
-      <h2>Every teammate's AI sessions, one encrypted feed.</h2>
-      <p>Invite your team to a project and every Claude Code and Codex session lands in one shared feed: the plain-English summary up top, the exact prompts one click down. End-to-end encrypted, invite-only, and off by default.</p>
-    </div>
-    <div class="trust-row cols3">
-      <div class="trust-item">
-        <span class="mono-label">Invite-only</span>
-        <p>Projects stay private until you share them. Only the people you invite can see a project's memory, and anyone can pause or leave at any time.</p>
-      </div>
-      <div class="trust-item">
-        <span class="mono-label">End-to-end encrypted</span>
-        <p>Your team's shared memory is encrypted client-side before it syncs. The relay only ever moves ciphertext: it can never read your code, your prompts, or your summaries.</p>
-      </div>
-      <div class="trust-item">
-        <span class="mono-label">Summaries + exact prompts</span>
-        <p>Catch up on any teammate's AI coding session in seconds: what changed in plain English, plus the word-for-word prompts that produced it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="how">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="mono-label">How it works</span>
-      <h2>A background daemon, not a platform.</h2>
-      <p>No accounts, no cloud, no setup ritual. MemBridge reads the session logs Claude Code and Codex already keep, and writes to the context files they already read.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <span class="num">01 · WATCH</span>
-        <h3>Tail the session logs</h3>
-        <p><code>membridge start</code> watches your Claude Code and Codex transcripts: read-only, incremental, byte offsets only. Any tool that logs JSONL plugs in with a config entry. No code.</p>
-      </div>
-      <div class="step">
-        <span class="num">02 · DISTILL</span>
-        <h3>Build a per-project memory</h3>
-        <p>Recent prompts, files touched, and the decisions behind them become a short per-project digest. Secrets (<code>sk-…</code>, <code>AKIA…</code>, <code>ghp_…</code>) are scrubbed before a single byte is written.</p>
-      </div>
-      <div class="step">
-        <span class="num">03 · INJECT</span>
-        <h3>Write where tools already read</h3>
-        <p>The digest lands between <code>&lt;!-- membridge --&gt;</code> markers in <code>CLAUDE.md</code> and <code>AGENTS.md</code>. Your own notes stay byte-for-byte intact, and <code>membridge remove</code> restores everything exactly.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="privacy">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="mono-label">Privacy</span>
-      <h2>Local is not a feature. It's the architecture.</h2>
-      <p>Your code never leaves your machine. Not as telemetry, not as analytics, not as an oops. MemBridge is local-first by architecture, and every claim below is one you can check yourself.</p>
-    </div>
-    <div class="trust-row">
-      <div class="trust-item">
-        <span class="mono-label">127.0.0.1 only</span>
-        <p>The daemon binds to localhost and nothing else. Solo use makes zero network calls: no telemetry, no analytics, no accounts. Turn your wifi off and MemBridge won't notice. Team sync is opt-in, off by default, and end-to-end encrypted.</p>
-      </div>
-      <div class="trust-item">
-        <span class="mono-label">Zero dependencies</span>
-        <p>The core is plain Node with zero npm dependencies. No supply chain to attack, no transitive packages to audit, nothing to read but the code itself. And the code is on GitHub.</p>
-      </div>
-      <div class="trust-item">
-        <span class="mono-label">Secrets redacted</span>
-        <p>API keys and tokens (<code>sk-…</code>, <code>AKIA…</code>, <code>ghp_…</code>) are scrubbed before a single byte hits a context file. Redaction happens before write, never after. Add your own patterns in config.</p>
-      </div>
-      <div class="trust-item">
-        <span class="mono-label">Fully reversible</span>
-        <p>MemBridge only ever writes between its own markers, and never touches your code. One command, <code>membridge remove</code>, strips every trace and restores your files byte-for-byte. Leaving takes ten seconds.</p>
-      </div>
-    </div>
-    <div class="proof">
-      <span class="mono-label proof-label">Don't just trust us. Check it yourself.</span>
-      <div class="term proof-term">
-        <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="title">verify</span><button class="copy-btn" data-cmd="lsof -nP -iTCP:7437" type="button">copy</button></div>
-        <div class="term-body"><span class="t-dim">$ </span>lsof -nP -iTCP:7437
-<span class="t-out">COMMAND  PID   USER  TYPE  NAME
-node     4821  sam   IPv4  TCP 127.0.0.1:7437 (LISTEN)</span></div>
-      </div>
-      <p class="proof-line">With MemBridge running: one socket. It's your dashboard, and it only answers localhost.</p>
-    </div>
-  </div>
-</section>
-
+<!-- ================= GET IT ================= -->
 <section class="section" id="get">
-  <div class="wrap">
-    <div class="section-head" style="margin-bottom: 26px;">
-      <span class="mono-label">Get it</span>
-      <h2>Two ways to run it.</h2>
+  <div class="wrap stack rv">
+    <span class="eyebrow">Get it</span>
+    <h2>Two minutes, <em>no account.</em></h2>
+    <p class="lede">Install on one repo and watch a session get distilled. Team sync is a separate, deliberate step.</p>
+    <div class="install">
+      <span class="sig">$</span>
+      <span class="cmd" id="cmd">npm install -g @membridgeai/membridge</span>
+      <button class="copy" id="copyBtn">Copy</button>
     </div>
-    <div class="paths">
-      <div class="path">
-        <div class="path-head">
-          <span class="path-ico">⌘</span>
-          <div><h3>The app</h3><span class="ph-sub">macOS · Apple Silicon</span></div>
-        </div>
-        <p>Menu-bar app plus the membridge CLI. Signed &amp; notarized &mdash; double-click and it opens, no warnings, no terminal.</p>
-        <a class="btn btn-primary dl-btn" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-arm64.dmg">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download for Mac
-        </a>
-        <p class="dl-plat">Other platforms: <a href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-win.zip">Windows</a> &middot; Intel Mac &amp; Linux run <code>npm install -g @membridgeai/membridge</code></p>
-      </div>
-      <div class="path">
-        <div class="path-head">
-          <span class="path-ico">&gt;_</span>
-          <div><h3>From source</h3><span class="ph-sub">macOS · Linux · Windows · Node 18+</span></div>
-        </div>
-        <p>Clone it, read it, run it. Zero dependencies, so what you read is what runs. Your dashboard comes up at 127.0.0.1:7437.</p>
-        <div class="term">
-          <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><button class="copy-btn" data-cmd="git clone https://github.com/MembridgeAi/membridge&#10;cd membridge&#10;node bin/membridge.js start" type="button">copy</button></div>
-          <div class="term-body"><span class="t-dim">$ </span>git clone https://github.com/MembridgeAi/membridge
-<span class="t-dim">$ </span>cd membridge
-<span class="t-dim">$ </span>node bin/membridge.js start</div>
-        </div>
-      </div>
+    <div class="hero-cta" style="margin-top:6px">
+      <a class="btn btn-primary" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-arm64.dmg">Download for macOS</a>
+      <a class="btn btn-ghost" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-win.zip">Download for Windows</a>
     </div>
-    <div class="strip">
-      <div class="s-copy">
-        <span class="npm">npm install -g @membridgeai/membridge</span>
-        <p>Occasional updates. Nothing else, ever.</p>
-      </div>
-      <form class="wl-form" id="wlForm" novalidate>
-        <input type="email" id="wlEmail" name="email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">
-        <input type="text" class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="btn btn-primary" type="submit" id="wlBtn">Get updates</button>
-      </form>
-      <p class="wl-msg" id="wlMsg" role="status" style="flex-basis:100%;margin:0"></p>
+
+    <div class="faq">
+      <details open>
+        <summary>Does our code leave the machine?</summary>
+        <p>No. MemBridge reads your agent sessions locally and writes memory to disk on the same
+        machine. Nothing is sent anywhere until you turn on team sync, and even then it is what
+        your sessions concluded — decisions, summaries, file paths — never your source code.
+        Team sync is end-to-end encrypted, so the backend stores ciphertext it has no key for.</p>
+      </details>
+      <details>
+        <summary>What happens to secrets that show up in a session?</summary>
+        <p>They are stripped before anything is written to disk or sent to your team. MemBridge
+        matches the shapes of AWS, GitHub, Google, Slack, OpenAI and Anthropic keys, JWTs, PEM
+        blocks, connection strings with inline credentials, and bearer tokens, plus a
+        high-entropy catch-all for the ones nobody has a pattern for. Redaction runs at every
+        boundary, including on data arriving back from your teammates.</p>
+      </details>
+      <details>
+        <summary>How is this different from maintaining CLAUDE.md ourselves?</summary>
+        <p>A hand-written context file is the startup half of this, and it only stays useful while
+        somebody keeps editing it. MemBridge writes that file for you from what your sessions
+        actually concluded. The two things it does that a file cannot: deliver a teammate's
+        decision into a session that is already running, and answer a question against months of
+        your team's history that no file would still contain.</p>
+      </details>
+      <details>
+        <summary>Which tools does it work with?</summary>
+        <p>Claude Code and Codex are first class, and they share one memory, so switching tools
+        mid-task doesn't reset anything. It registers itself over MCP with whichever agents it
+        finds installed. Other agents that write session logs can be pointed at with a config
+        entry.</p>
+      </details>
+      <details>
+        <summary>What happens when someone leaves the team?</summary>
+        <p>Removing them revokes access to every shared project immediately and mints a new team
+        encryption key sealed only to the people who remain, so their copy stops being able to
+        read anything new. Membership and sharing changes are all recorded in an audit trail.</p>
+      </details>
+      <details>
+        <summary>Can people keep some work private?</summary>
+        <p>Yes, at three levels. Verbatim prompts stay on your machine by default — only summaries
+        and file paths sync unless someone opts in. Any project can be kept private, and shared
+        projects have per-person access. A developer can pause capture entirely for a project
+        without affecting anyone else.</p>
+      </details>
+      <details>
+        <summary>Do people have to change how they work?</summary>
+        <p>No. It watches the sessions your team already runs and writes to the instruction files
+        your agents already read. Nobody writes documentation for it, and nobody has to remember
+        to record anything.</p>
+      </details>
     </div>
   </div>
 </section>
 
-<section class="section" id="faq">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="mono-label">FAQ</span>
-      <h2>Questions engineers actually ask.</h2>
+<section class="section cta-band" id="talk">
+  <div class="wrap stack rv">
+    <span class="eyebrow">Talk to us</span>
+    <h2>Or see it on <em>your own code.</em></h2>
+    <p class="lede">
+      Book twenty minutes and we'll set it up on a repository your team actually works in, then
+      show the hand-off firing between two real sessions. No slides, and nothing to uninstall
+      afterwards if it isn't for you.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="mailto:hello@membridge.app?subject=MemBridge%20for%20our%20team&amp;body=Team%20size%3A%0AAgents%20we%20run%3A%0ARepos%20on%20GitHub%3F%3A%0A">Book 20 minutes</a>
+      <a class="btn btn-ghost" href="mailto:hello@membridge.app">Email us instead</a>
     </div>
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary>How do I give Claude Code a persistent memory? <span class="fx">+</span></summary>
-        <p class="faq-a">Run <code>membridge start</code>. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into <code>CLAUDE.md</code>, which Claude Code reads on every startup. Your next session starts already knowing what the last one did.</p>
-      </details>
-      <details class="faq-item">
-        <summary>How do I stop my AI coding assistant from losing context between sessions? <span class="fx">+</span></summary>
-        <p class="faq-a">Persist the context somewhere the tool re-reads on startup. That's exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into <code>CLAUDE.md</code> and <code>AGENTS.md</code>, so a new session, even in a different tool, picks up where the last one left off instead of starting from zero.</p>
-      </details>
-      <details class="faq-item">
-        <summary>How do I share context between Claude Code and Codex? <span class="fx">+</span></summary>
-        <p class="faq-a">The same memory block lands in both <code>CLAUDE.md</code> and <code>AGENTS.md</code>, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Does MemBridge send my code to the cloud? <span class="fx">+</span></summary>
-        <p class="faq-a">No. The daemon binds to <code>127.0.0.1</code> and solo use makes zero network calls: no accounts, no telemetry, nothing phoning home. You can verify it yourself with one lsof command, shown in the Privacy section above. Team sync is opt-in and end-to-end encrypted.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Will it overwrite my CLAUDE.md or AGENTS.md? <span class="fx">+</span></summary>
-        <p class="faq-a">Never. MemBridge only writes between its own <code>&lt;!-- membridge --&gt;</code> markers, your notes stay byte-for-byte intact, and <code>membridge remove</code> restores every file exactly. It's plain markdown you can read and diff.</p>
-      </details>
-      <details class="faq-item">
-        <summary>What is CLAUDE.md? <span class="fx">+</span></summary>
-        <p class="faq-a"><code>CLAUDE.md</code> is the markdown file Claude Code automatically reads at the start of every session, a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up.</p>
-      </details>
-      <details class="faq-item">
-        <summary>What is AGENTS.md? <span class="fx">+</span></summary>
-        <p class="faq-a"><code>AGENTS.md</code> is an open convention for giving coding agents per-repository instructions. Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to <code>CLAUDE.md</code>, which is how context crosses between tools.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Does it work with Cursor, Gemini CLI, or other AI coding tools? <span class="fx">+</span></summary>
-        <p class="faq-a">Claude Code and Codex adapters ship built in. Any tool that logs its sessions as JSONL can be wired up with a small config entry, no code required. More first-class adapters are on the roadmap.</p>
-      </details>
-      <details class="faq-item">
-        <summary>How is MemBridge different from Mem0, claude-mem, and other AI memory tools? <span class="fx">+</span></summary>
-        <p class="faq-a">Four ways. MemBridge captures <strong>automatically</strong> by tailing session logs, so there's no save tool for the agent to forget. Memory is <strong>per-project</strong>, not one global store that bleeds between repos. It runs <strong>100% locally</strong> with no API key or cloud service. And <code>membridge why file:line</code> answers a question git blame can't: the reasoning behind any line of code.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Is MemBridge free? <span class="fx">+</span></summary>
-        <p class="faq-a">Yes. MemBridge is free and source-available with zero dependencies. There is no API key to bring and no paid tier. Install it and you have all of it.</p>
-      </details>
-      <details class="faq-item">
-        <summary>How does a team share one AI memory? <span class="fx">+</span></summary>
-        <p class="faq-a">Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. End-to-end encrypted before it leaves each machine, invite-only, off by default.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Won't Anthropic or OpenAI just build this? <span class="fx">+</span></summary>
-        <p class="faq-a">Each can build memory inside its own tool. Neither has a reason to build the bridge across its competitor's, and that neutral spot is exactly where MemBridge lives. The cross-tool provenance it accumulates is the part that compounds.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Why does Windows warn me about this download? <span class="fx">+</span></summary>
-        <p class="faq-a">The Windows build isn't code-signed yet &mdash; an Authenticode certificate is in progress &mdash; so SmartScreen shows a caution prompt the first time you run it. Click <strong>More info</strong>, then <strong>Run anyway</strong>. The macOS build is fully signed and notarized, so it opens with no warning. Prefer no prompt at all? <code>npm install -g @membridgeai/membridge</code> installs the same thing with none.</p>
-      </details>
-    </div>
-    <p class="faq-more">Still reading? <a href="https://github.com/MembridgeAi/membridge" target="_blank" rel="noopener">The repo answers the rest</a>.</p>
+    <p class="hero-note">
+      Useful to know beforehand: how many engineers, which agents they run, and whether your
+      repos live on GitHub.
+    </p>
   </div>
 </section>
 
 <footer>
-  <div class="wrap foot-inner">
-    <a class="brand" href="#">
-      <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
-      MemBridge
-    </a>
-    <div class="foot-links">
-      <a href="#why">Why MemBridge</a>
-      <a href="#demo">Claude Code + Codex sync</a>
-      <a href="#faq">FAQ</a>
-      <a href="/context-ledger/">The Context Ledger</a>
-      <a href="https://github.com/MembridgeAi/membridge" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://github.com/MembridgeAi/membridge#readme" target="_blank" rel="noopener">Docs</a>
-      <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md" target="_blank" rel="noopener">License</a>
-    </div>
-    <span class="foot-note">No cookies. No analytics. Obviously.</span>
-  </div>
-  <div class="wrap foot-blurb">
-    MemBridge is a local-first, source-available memory layer for AI coding tools. It watches your Claude Code and Codex sessions, distills each one into per-project memory, and syncs it into the context files every tool already reads, <code>CLAUDE.md</code> and <code>AGENTS.md</code>, so your agents stop starting from zero.
-  </div>
+  <div class="wrap">MemBridge · shared memory for teams running AI coding agents</div>
 </footer>
 
 <script>
 (function () {
-  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- tiny terminal script engine ----------
-     step kinds:
-       type : type text char-by-char (prefix rendered instantly)
-       line : print a full line
-       wait : pause ms
-       call : run a function (bridge animations)
-  */
-  function esc(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  /* Start when the element is seen — but never depend on it. Some embedding
+     contexts (iframes, snapshot renderers) never deliver IntersectionObserver
+     callbacks, and a hero animation that silently never plays is worse than
+     one that starts a beat early. */
+  function whenSeen(el, fn, fallbackMs) {
+    var done = false;
+    var go = function () { if (!done) { done = true; fn(); } };
+    if (!el) return;
+    // Already on screen when the page loads? Start now — waiting on an
+    // observer that may never report is how an animation silently dies.
+    var box = el.getBoundingClientRect();
+    if (box.top < window.innerHeight && box.bottom > 0) { setTimeout(go, 260); }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { io.disconnect(); go(); }
+      }, { threshold: 0.25 });
+      io.observe(el);
+    }
+    setTimeout(go, fallbackMs || 1200);
   }
 
-  function makeRunner(steps, onDone) {
-    var i = 0, cancelled = false, timers = [];
-    function later(fn, ms) { timers.push(setTimeout(fn, REDUCED ? 0 : ms)); }
-    function next() {
-      if (cancelled) return;
-      if (i >= steps.length) { if (onDone) onDone(); return; }
-      var s = steps[i++];
-      if (s.kind === 'wait') { later(next, s.ms); return; }
-      if (s.kind === 'call') { s.fn(); later(next, s.ms || 0); return; }
-      var body = s.el;
-      var stale = body.querySelector('.idle');
-      if (stale) stale.remove();
-      var ln = document.createElement('span');
-      ln.className = 'ln' + (s.cls ? ' ' + s.cls : '');
-      body.appendChild(ln);
-      if (s.kind === 'line' || REDUCED) {
-        ln.innerHTML = (s.prefix || '') + esc(s.text);
-        later(next, REDUCED ? 0 : (s.after || 120));
+  /* ---- scroll reveal, matching the site's existing .35s feel ---- */
+  var rvs = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) {
+    rvs.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    rvs.forEach(function (el) { io.observe(el); });
+    // Belt and braces: if the observer never reports, show everything.
+    setTimeout(function () { rvs.forEach(function (el) { el.classList.add('in'); }); }, 1600);
+  }
+
+  /* ---- the live hand-off sequence ---- */
+  var ASK = 'rotate the vault credentials for tenant onboarding';
+  var ask = document.getElementById('ask');
+  var readLine = document.getElementById('readLine');
+  var inject = document.getElementById('inject');
+  var afterLine = document.getElementById('afterLine');
+  var replay = document.getElementById('replay');
+  var timers = [];
+
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+  function run() {
+    clearTimers();
+    ask.textContent = '';
+    ask.classList.add('typed');
+    [readLine, inject, afterLine, replay].forEach(function (el) { el.hidden = true; });
+    inject.classList.remove('show');
+
+    if (reduce) {
+      ask.textContent = ASK;
+      ask.classList.remove('typed');
+      readLine.hidden = false; inject.hidden = false; afterLine.hidden = false; replay.hidden = false;
+      return;
+    }
+
+    var i = 0;
+    (function type() {
+      if (i <= ASK.length) {
+        ask.textContent = ASK.slice(0, i++);
+        timers.push(setTimeout(type, 26));
+      } else {
+        ask.classList.remove('typed');
+        at(340, function () { readLine.hidden = false; });
+        at(1000, function () { inject.hidden = false; inject.classList.add('show'); });
+        at(2500, function () { afterLine.hidden = false; });
+        at(3000, function () { replay.hidden = false; });
+      }
+    })();
+  }
+
+  replay.addEventListener('click', run);
+
+  /* start when the demo is actually on screen */
+  whenSeen(document.getElementById('demo'), run, 900);
+
+  /* ---- ask-your-agent: question -> MCP lookup -> a clear answer ---- */
+  var askDemo = document.getElementById('askDemo');
+  if (askDemo) {
+    var Q = 'what did Priya decide about auth rotation?';
+    var HITS = [
+      ['Priya','Codex','Jun 14',21,'JWT rotation happens in vault, never in app config. The app-config path was reverted after the March incident.',['decisions','gotchas','services/auth/rotate.ts']],
+      ['Marcus','Claude Code','Jun 2',14,'Moved session refresh behind the gateway so the SDK never sees a raw token.',['headline','summary','gateway/session.ts']],
+      ['You','Claude Code','May 28',9,'Tried per-service key caching, abandoned it: rotation invalidation got unmanageable.',['decisions','auth/cache.ts']]
+    ];
+    var aQ = document.getElementById('askQ'), aCaret = document.getElementById('askCaret');
+    var aWork = document.getElementById('askWork'), aFound = document.getElementById('askFound');
+    var aHits = document.getElementById('askHits'), aAns = document.getElementById('askAnswer');
+    var aReplay = document.getElementById('askReplay');
+    var esc = function (t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; };
+    var aT = [];
+    var aClear = function () { aT.forEach(clearTimeout); aT = []; };
+    var aAt = function (ms, fn) { aT.push(setTimeout(fn, ms)); };
+
+    function paintHits() {
+      aHits.innerHTML = HITS.map(function (h) {
+        return '<div class="hit"><div class="hit-top">' +
+          '<span class="hit-who">' + esc(h[0]) + '</span><span>' + esc(h[1]) + '</span><span>' + esc(h[2]) + '</span>' +
+          '<span class="hit-score">score ' + h[3] + '</span></div>' +
+          '<p class="hit-text">' + esc(h[4]) + '</p><div class="hit-fields">' +
+          h[5].map(function (f) { return '<span class="field">' + esc(f) + '</span>'; }).join('') +
+          '</div></div>';
+      }).join('');
+      var rows = aHits.querySelectorAll('.hit');
+      rows.forEach(function (r, i) { setTimeout(function () { r.classList.add('in'); }, 110 * i); });
+    }
+
+    function askRun() {
+      aClear();
+      aQ.textContent = '';
+      aCaret.classList.remove('off');
+      [aWork, aFound, aAns, aReplay].forEach(function (el) { el.hidden = true; el.classList.remove('in'); });
+      aWork.classList.add('ask-step'); aFound.classList.add('ask-step'); aAns.classList.add('ask-step');
+      aHits.innerHTML = '';
+
+      if (reduce) {
+        aQ.textContent = Q; aCaret.classList.add('off');
+        [aWork, aFound, aAns, aReplay].forEach(function (el) { el.hidden = false; });
+        paintHits();
         return;
       }
-      // typed
-      ln.innerHTML = (s.prefix || '');
-      var caret = document.createElement('span');
-      caret.className = 'caret';
-      ln.appendChild(caret);
-      var txt = document.createTextNode('');
-      ln.insertBefore(txt, caret);
-      var j = 0;
-      (function tick() {
-        if (cancelled) return;
-        if (j < s.text.length) {
-          txt.nodeValue += s.text.charAt(j++);
-          later(tick, s.speed || 26);
-        } else {
-          caret.remove();
-          later(next, s.after || 300);
+      var i = 0;
+      (function type() {
+        if (i <= Q.length) { aQ.textContent = Q.slice(0, i++); aAt(34, type); }
+        else {
+          aCaret.classList.add('off');
+          aAt(420,  function () { aWork.hidden = false; aWork.classList.add('in'); });
+          aAt(1750, function () { aWork.hidden = true; aFound.hidden = false; aFound.classList.add('in'); });
+          aAt(1900, paintHits);
+          aAt(2900, function () { aAns.hidden = false; aAns.classList.add('in'); });
+          aAt(3500, function () { aReplay.hidden = false; });
         }
       })();
     }
-    return {
-      start: next,
-      cancel: function () { cancelled = true; timers.forEach(clearTimeout); }
+
+    aReplay.addEventListener('click', askRun);
+    whenSeen(askDemo, askRun, 1400);
+  }
+
+  /* ---- app: switch views from the rail ---- */
+  var app = document.getElementById('aApp');
+  if (app) {
+    var titles = {
+      today: ['Today', 'Thursday, 30 July'],
+      projects: ['Projects', '4 tracked'],
+      members: ['Members', '4 people · 1 invite pending'],
+      insights: ['Insights', 'last 30 days'],
+      settings: ['Settings', 'this machine']
     };
-  }
-
-  /* ---------- hero: membridge why ---------- */
-  var whyBody = document.getElementById('whyBody');
-  var whyRunner = null;
-
-  function whySteps() {
-    return [
-      { kind: 'type', el: whyBody, prefix: '<span class="t-dim">$ </span>', text: 'membridge why src/checkout/Button.jsx:18', after: 500 },
-      { kind: 'line', el: whyBody, text: '', after: 60 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-ok">src/checkout/Button.jsx:18</span><span class="t-dim"> · </span>', text: 'label = "Reserve your spot"', after: 300 },
-      { kind: 'line', el: whyBody, text: '', after: 60 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Written   </span>', text: 'last night · Claude Code · prompted by Sam', after: 180 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Prompt    </span>', text: '"Change the checkout button to say', after: 90 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">          </span>', text: ' Reserve your spot, not Buy now."', after: 180 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-mem">Why       </span>', text: '"Buy now" was scaring people off at checkout', after: 180 },
-      { kind: 'line', el: whyBody, prefix: '<span class="t-dim">Session   </span>', text: '~/cartful · Jul 17, 11:42 PM', after: 100 }
-    ];
-  }
-
-  function runWhy() {
-    if (whyRunner) whyRunner.cancel();
-    whyBody.innerHTML = '';
-    whyRunner = makeRunner(whySteps());
-    whyRunner.start();
-  }
-  document.getElementById('whyReplay').addEventListener('click', runWhy);
-  runWhy();
-
-  /* ---------- sync demo ---------- */
-  var demoStage = document.getElementById('demoStage');
-  var wires = document.getElementById('wires');
-  var topT = document.getElementById('topT'), botT = document.getElementById('botT');
-  var topBody = document.getElementById('topBody'), botBody = document.getElementById('botBody');
-  var mwrap = document.getElementById('mwrap'), mring = document.getElementById('mring'), mstatus = document.getElementById('mstatus');
-  var fileL = document.getElementById('fileL'), fileR = document.getElementById('fileR');
-  var syncRunner = null, syncStarted = false, loopTimer = null;
-  var CAN_ANIM = !REDUCED && typeof document.body.animate === 'function';
-  var P = {};
-
-  function bridgeSet(text, active, pulse) {
-    mstatus.textContent = text;
-    mstatus.classList.toggle('active', !!active);
-    mwrap.classList.toggle('pulse', !!pulse && !REDUCED);
-  }
-
-  // an empty dark box reads as broken: show a waiting shell prompt instead
-  function seedIdle(el) {
-    el.innerHTML = '<span class="ln idle"><span class="t-prompt">&gt; </span><span class="caret"></span></span>';
-  }
-
-  function anchor(el, edge) {
-    var r = el.getBoundingClientRect(), st = demoStage.getBoundingClientRect();
-    return { x: r.left - st.left + r.width / 2, y: (edge === 'top' ? r.top : r.bottom) - st.top };
-  }
-  // straight right-angle elbow: down, across, down
-  function elbowV(a, b) {
-    if (Math.abs(a.x - b.x) < 1) return 'M' + a.x + ' ' + a.y + ' L' + b.x + ' ' + b.y;
-    var my = (a.y + b.y) / 2;
-    return 'M' + a.x + ' ' + a.y + ' L' + a.x + ' ' + my + ' L' + b.x + ' ' + my + ' L' + b.x + ' ' + b.y;
-  }
-  function layoutWires() {
-    wires.innerHTML = '';
-    P = {};
-    wires.setAttribute('viewBox', '0 0 ' + demoStage.offsetWidth + ' ' + demoStage.offsetHeight);
-    var big = mwrap.querySelector('.bigm');
-    var defs = [
-      ['in',   elbowV(anchor(topT, 'bottom'), anchor(big, 'top'))],
-      ['outL', elbowV(anchor(big, 'bottom'), anchor(fileL, 'top'))],
-      ['outR', elbowV(anchor(big, 'bottom'), anchor(fileR, 'top'))],
-      ['dnL',  elbowV(anchor(fileL, 'bottom'), anchor(botT, 'top'))],
-      ['dnR',  elbowV(anchor(fileR, 'bottom'), anchor(botT, 'top'))]
-    ];
-    // faint ghost tree, always visible
-    defs.forEach(function (d) {
-      var g = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      g.setAttribute('d', d[1]);
-      g.setAttribute('class', 'ghost');
-      wires.appendChild(g);
-    });
-    // blue overlay, revealed stage by stage
-    defs.forEach(function (d) {
-      var pth = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      pth.setAttribute('d', d[1]);
-      wires.appendChild(pth);
-      P[d[0]] = pth;
-    });
-  }
-  function drawPath(pth, dur) {
-    if (!pth) return;
-    var L = pth.getTotalLength();
-    pth.style.strokeDasharray = L;
-    if (!CAN_ANIM) { pth.style.strokeDashoffset = 0; pth.style.opacity = 1; return; }
-    pth.style.opacity = 1;
-    pth.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: dur, easing: 'ease', fill: 'forwards' });
-  }
-  function travel(pth, dur, delay) {
-    if (!pth || !CAN_ANIM) return;
-    setTimeout(function () {
-      var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      dot.setAttribute('r', '3.6');
-      wires.appendChild(dot);
-      var L = pth.getTotalLength(), t0 = null;
-      function step(ts) {
-        if (t0 === null) t0 = ts;
-        var t = Math.min(1, (ts - t0) / dur);
-        var pt = pth.getPointAtLength(L * t);
-        dot.setAttribute('cx', pt.x);
-        dot.setAttribute('cy', pt.y);
-        dot.style.opacity = t < 0.9 ? 1 : (1 - t) * 10;
-        if (t < 1) requestAnimationFrame(step); else dot.remove();
-      }
-      requestAnimationFrame(step);
-    }, delay || 0);
-  }
-  // fragments of the session ride the wire down and consolidate into the M
-  function fragsIn() {
-    if (!CAN_ANIM) return;
-    var words = ['checkout', 'button copy', '"Reserve your spot"', 'done ✓'];
-    words.forEach(function (w, i) {
-      setTimeout(function () {
-        var pth = P['in'];
-        if (!pth) return;
-        var f = document.createElement('span');
-        f.className = 'frag';
-        f.textContent = w;
-        demoStage.appendChild(f);
-        var L = pth.getTotalLength(), t0 = null, dur = 800;
-        function step(ts) {
-          if (t0 === null) t0 = ts;
-          var t = Math.min(1, (ts - t0) / dur);
-          var pt = pth.getPointAtLength(L * t);
-          f.style.left = pt.x + 'px';
-          f.style.top = pt.y + 'px';
-          f.style.opacity = t < 0.15 ? t / 0.15 : (t > 0.8 ? (1 - t) * 5 : 1);
-          f.style.transform = 'translate(-50%,-50%) scale(' + (1 - t * 0.65) + ')';
-          if (t < 1) requestAnimationFrame(step); else f.remove();
-        }
-        requestAnimationFrame(step);
-      }, 120 + i * 190);
-    });
-  }
-  function ringPulse() {
-    mring.classList.remove('go');
-    void mring.offsetWidth; // restart the animation
-    mring.classList.add('go');
-  }
-  // the files already exist: sync AMENDS the block between their markers
-  function amendFiles(on) {
-    [fileL, fileR].forEach(function (card) {
-      var lines = card.querySelectorAll('.fl.new');
-      for (var i = 0; i < lines.length; i++) {
-        (function (el, d) {
-          if (on) setTimeout(function () { el.classList.add('on'); }, REDUCED ? 0 : d);
-          else el.classList.remove('on');
-        })(lines[i], i * 160);
-      }
-      card.querySelector('.fnew').classList.toggle('on', on);
-    });
-  }
-  function clearBridgeFx() {
-    var fx = demoStage.querySelectorAll('.frag');
-    for (var i = 0; i < fx.length; i++) fx[i].remove();
-    mring.classList.remove('go');
-  }
-
-  function syncSteps() {
-    return [
-      { kind: 'call', fn: function () { bridgeSet('watching…', false, false); } },
-      { kind: 'type', el: topBody, prefix: '<span class="t-prompt">&gt; </span>', text: 'Change the checkout button to "Reserve your spot". "Buy now" was scaring people off.', speed: 13, after: 350 },
-      { kind: 'line', el: topBody, prefix: '<span class="t-ok">⏺ </span>', text: 'Checkout updated. The button now reads "Reserve your spot".', after: 420 },
-      { kind: 'call', ms: 1250, fn: function () { bridgeSet('consolidating…', true, true); drawPath(P['in'], 550); fragsIn(); } },
-      { kind: 'call', ms: 550, fn: function () {
-          bridgeSet('amending memory…', true, false); ringPulse();
-          drawPath(P.outL, 500); drawPath(P.outR, 500);
-          travel(P.outL, 550, 120); travel(P.outR, 550, 260);
-        } },
-      { kind: 'call', ms: 1150, fn: function () { amendFiles(true); } },
-      { kind: 'call', ms: 650, fn: function () {
-          bridgeSet('synced ✓', true, false);
-          drawPath(P.dnL, 550); drawPath(P.dnR, 550);
-          travel(P.dnL, 650, 150); travel(P.dnR, 650, 330);
-        } },
-      { kind: 'type', el: botBody, prefix: '<span class="t-prompt">&gt; </span>', text: 'Why does checkout say "Reserve your spot"?', speed: 17, after: 380 },
-      { kind: 'line', el: botBody, prefix: '<span class="t-mem">⏺ </span>', text: 'From AGENTS.md: "Buy now" was scaring people off. Sam changed it last night.', after: 200 }
-    ];
-  }
-
-  function runSync() {
-    if (syncRunner) syncRunner.cancel();
-    clearTimeout(loopTimer);
-    layoutWires();
-    clearBridgeFx();
-    seedIdle(topBody);
-    seedIdle(botBody);
-    amendFiles(false);
-    syncRunner = makeRunner(syncSteps(), function () {
-      if (!REDUCED) loopTimer = setTimeout(runSync, 7000);
-    });
-    syncRunner.start();
-  }
-  document.getElementById('syncReplay').addEventListener('click', runSync);
-
-  seedIdle(topBody);
-  seedIdle(botBody);
-  layoutWires();
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting && !syncStarted) {
-          syncStarted = true;
-          runSync();
-          io.disconnect();
-        }
-      });
-    }, { threshold: 0.25 });
-    io.observe(document.getElementById('demo'));
-  } else {
-    runSync();
-  }
-  var rsT = null;
-  window.addEventListener('resize', function () {
-    if (!syncStarted) { layoutWires(); return; }
-    clearTimeout(rsT);
-    rsT = setTimeout(runSync, 250);
-  });
-
-  /* ---------- app demo (merged from ui-demo.html) ---------- */
-(function () {
-  'use strict';
-  function $(id) { return document.getElementById(id); }
-  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-
-  /* ---------- sync pill ticker ----------
-     The daemon syncs every 60s, so the pill must never read 60S or higher —
-     it wraps back to a couple of seconds as the next sync lands. */
-  var syncS = 8;
-  setInterval(function () {
-    syncS = syncS >= 59 ? 2 : syncS + 1;
-    $('syncAgo').textContent = syncS + 'S';
-  }, 1000);
-
-  /* ---------- view switching ---------- */
-  var views = ['projects', 'detail', 'activity', 'team', 'day', 'settings'];
-  var tabs = document.querySelectorAll('.app-tab');
-  function showView(name) {
-    views.forEach(function (v) { $('view-' + v).hidden = (v !== name); });
-    var tabName = name === 'detail' ? 'projects' : (name === 'day' ? 'activity' : name);
-    tabs.forEach(function (t) {
-      var on = name !== 'settings' && t.getAttribute('data-view') === tabName;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', String(on));
-    });
-    $('gearBtn').classList.toggle('active', name === 'settings');
-  }
-  $('gearBtn').addEventListener('click', function () { showView('settings'); });
-  tabs.forEach(function (t) {
-    t.addEventListener('click', function () { showView(t.getAttribute('data-view')); });
-  });
-  $('inviteBtn').addEventListener('click', function () {
-    showView('team');
-    flashJoin();
-  });
-  $('inviteSomeone').addEventListener('click', flashJoin);
-  $('manageTeam').addEventListener('click', function () { showView('team'); });
-
-  /* ---------- settings interactions ---------- */
-  $('selAll').addEventListener('change', function () {
-    var on = this.checked;
-    document.querySelectorAll('.set-check.loc').forEach(function (c) { c.checked = on; });
-  });
-  function flashJoin() {
-    var jc = $('joinCard');
-    jc.classList.remove('flash');
-    void jc.offsetWidth;
-    jc.classList.add('flash');
-  }
-
-  /* ---------- theme toggle ---------- */
-  $('themeBtn').addEventListener('click', function () {
-    var dark = $('appWin').classList.toggle('dark');
-    this.textContent = dark ? '☾' : '☀';
-    this.setAttribute('aria-label', dark ? 'Switch to light' : 'Switch to dark');
-  });
-
-  /* ---------- projects: show / person / sort ---------- */
-  var projRows = Array.prototype.slice.call(document.querySelectorAll('.proj-row'));
-  var projShow = 'all', projPerson = 'all';
-  function applyProjects() {
-    projRows.forEach(function (row) {
-      var kindOk = projShow === 'all' || row.getAttribute('data-kind') === projShow;
-      var personOk = projPerson === 'all' || row.getAttribute('data-people').split(' ').indexOf(projPerson) !== -1;
-      row.hidden = !(kindOk && personOk);
-    });
-  }
-  function segWire(sel, onPick) {
-    var btns = document.querySelectorAll(sel + ' button');
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        btns.forEach(function (x) { x.classList.remove('active'); });
-        b.classList.add('active');
-        onPick(b);
-      });
-    });
-  }
-  segWire('#showSeg', function (b) { projShow = b.getAttribute('data-filter'); applyProjects(); });
-  segWire('#sortSeg', function (b) {
-    var byName = b.getAttribute('data-sort') === 'name';
-    projRows.slice().sort(function (a, c) {
-      return byName
-        ? a.getAttribute('data-name').localeCompare(c.getAttribute('data-name'))
-        : (+a.getAttribute('data-rank')) - (+c.getAttribute('data-rank'));
-    }).forEach(function (r) { $('projList').appendChild(r); });
-  });
-  $('personSel').addEventListener('change', function () { projPerson = this.value; applyProjects(); });
-  $('addProjBtn').addEventListener('click', function () { showView('settings'); });
-
-  /* ---------- activity: person / project / tool / distilled ---------- */
-  var actCards = Array.prototype.slice.call(document.querySelectorAll('#view-activity .act-card'));
-  function applyActivity() {
-    var p = $('actPerson').value, pr = $('actProject').value,
-        tool = $('actTool').value, distOnly = $('actDistilled').checked;
-    actCards.forEach(function (c) {
-      c.hidden = !((p === 'all' || c.getAttribute('data-person') === p)
-        && (pr === 'all' || c.getAttribute('data-project') === pr)
-        && (tool === 'all' || c.getAttribute('data-tools').split(',').indexOf(tool) !== -1)
-        && (!distOnly || c.getAttribute('data-distilled') === '1'));
-    });
-    /* a day heading disappears with the last card under it */
-    document.querySelectorAll('#view-activity [data-day-label]').forEach(function (lbl) {
-      var any = false, n = lbl.nextElementSibling;
-      while (n && n.classList.contains('act-card')) {
-        if (!n.hidden) any = true;
-        n = n.nextElementSibling;
-      }
-      lbl.hidden = !any;
-    });
-  }
-  ['actPerson', 'actProject', 'actTool', 'actDistilled'].forEach(function (id) {
-    $(id).addEventListener('change', applyActivity);
-  });
-
-  /* ---------- project detail data ---------- */
-  var PROJ = {
-    'cartful': {
-      ini: 'CA', name: 'cartful', badge: 'Shared · Sam + Maya', shared: true,
-      path: '/Users/sam/cartful', when: 'today',
-      catch_: 'Nothing new since you last looked.',
-      stats: [['17', 'Sessions this week'], ['49', 'Files touched'], ['1', 'Open todos', true]],
-      digest: 'cartful, shared memory digest (MemBridge)\n- Checkout button says "Reserve your spot", not "Buy now". "Buy now" scared people off. (Sam, Jul 17)\n- Free plan caps at 3 projects. (Maya, Jul 15)\n- Cart drawer: optimistic updates, roll back on 5xx. (Maya, Jul 15)\nPaste this into any AI to give it project context.',
-      days: [
-        { label: 'Today', cards: [
-          { tile: 'sam', ini: 'S', who: 'You', tool: 'Claude Code', when: '2h ago', share: null,
-            title: 'Checkout button now says "Reserve your spot"',
-            intent: 'Change checkout copy that was scaring buyers off',
-            nprompts: 4,
-            summary: 'The checkout button now reads "Reserve your spot" instead of "Buy now" across every view, including the mobile sticky footer. Copy change came from watching three test users hesitate at the old wording. Suite green at 214 of 214, shipped to the preview branch for Maya to review in the morning.',
-            agent: 'Checkout copy swap and mobile spacing',
-            prompts: ['"Change the checkout button to \'Reserve your spot\'. \'Buy now\' was scaring people off."', '"continue"', '"Tighten mobile spacing so checkout stays above the fold."', '"Run the suite and fix whatever breaks."'] },
-          { tile: 'maya', ini: 'M', who: 'Maya', tool: 'Codex', when: '9h ago', share: null,
-            title: 'Empty-cart screen rewritten, save-for-later added',
-            intent: 'Reduce mobile bounce on the empty-cart step',
-            nprompts: 3,
-            summary: 'Rewrote the empty-cart screen copy to one warm sentence and added a "save for later" link under the items. Mobile bounce on that step was the worst point in the funnel; this is the first of two planned fixes, the second is the checkout button copy Sam picked up tonight.',
-            agent: 'Empty-cart rework',
-            prompts: ['"Rewrite the empty-cart screen. Warmer, one sentence max."', '"Add a save-for-later link under the items."', '"Show me bounce for the cart step before and after."'] }
-        ]}
-      ]
-    },
-    'brewlog': {
-      ini: 'BR', name: 'brewlog', badge: 'Local only', shared: false,
-      path: '/Users/sam/Desktop/brewlog', when: 'yesterday',
-      catch_: 'This project is local only: only your own sessions land here.',
-      stats: [['5', 'Sessions this week'], ['21', 'Files touched'], ['0', 'Open todos', true]],
-      digest: 'brewlog, memory digest (MemBridge)\n- Brew timer state lives in IndexedDB, not localStorage: Safari clears LS in private mode. (Sam, Jul 12)\nPaste this into any AI to give it project context.',
-      days: [
-        { label: 'Jul 18', cards: [
-          { tile: 'sam', ini: 'S', who: 'You', tool: 'Claude Code', when: '25h ago', share: 'Share with team',
-            title: 'Pour-over preset added, iOS wake-lock fixed',
-            intent: 'Stop the screen sleeping mid-brew',
-            nprompts: 2,
-            summary: 'Added a pour-over preset (4:30 total, bloom at 45s) and fixed the screen sleeping mid-brew on iOS with a wake-lock request tied to the running timer. Timer state stays in IndexedDB so Safari private mode stops eating it.',
-            agent: 'Preset + wake lock',
-            prompts: ['"Add a pour-over preset, 4:30 total, bloom at 45s."', '"The screen keeps sleeping mid-brew on iOS, fix that."'] }
-        ]}
-      ]
-    },
-    'study-buddy': {
-      ini: 'ST', name: 'study-buddy', badge: 'Local only', shared: false,
-      path: '/Users/sam/study-buddy', when: '3 days ago',
-      catch_: 'This project is local only: only your own sessions land here.',
-      stats: [['2', 'Sessions this week'], ['8', 'Files touched'], ['0', 'Open todos', true]],
-      digest: 'study-buddy, memory digest (MemBridge)\n- Flashcards use SM-2 spaced repetition, reviews capped at 40/day. (Sam, Jul 8)\nPaste this into any AI to give it project context.',
-      days: [
-        { label: 'Jul 18', cards: [
-          { tile: 'sam', ini: 'S', who: 'You', tool: 'Codex', when: '3d ago', share: 'Share with team',
-            title: 'Spaced repetition scheduling for flashcards',
-            intent: 'Make reviews feel light, never like homework',
-            nprompts: 2,
-            summary: 'Flashcards now schedule with SM-2 spaced repetition and daily reviews cap at 40 so the queue never feels like homework. The cap lives in config for later tuning.',
-            agent: 'SM-2 scheduling',
-            prompts: ['"Use SM-2 for review scheduling."', '"Cap daily reviews at 40 so it never feels like homework."'] }
-        ]}
-      ]
-    }
-  };
-
-  function renderDetail(key) {
-    var d = PROJ[key];
-    if (!d) return;
-    var h = '<button class="pd-back" type="button" id="pdBack">‹ Projects</button>';
-    h += '<div class="pd-headrow"><div class="grow">' +
-      '<div class="pd-name">' + d.name + ' <span class="proj-badge' + (d.shared ? ' shared' : '') + '">' + d.badge + '</span></div>' +
-      '<div class="pd-path">' + d.path + '</div>' +
-      '<div class="pd-path">' + d.when + '</div></div>' +
-      '<button class="copy-ai" type="button" id="copyAi" data-digest="' + d.digest.replace(/"/g, '&quot;') + '">Copy for AI</button></div>';
-    h += '<span class="catch-pill"><span class="dot"></span>The catch-up</span>';
-    h += '<div class="catch-card"><span class="catch-check">✓</span><div><h4>You\'re caught up here</h4><p>' + d.catch_ + '</p></div></div>';
-    h += '<div class="stat-trio">';
-    d.stats.forEach(function (s) {
-      h += '<div class="stat-card"><span class="n' + (s[2] ? ' blue' : '') + '">' + s[0] + '</span><span class="l">' + s[1] + '</span></div>';
-    });
-    h += '</div>';
-    d.days.forEach(function (day) {
-      h += '<span class="mono-label day-label">' + day.label + '</span>';
-      day.cards.forEach(function (c, i) {
-        var id = key + '-' + i;
-        h += '<div class="act-card"><div class="act-top">' +
-          '<span class="act-tile ' + c.tile + '">' + c.ini + '</span><div class="act-main">' +
-          '<div class="act-who"><span class="who">' + c.who + '</span><span class="tool-chip">' + c.tool + '</span><span class="when">' + c.when + '</span></div>' +
-          '<p class="act-title">' + esc(c.title) + '</p>' +
-          '<p class="intent"><span class="il">Intent</span>' + esc(c.intent) + '</p>' +
-          '<div class="card-links">' +
-          '<button class="expander" type="button" data-target="dt-' + id + '" aria-expanded="false">' + c.nprompts + ' prompts ▾</button>' +
-          (c.share ? '<button class="share-chip" type="button">⇗ ' + c.share + '</button>' : '') +
-          '</div>' +
-          '<div class="detail" id="dt-' + id + '" hidden>' +
-          '<span class="dl">Summary</span><p class="summary">' + esc(c.summary) + '</p>' +
-          '<span class="dl">Agent 1 · ' + esc(c.agent) + '</span>' +
-          '<ol class="prompt-list">' + c.prompts.map(function (p, j) {
-            return '<li><span class="pn">0' + (j + 1) + '</span><em>' + esc(p) + '</em></li>';
-          }).join('') + '</ol></div>' +
-          '</div></div></div>';
-      });
-    });
-    var view = $('view-detail');
-    view.innerHTML = h;
-    showView('detail');
-    $('pdBack').addEventListener('click', function () { showView('projects'); });
-    $('copyAi').addEventListener('click', function () {
-      var btn = this;
-      var text = btn.getAttribute('data-digest').replace(/\\\n/g, '\n');
-      function done(ok) {
-        btn.textContent = ok ? 'Copied ✓' : 'Copy for AI';
-        setTimeout(function () { btn.textContent = 'Copy for AI'; }, 2000);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
-      } else { done(false); }
-    });
-  }
-
-  /* ---------- day detail data ---------- */
-  var DAYS = {
-    'sam-live': {
-      crumb: 'Activity › You · Today',
-      head: 'Checkout copy swap: "Reserve your spot", mobile spacing pass',
-      cards: [
-        { live: true, when: '12m ago', share: true, open: true,
-          title: 'Checkout copy swap: "Reserve your spot", mobile spacing pass',
-          summary: 'The checkout button now reads "Reserve your spot" instead of "Buy now" across every view, including the mobile sticky footer. Mobile spacing pass is next so the button stays above the fold on small screens. Suite green at 214 of 214 so far, still running.',
-          prompts: ['"Change the checkout button to \'Reserve your spot\'. \'Buy now\' was scaring people off."', '"continue"', '(no prompt captured)', '"Tighten mobile spacing so checkout stays above the fold."', '(file edits)', '"Run the suite and fix whatever breaks."'] }
-      ]
-    },
-    'maya-multi': {
-      crumb: 'Activity › Maya · Today',
-      head: 'Empty-cart rework, config cleanup, retry hardening',
-      cards: [
-        { live: false, when: '86m ago', share: false, open: true,
-          title: 'Empty-cart screen rewritten, save-for-later added',
-          summary: 'Rewrote the empty-cart screen copy to one warm sentence and added a "save for later" link under the items. Mobile bounce on that step was the worst point in the funnel; this is the first of two planned fixes, the second is the checkout button copy Sam picked up tonight.',
-          prompts: ['"Rewrite the empty-cart screen. Warmer, one sentence max."', '"Add a save-for-later link under the items."', '"Show me bounce for the cart step before and after."'] },
-        { live: false, when: '2h ago', share: false, open: false,
-          title: 'Retries hardened: backoff capped at 3',
-          summary: 'Checkout retries moved to exponential backoff capped at 3 so the worst case stays under the payment gateway 10s timeout. Stripe webhook retries now dedupe by event id. Suite green at 214 of 214.',
-          prompts: ['"Switch checkout retries to exponential backoff, cap at 3."', '"Why 3? Document the reasoning in the summary."', '(file edits)', '"Dedupe Stripe webhook retries by event id."'] }
-      ]
-    }
-  };
-
-  function renderDay(key) {
-    var d = DAYS[key];
-    if (!d) return;
-    var h = '<button class="pd-back" type="button" id="dayBack">‹ Activity</button>';
-    h += '<div class="crumb">' + esc(d.crumb) + '</div>';
-    h += '<p class="day-head">' + esc(d.head) + '</p>';
-    d.cards.forEach(function (c, i) {
-      var id = 'day-' + key + '-' + i;
-      h += '<div class="day-card">' +
-        (c.live ? '<span class="working-label">● WORKING NOW</span>' : '') +
-        '<h4>' + esc(c.title) + '</h4>' +
-        '<p class="summary">' + esc(c.summary) + '</p>' +
-        '<div class="card-links">' +
-        '<button class="expander" type="button" data-target="' + id + '" aria-expanded="' + (c.open ? 'true' : 'false') + '">' +
-        (c.open ? 'hide ' + c.prompts.length + ' prompts ▴' : 'show ' + c.prompts.length + ' prompts ▾') + '</button>' +
-        (c.share ? '<button class="share-chip" type="button">⇗ Share with team</button>' : '') +
-        '<span class="when">' + c.when + '</span></div>' +
-        '<div class="detail" id="' + id + '"' + (c.open ? '' : ' hidden') + '>' +
-        '<ol class="prompt-list">' + c.prompts.map(function (pr, j) {
-          var n = (j + 1 < 10 ? '0' : '') + (j + 1);
-          var body = pr.charAt(0) === '(' ? '<span class="ph">' + esc(pr) + '</span>' : '<em>' + esc(pr) + '</em>';
-          return '<li><span class="pn">' + n + '</span>' + body + '</li>';
-        }).join('') + '</ol></div></div>';
-    });
-    var view = $('view-day');
-    view.innerHTML = h;
-    showView('day');
-    $('dayBack').addEventListener('click', function () { showView('activity'); });
-  }
-
-  /* ---------- delegated clicks ---------- */
-  $('appWin').addEventListener('click', function (ev) {
-    var dayT = ev.target.closest('.act-title.link');
-    if (dayT) { renderDay(dayT.getAttribute('data-day')); return; }
-    var pause = ev.target.closest('.pause-btn');
-    if (pause) { pause.textContent = pause.textContent === 'Pause' ? 'Resume' : 'Pause'; return; }
-    var row = ev.target.closest('.proj-row');
-    if (row) { renderDetail(row.getAttribute('data-proj')); return; }
-    var ex = ev.target.closest('.expander');
-    if (ex && ex.getAttribute('data-target')) {
-      var det = $(ex.getAttribute('data-target'));
-      var open = ex.getAttribute('aria-expanded') === 'true';
-      ex.setAttribute('aria-expanded', String(!open));
-      det.hidden = open;
-      ex.textContent = ex.textContent.replace(open ? '▴' : '▾', open ? '▾' : '▴');
-      return;
-    }
-    var share = ev.target.closest('.share-chip');
-    if (share && !share.classList.contains('shared')) {
-      share.classList.add('shared');
-      share.textContent = '✓ Shared';
-      return;
-    }
-  });
-
-  /* ---------- activity: show all changes ---------- */
-  $('showChanges').addEventListener('click', function () {
-    var open = this.getAttribute('aria-expanded') === 'true';
-    this.setAttribute('aria-expanded', String(!open));
-    document.querySelectorAll('.checks .extra').forEach(function (li) { li.hidden = !open ? false : true; });
-    this.textContent = open ? 'Show all 8 changes ▾' : 'Show fewer ▴';
-  });
-
-  /* ---------- join code copy ---------- */
-  $('joinCopy').addEventListener('click', function () {
-    var btn = this;
-    function done(ok) {
-      btn.textContent = ok ? 'COPIED ✓' : 'COPY';
-      setTimeout(function () { btn.textContent = 'COPY'; }, 2000);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(btn.getAttribute('data-code')).then(function () { done(true); }, function () { done(false); });
-    } else { done(false); }
-  });
-})();
-
-  /* ---------- copy buttons: bare command only, never the $ or output ---------- */
-  var copyBtns = document.querySelectorAll('.copy-btn');
-  for (var cb = 0; cb < copyBtns.length; cb++) {
-    (function (btn) {
+    var navBtns = app.querySelectorAll('.a-nav button');
+    navBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var cmd = btn.getAttribute('data-cmd') || '';
-        function done(ok) {
-          btn.textContent = ok ? 'copied ✓' : 'select + copy';
-          setTimeout(function () { btn.textContent = 'copy'; }, 2000);
-        }
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(cmd).then(function () { done(true); }, function () { done(false); });
-        } else {
-          done(false);
+        var v = btn.getAttribute('data-v');
+        navBtns.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('on', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        app.querySelectorAll('.a-view').forEach(function (view) {
+          view.classList.toggle('on', view.getAttribute('data-view') === v);
+        });
+        var t = titles[v];
+        if (t) {
+          document.getElementById('aTitle').textContent = t[0];
+          document.getElementById('aDate').textContent = t[1];
         }
       });
-    })(copyBtns[cb]);
-  }
-
-  /* ---------- waitlist ---------- */
-  var SUPA_URL = 'https://mefgbiecvoszjorwzkfz.supabase.co';
-  var SUPA_KEY = 'sb_publishable_UQ4b9MiFBIMcBKv6TDiZIQ_pxlsoRoI';
-  var form = document.getElementById('wlForm');
-  var emailInput = document.getElementById('wlEmail');
-  var msg = document.getElementById('wlMsg');
-  var btn = document.getElementById('wlBtn');
-
-  function setMsg(text, cls) {
-    msg.textContent = text;
-    msg.className = 'wl-msg' + (cls ? ' ' + cls : '');
-  }
-
-  form.addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    if (form.website.value) return; // honeypot
-    var email = emailInput.value.trim();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      setMsg('That doesn’t look like an email address.', 'err');
-      emailInput.focus();
-      return;
-    }
-    btn.disabled = true;
-    setMsg('…', '');
-    fetch(SUPA_URL + '/rest/v1/waitlist', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPA_KEY,
-        'Authorization': 'Bearer ' + SUPA_KEY,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ email: email, source: 'landing' })
-    }).then(function (res) {
-      btn.disabled = false;
-      if (res.status === 201) {
-        setMsg('You’re in. We’ll email you when it ships.', 'ok');
-        form.reset();
-      } else if (res.status === 409) {
-        setMsg('Already on the list ✓', 'ok');
-      } else {
-        setMsg('Something broke on our end: email andrewludwigbrown@gmail.com and we’ll add you by hand.', 'err');
-      }
-    }).catch(function () {
-      btn.disabled = false;
-      setMsg('Couldn’t reach the server: check your connection and try again.', 'err');
     });
+  }
+
+  /* ---- copy button ---- */
+  var copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', function () {
+    var txt = document.getElementById('cmd').textContent.trim();
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, done);
+    } else { done(); }
   });
 })();
 </script>
