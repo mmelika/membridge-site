@@ -732,6 +732,16 @@
 
   .cta-band { background: var(--bg-alt); }
   .cta-band .lede { max-width: 56ch; }
+  .cite {
+    font-size: .95rem; color: var(--muted); max-width: 62ch;
+    border-left: 2px solid var(--border-strong); padding-left: 14px;
+  }
+  .cite b { color: var(--ink); font-weight: 620; }
+  .cite a { color: var(--blue); text-decoration: none; font-weight: 600; white-space: nowrap; }
+  .cite a:hover { text-decoration: underline; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; }
+  .foot-links a { color: var(--muted); text-decoration: none; }
+  .foot-links a:hover { color: var(--ink); }
   footer { padding: 40px 0 56px; color: var(--faint); font-size: .85rem; border-top: 1px solid var(--border); }
 
   /* reveal on scroll, matching the site's existing .35s ease feel */
@@ -807,6 +817,7 @@
       <a href="#search">Team search</a>
       <a href="#app">The app</a>
       <a href="#trust">Privacy</a>
+      <a href="/context-ledger/">Research</a>
       <a href="#get">Get it</a>
     </div>
   </nav>
@@ -817,7 +828,6 @@
   <div class="wrap">
     <div class="hero-grid">
       <div class="stack">
-        <span class="eyebrow">For engineering teams</span>
         <h1>Your teammates' agents already know <em>what yours figured out.</em></h1>
         <p class="lede">
           MemBridge watches every Claude Code and Codex session on your team, distills what each one
@@ -862,6 +872,11 @@
     <p class="lede">
       Most memory tools stop at writing a file. The useful part is what happens after the session
       has already started, and months later when nobody remembers who did it.
+    </p>
+    <p class="cite">
+      We measured how much this costs: across <b>6,104 real agent sessions</b> from
+      <b>310 developers</b>, the median developer spends <b>31% of their tokens</b> re-orienting an
+      agent in code it has already seen. <a href="/context-ledger/">Read the Context Ledger →</a>
     </p>
 
     <div class="moments">
@@ -1327,7 +1342,16 @@
 </section>
 
 <footer>
-  <div class="wrap">MemBridge · shared memory for teams running AI coding agents</div>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="/context-ledger/">The Context Ledger</a>
+      <a href="https://github.com/MembridgeAi/membridge">GitHub</a>
+      <a href="https://github.com/MembridgeAi/membridge#readme">Docs</a>
+      <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md">License</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    MemBridge · shared memory for teams running AI coding agents
+  </div>
 </footer>
 
 <script>
