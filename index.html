@@ -98,7 +98,7 @@
       "isPartOf": { "@id": "https://membridge.app/#website" },
       "about": { "@id": "https://membridge.app/#software" },
       "primaryImageOfPage": { "@type": "ImageObject", "url": "https://membridge.app/og.png" },
-      "dateModified": "2026-07-25",
+      "dateModified": "2026-07-31",
       "inLanguage": "en"
     }
   ]
@@ -1377,6 +1377,8 @@
       <a href="https://github.com/MembridgeAi/membridge#readme">Docs</a>
       <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md">License</a>
       <a href="/llms.txt">llms.txt</a>
+      <a href="/llms-full.txt">llms-full.txt</a>
+      <a href="/feedback/">Feedback</a>
     </div>
     MemBridge · shared memory for teams running AI coding agents
   </div>
@@ -1605,14 +1607,36 @@
   /* ---- copy button ---- */
   var copyBtn = document.getElementById('copyBtn');
   copyBtn.addEventListener('click', function () {
-    var txt = document.getElementById('cmd').textContent.trim();
+    var cmd = document.getElementById('cmd');
+    var txt = cmd.textContent.trim();
     var done = function () {
       copyBtn.textContent = 'Copied';
       setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1600);
     };
+    var fallback = function () {
+      var ok = false;
+      var ta = document.createElement('textarea');
+      ta.value = txt;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      if (ok) {
+        done();
+      } else if (window.getSelection) {
+        var range = document.createRange();
+        range.selectNodeContents(cmd);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    };
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(txt).then(done, done);
-    } else { done(); }
+      navigator.clipboard.writeText(txt).then(done, fallback);
+    } else { fallback(); }
   });
 })();
 </script>
