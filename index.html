@@ -50,7 +50,7 @@
   "featureList": [
     "Automatic memory capture from Claude Code and Codex session logs",
     "Per-project memory synced into CLAUDE.md and AGENTS.md",
-    "membridge why file:line — the prompt and reasoning behind any line of code",
+    "membridge why file:line: the prompt and reasoning behind any line of code",
     "100% local: binds to 127.0.0.1, no accounts, no telemetry, no API key",
     "Opt-in team feed of every teammate's AI sessions, end-to-end encrypted",
     "Plain-markdown memory; membridge remove restores every file exactly"
@@ -86,7 +86,7 @@
       "@id": "https://membridge.app/#website",
       "url": "https://membridge.app/",
       "name": "MemBridge",
-      "description": "Shared memory for Claude Code, Codex, and every AI coding tool — local-first, automatic, free.",
+      "description": "Shared memory for Claude Code, Codex, and every AI coding tool. Local-first, automatic, free.",
       "publisher": { "@id": "https://membridge.app/#org" },
       "inLanguage": "en"
     },
@@ -169,7 +169,7 @@
   ]
 }
 </script>
-<link rel="alternate" type="text/plain" href="/llms.txt" title="MemBridge — LLM-readable summary">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="MemBridge: LLM-readable summary">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
@@ -178,7 +178,7 @@
   /* ------------------------------------------------------------------
      Tokens lifted from membridge.app so this mock sits inside the
      existing identity rather than proposing a new one. The page commits
-     to the white ground deliberately — no dark variant, matching the
+     to the white ground deliberately: no dark variant, matching the
      current site's presentation.
      ------------------------------------------------------------------ */
   :root {
@@ -460,7 +460,7 @@
   }
 
   /* ------------------------------------------------------------------
-     The app, matched to what ships on master today — including the
+     The app, matched to what ships on master today, including the
      visual refresh: two-tier radius (--r 7px for rows and buttons,
      --r-sm 4px for chips and indicators), the real type and spacing
      scales, and the rule that only avatars are true circles. Status
@@ -531,7 +531,7 @@
     padding: 8px 8px 0; border-top: 1px solid var(--ln);
     color: var(--tx2); font-size: var(--fs-sm);
   }
-  /* Indicators are rounded squares on purpose — circles are avatars only. */
+  /* Indicators are rounded squares on purpose: circles are avatars only. */
   .a-dot {
     width: 7px; height: 7px; border-radius: var(--r-sm);
     background: var(--tx3); flex: none;
@@ -573,7 +573,7 @@
     letter-spacing: .04em; text-transform: uppercase; color: var(--tx2);
   }
 
-  /* Section labels own real space above them — that gap is what separates
+  /* Section labels own real space above them. That gap is what separates
      one group from the next, rather than uniform row padding. */
   .a-sect {
     padding: var(--sp-5) var(--sp-4) var(--sp-2);
@@ -667,7 +667,7 @@
     padding: 10px var(--sp-4); border-bottom: 1px solid var(--ln);
   }
   .a-srow:last-of-type { border-bottom: 0; }
-  /* Privacy rows carry a quiet accent rule — the group a buyer scans for. */
+  /* Privacy rows carry a quiet accent rule: this is the group a buyer scans for. */
   .a-srow.hi { border-left: 2px solid var(--ac); background: var(--acd); }
   .a-slab { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
   .a-slab b { font-weight: var(--fw-m); font-size: var(--fs-md); }
@@ -689,7 +689,7 @@
   }
 
   /* The app is the section's subject, so it gets a wider gutter than the
-     reading column — otherwise it floats in whitespace. */
+     reading column. Otherwise it floats in whitespace. */
   .wrap-wide { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
   @media (max-width: 1340px) { .wrap-wide { max-width: 100%; } }
 
@@ -777,7 +777,7 @@
 
   <!-- Demo team avatars. Consistent construction across all five: a wide
        shoulder dome that meets the crop edge, one head circle at a fixed
-       position, then hair drawn behind and in front. No facial features —
+       position, then hair drawn behind and in front. No facial features:
        at 18px they would turn to mud, and faceless reads as considered
        rather than unfinished. -->
   <symbol id="avP" viewBox="0 0 40 40">
@@ -949,8 +949,8 @@
       <div class="ask-answer" id="askAnswer" hidden>
         <span class="ask-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg></span>
         <div>
-          <b>Priya settled this on 14 June.</b> JWT rotation happens in vault, never in app config —
-          the app-config path was tried in March and reverted after an incident. Marcus then moved
+          <b>Priya settled this on 14 June.</b> JWT rotation happens in vault, never in app config.
+          The app-config path was tried in March and reverted after an incident. Marcus then moved
           session refresh behind the gateway so the SDK never sees a raw token. You tried per-service
           key caching in May and abandoned it, because rotation invalidation got unmanageable.
         </div>
@@ -1028,7 +1028,7 @@
               <div class="a-pleft">
                 <div class="a-prow"><span class="nm">api-gateway</span><span class="a-tag">Shared</span>
                   <span class="a-faces"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus Bell"><use href="#avM"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam Ortiz"><use href="#avS"/></svg></span></span></div>
-                <div class="a-brow">Fixed proration on mid-cycle plan changes <span class="by">— Jules, 2h</span></div>
+                <div class="a-brow">Fixed proration on mid-cycle plan changes <span class="by">· Jules, 2h</span></div>
               </div>
               <div class="a-pright">
                 <div class="a-mline"><span class="a-metric">14 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
@@ -1039,7 +1039,7 @@
               <div class="a-pleft">
                 <div class="a-prow"><span class="nm">billing</span><span class="a-tag">Shared</span>
                   <span class="a-faces"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam Ortiz"><use href="#avS"/></svg></span></span></div>
-                <div class="a-brow">Added a retry budget to the webhook dispatcher <span class="by">— Sam, yesterday</span></div>
+                <div class="a-brow">Added a retry budget to the webhook dispatcher <span class="by">· Sam, yesterday</span></div>
               </div>
               <div class="a-pright">
                 <div class="a-mline"><span class="a-metric">6 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
@@ -1050,7 +1050,7 @@
               <div class="a-pleft">
                 <div class="a-prow"><span class="nm">infra-secrets</span><span class="a-tag">Private</span>
                   <span class="a-faces"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span></span></div>
-                <div class="a-brow">Rotated the signing keys after the March incident <span class="by">— Priya, 3d</span></div>
+                <div class="a-brow">Rotated the signing keys after the March incident <span class="by">· Priya, 3d</span></div>
               </div>
               <div class="a-pright">
                 <div class="a-mline"><span class="a-metric">4 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
@@ -1213,7 +1213,7 @@
     </div>
 
     <p class="hero-note" style="margin-top:14px">
-      Click through the sidebar. This is the shipped interface, not a rendering of one — live
+      Click through the sidebar. This is the shipped interface, not a rendering of one. Live
       rows show the ask a session opened with, never a guess at what it is doing.
     </p>
   </div>
@@ -1283,8 +1283,8 @@
       <details open>
         <summary>Does our code leave the machine?</summary>
         <p>No. MemBridge reads your agent sessions locally and writes memory to disk on the same
-        machine. Nothing is sent anywhere until you turn on team sync, and even then it is what
-        your sessions concluded — decisions, summaries, file paths — never your source code.
+        machine. Nothing is sent anywhere until you turn on team sync, and even then it is only
+        what your sessions concluded: decisions, summaries, and file paths, never your source code.
         Team sync is end-to-end encrypted, so the backend stores ciphertext it has no key for.</p>
       </details>
       <details>
@@ -1318,7 +1318,7 @@
       </details>
       <details>
         <summary>Can people keep some work private?</summary>
-        <p>Yes, at three levels. Verbatim prompts stay on your machine by default — only summaries
+        <p>Yes, at three levels. Verbatim prompts stay on your machine by default; only summaries
         and file paths sync unless someone opts in. Any project can be kept private, and shared
         projects have per-person access. A developer can pause capture entirely for a project
         without affecting anyone else.</p>
@@ -1370,7 +1370,7 @@
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Start when the element is seen — but never depend on it. Some embedding
+  /* Start when the element is seen, but never depend on it. Some embedding
      contexts (iframes, snapshot renderers) never deliver IntersectionObserver
      callbacks, and a hero animation that silently never plays is worse than
      one that starts a beat early. */
@@ -1378,7 +1378,7 @@
     var done = false;
     var go = function () { if (!done) { done = true; fn(); } };
     if (!el) return;
-    // Already on screen when the page loads? Start now — waiting on an
+    // Already on screen when the page loads? Start now: waiting on an
     // observer that may never report is how an animation silently dies.
     var box = el.getBoundingClientRect();
     if (box.top < window.innerHeight && box.bottom > 0) { setTimeout(go, 260); }

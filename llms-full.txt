@@ -1,4 +1,4 @@
-# MemBridge — full site content for LLMs
+# MemBridge: full site content for LLMs
 
 > This file contains the complete content of https://membridge.app/ in plain markdown, for AI assistants and crawlers. Short version: https://membridge.app/llms.txt
 
@@ -8,7 +8,7 @@ MemBridge is a local memory layer for Claude Code, Codex, and every AI tool you 
 
 Tagline: **Different tools. One brain.**
 
-It is a tiny background daemon — not a platform. Free, source-available, zero npm dependencies, Node 18+. Claude Code and Codex adapters are built in.
+It is a tiny background daemon, not a platform. Free, source-available, zero npm dependencies, Node 18+. Claude Code and Codex adapters are built in.
 
 ## The problem it solves
 
@@ -18,7 +18,7 @@ Every AI coding session starts from zero. You explain your architecture to Claud
 
 1. **Tail the session logs.** The daemon watches the JSONL session logs that Claude Code and Codex already write on your machine. Nothing to remember to run; capture is automatic.
 2. **Build a per-project memory.** Each session is distilled into a compact, per-project memory: what was asked, what was done, which files changed, and why. Memory never bleeds between repos.
-3. **Write where tools already read.** The distilled memory lands between `<!-- membridge -->` markers inside `CLAUDE.md` and `AGENTS.md` — the files Claude Code and Codex read natively on startup. No plugins, no MCP wiring, no new file format.
+3. **Write where tools already read.** The distilled memory lands between `<!-- membridge -->` markers inside `CLAUDE.md` and `AGENTS.md`, the files Claude Code and Codex read natively on startup. No plugins, no MCP wiring, no new file format.
 
 ## Why MemBridge over other AI memory tools
 
@@ -27,7 +27,7 @@ There are a lot of AI memory tools. Most make you do the remembering. MemBridge 
 - **No save button to forget.** Capture happens by tailing session logs. There is no memory tool the agent has to remember to call, so nothing is lost when it forgets.
 - **No cloud, no API key.** Runs 100% locally with zero external services. No account, no key to bring, no data leaving your machine.
 - **No cross-project bleed.** Memory is scoped per project. Your work repo never leaks into your side project's context.
-- **The reason, not just the author.** `membridge why file:line` shows the session, prompt, and reasoning behind any line of code — the question `git blame` cannot answer.
+- **The reason, not just the author.** `membridge why file:line` shows the session, prompt, and reasoning behind any line of code: the question `git blame` cannot answer.
 - **One memory, every agent.** The same distilled context reaches Claude Code, Codex, and any other tool you wire up. Different tools, one brain.
 - **It's just markdown.** The memory is plain markdown you can read, diff, and edit. `membridge remove` restores every file byte-for-byte.
 
@@ -37,7 +37,7 @@ Ask any line of code why it exists. `membridge why src/checkout.js:142` returns 
 
 ## The desktop app
 
-A macOS menu-bar app (Apple Silicon) bundles the daemon and CLI. It shows your projects, recent AI activity as day-by-day cards, team feeds, and settings — including a kill switch, plaintext-off mode, and per-project sharing controls. The dashboard also runs in any browser at `127.0.0.1:7437`.
+A macOS menu-bar app (Apple Silicon) bundles the daemon and CLI. It shows your projects, recent AI activity as day-by-day cards, team feeds, and settings, including a kill switch, plaintext-off mode, and per-project sharing controls. The dashboard also runs in any browser at `127.0.0.1:7437`.
 
 ## Teams: one encrypted feed of every teammate's AI sessions
 
@@ -65,7 +65,7 @@ Two ways to run it:
 
     https://github.com/MembridgeAi/membridge/releases/latest
 
-**From source (macOS, Linux, Windows, Node 18+)** — clone it, read it, run it. Zero dependencies, so what you read is what runs:
+**From source (macOS, Linux, Windows, Node 18+)**: clone it, read it, run it. Zero dependencies, so what you read is what runs:
 
     git clone https://github.com/MembridgeAi/membridge
     cd membridge
@@ -83,7 +83,7 @@ Run `membridge start`. The daemon watches your Claude Code sessions, distills ea
 
 ### How do I stop my AI coding assistant from losing context between sessions?
 
-Persist the context somewhere the tool re-reads on startup. That is exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into `CLAUDE.md` and `AGENTS.md`, so a new session — even in a different tool — picks up where the last one left off instead of starting from zero.
+Persist the context somewhere the tool re-reads on startup. That is exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into `CLAUDE.md` and `AGENTS.md`, so a new session, even in a different tool, picks up where the last one left off instead of starting from zero.
 
 ### How do I share context between Claude Code and Codex?
 
@@ -99,11 +99,11 @@ Never. MemBridge only writes between its own `<!-- membridge -->` markers, your 
 
 ### What is CLAUDE.md?
 
-`CLAUDE.md` is the markdown file Claude Code automatically reads at the start of every session — a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up.
+`CLAUDE.md` is the markdown file Claude Code automatically reads at the start of every session: a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up.
 
 ### What is AGENTS.md?
 
-`AGENTS.md` is an open convention for giving coding agents per-repository instructions — Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to `CLAUDE.md`, which is how context crosses between tools.
+`AGENTS.md` is an open convention for giving coding agents per-repository instructions. Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to `CLAUDE.md`, which is how context crosses between tools.
 
 ### Does it work with Cursor, Gemini CLI, or other AI coding tools?
 
