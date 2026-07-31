@@ -341,7 +341,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
   <div class="wrap narrow">
     <span class="mono-label" style="display:block;margin-bottom:14px">Finding 1</span>
     <h2>The median developer burns <span class="num n-waste">31%</span> of agent tokens on re-orientation<span class="tag t-meas">measured</span></h2>
-    <p>Re-orientation is your agent re-reading, re-searching, and re-deriving context in a codebase it has already worked in. Across the 174 developers with five or more sessions, the median share of billed tokens spent this way is 31.2%, and nine in ten developers sit above 16%. At the corpus level, re-orientation accounts for <span class="num n-waste">$14,524</span> of the $56,666 measured, or 26% of everything spent.</p>
+    <p>Re-orientation is your agent re-reading, re-searching, and re-deriving context in a codebase it has already worked in. Across the 174 developers with five or more sessions, the median share of billed tokens spent this way is 31.2%, and nine in ten developers sit above 16%. At the corpus level, re-orientation accounts for <span class="num n-waste">$13,776</span> of the $56,666 measured, or 24.3% of everything spent.</p>
     <div class="strip-chart" aria-hidden="true">
       <div class="smark" style="left:5.7%"><i>min 3.6</i></div>
       <div class="smark you" style="left:21.5%"><i>our own repos 13.5</i></div>
@@ -349,13 +349,13 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       <div class="smark" style="left:99.8%"><i style="transform:translateX(-100%)">max 62.9</i></div>
     </div>
     <div class="axis"><span>0%</span><span>re-orientation share of billed tokens, per developer</span><span>63%</span></div>
-    <p class="note" style="margin-top:16px">We measured ourselves first. Our own repositories sit near the population's 10th percentile (more efficient than roughly nine in ten developers we measured), and we still burn 13.5%. We built MemBridge because even the efficient end of this chart is paying a permanent tax.</p>
+    <p class="note" style="margin-top:16px">We measured ourselves first. Our own repositories sit below the population's 10th percentile (more efficient than roughly nine in ten developers we measured), and we still burn 13.5%. We built MemBridge because even the efficient end of this chart is paying a permanent tax.</p>
 
     <h2 style="margin-top:56px">In repos with history, <span class="num n-waste">53%</span> of file reads repeat an earlier session's work<span class="tag t-meas">measured</span></h2>
     <p>Median across the 96 repositories with enough session history to measure, ranging as high as 81%. Your agent's breakthroughs from this morning are invisible to the session you open after lunch, and everything your teammate's agent figured out is gone. The waste is worst exactly where teams work together.</p>
 
-    <h2 style="margin-top:56px">And it never goes away on its own<span class="tag t-meas">measured</span></h2>
-    <p>Orientation share is essentially flat with repo experience: a developer's twentieth session in a repo re-orients nearly as much as their first. Agents do not learn their way around your codebase. Without a memory layer, the tax is permanent.</p>
+    <h2 style="margin-top:56px">And experience barely dents it<span class="tag t-meas">measured</span></h2>
+    <p>Orientation share stays stubbornly high with repo experience: a developer's tenth session in a repo re-orients as much as their first, and even past twenty sessions the median still spends more than a fifth of billed tokens re-orienting. Agents do not learn their way around your codebase on their own.</p>
     <div class="fam" role="img" aria-label="Orientation share by session order within a repo: first session 25.3 percent, sessions two to four 26.0, five to nine 26.0, ten to nineteen 27.7, twenty plus 21.4">
       <div><b>25.3</b><div class="col" style="height:91px"></div><span>1st</span></div>
       <div><b>26.0</b><div class="col" style="height:94px"></div><span>2&ndash;4</span></div>
@@ -363,7 +363,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       <div><b>27.7</b><div class="col" style="height:100px"></div><span>10&ndash;19</span></div>
       <div><b>21.4</b><div class="col" style="height:77px"></div><span>20+</span></div>
     </div>
-    <p class="note">Median re-orientation share of billed tokens, grouped by how many sessions that developer had already worked in that repo.</p>
+    <p class="note">Median re-orientation share of billed tokens, grouped by how many sessions that developer had already worked in that repo. These buckets are medians over individual sessions, while the 31.2% headline is a median over developers with each developer's sessions pooled first, which is why the two sets of figures sit on different scales.</p>
   </div>
 </section>
 
@@ -402,7 +402,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
     <div class="callout"><p><strong>The range was recalculated on a much larger corpus.</strong> It was first worked out on 20 developers. Run again on a corpus fourteen times larger, it came out the same, even though the share of tokens going to orientation doubled between the two. The extra orientation was first-time reading, which memory cannot save, and the model separates first-time reading from repeat reading.</p></div>
 
     <h3>What that means at scale</h3>
-    <p>For a developer using agents heavily, that band is <span class="num">$1,900&ndash;$5,200</span> a year in tokens alone. For a 50-person agent-first engineering org paying three or four vendors at once, it's a real line item. Apply the measured 26% rate to the roughly $10B enterprise coding-agent market and the industry is spending on the order of $2.5B a year re-deriving what its agents already knew<span class="tag t-assm">extrapolation</span>. That is the measured rate multiplied by a published market size, and nothing more.</p>
+    <p>For a developer using agents heavily, that band is <span class="num">$1,900&ndash;$5,200</span> a year in tokens alone. For a 50-person agent-first engineering org paying three or four vendors at once, it's a real line item. Apply the measured 24.3% rate to the roughly $10B enterprise coding-agent market and the industry is spending on the order of $2.4B a year re-deriving what its agents already knew<span class="tag t-assm">extrapolation</span>. That is the measured rate multiplied by a published market size, and nothing more.</p>
     <p>And the dollars are the smaller half. The median session spends its first several turns re-orienting before it touches a file: minutes of a developer watching a spinner, several times a day. MemBridge collapses that to one or two. Tokens are what the ledger counts; time is what you feel by Wednesday.</p>
   </div>
 </section>
@@ -418,7 +418,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
       </div>
       <div>
         <h2>Where the data comes from</h2>
-        <p>Real sessions, no telemetry of ours: the SWE-chat research corpus of consenting open-source developers (Stanford SALT, used under ODC-BY; Baumann et al., 2026, arXiv:2604.20779), public Entire checkpoint data from open-source repositories, and our own transcripts. All figures published here are aggregates under anonymous labels.</p>
+        <p>Real sessions, none of them collected by the product: the SWE-chat research corpus of consenting open-source developers (Stanford SALT, used under ODC-BY; Baumann et al., 2026, <a href="https://arxiv.org/abs/2604.20779" target="_blank" rel="noopener">arXiv:2604.20779</a>), public Entire checkpoint data from open-source repositories, and our own transcripts. All figures published here are aggregates under anonymous labels.</p>
       </div>
     </div>
   </div>
