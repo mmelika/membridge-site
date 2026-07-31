@@ -295,6 +295,10 @@
   }
   .dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.16); }
   .demo-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 9px; min-height: 268px; }
+  /* .line below sets display:flex, which outranks the UA rule for [hidden] and
+     left every step of the sequence on screen from first paint. The panel is
+     min-height'd, so collapsing the hidden steps does not resize it. */
+  .demo-body [hidden] { display: none; }
   .who { color: var(--term-faint); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
   .line { display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
   .line .caret { color: var(--blue-grad-a); flex: none; }
@@ -1405,44 +1409,84 @@
   var inject = document.getElementById('inject');
   var afterLine = document.getElementById('afterLine');
   var replay = document.getElementById('replay');
-  var timers = [];
 
-  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
-  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  var TYPE_MS = 26;
+  var TYPED_END = ASK.length * TYPE_MS;
 
-  function run() {
-    clearTimers();
-    ask.textContent = '';
-    ask.classList.add('typed');
-    [readLine, inject, afterLine, replay].forEach(function (el) { el.hidden = true; });
-    inject.classList.remove('show');
+  /* Beats are absolute offsets from the top of a play, and the whole frame is
+     painted from one elapsed value. That is what lets the sequence stop when
+     it scrolls away and pick up mid-beat when it comes back, instead of
+     restarting from an empty prompt every time. */
+  var BEATS = [
+    { t: TYPED_END + 340,  el: readLine },
+    { t: TYPED_END + 1000, el: inject, cls: 'show' },
+    { t: TYPED_END + 2500, el: afterLine }
+  ];
+  var REPLAY_AT  = TYPED_END + 3000;
+  var TEASER_END = TYPED_END + 840;   /* through 'Read services/auth/rotate.ts' */
+  var FULL_END   = TYPED_END + 4500;  /* through the last line, then a beat to read it */
+  var TEASER_FOR = 40000;             /* the short loop runs for this much time on screen */
 
-    if (reduce) {
-      ask.textContent = ASK;
-      ask.classList.remove('typed');
-      readLine.hidden = false; inject.hidden = false; afterLine.hidden = false; replay.hidden = false;
-      return;
-    }
+  var TICK = 40;
+  var ticker = null, elapsed = 0, seenFor = 0, full = false, replayShown = false;
 
-    var i = 0;
-    (function type() {
-      if (i <= ASK.length) {
-        ask.textContent = ASK.slice(0, i++);
-        timers.push(setTimeout(type, 26));
-      } else {
-        ask.classList.remove('typed');
-        at(340, function () { readLine.hidden = false; });
-        at(1000, function () { inject.hidden = false; inject.classList.add('show'); });
-        at(2500, function () { afterLine.hidden = false; });
-        at(3000, function () { replay.hidden = false; });
-      }
-    })();
+  /* Idempotent: given a position in the play, show exactly what belongs there. */
+  function paint(ms) {
+    var chars = Math.min(ASK.length, Math.floor(ms / TYPE_MS));
+    ask.textContent = ASK.slice(0, chars);
+    ask.classList.toggle('typed', chars < ASK.length);
+    BEATS.forEach(function (b) {
+      var on = ms >= b.t;
+      b.el.hidden = !on;
+      if (b.cls) b.el.classList.toggle(b.cls, on);
+    });
+    /* Once offered, the replay control stays: it is the only way back for
+       anyone who is not going to sit through another cycle. */
+    if (full && ms >= REPLAY_AT) replayShown = true;
+    replay.hidden = !replayShown;
   }
 
-  replay.addEventListener('click', run);
+  function step() {
+    elapsed += TICK;
+    seenFor += TICK;
+    if (!full && seenFor >= TEASER_FOR) full = true;
+    if (elapsed >= (full ? FULL_END : TEASER_END)) elapsed = 0;
+    paint(elapsed);
+  }
 
-  /* start when the demo is actually on screen */
-  whenSeen(document.getElementById('demo'), run, 900);
+  function play() { if (!ticker) ticker = setInterval(step, TICK); }
+  function pause() { if (ticker) { clearInterval(ticker); ticker = null; } }
+
+  replay.addEventListener('click', function () {
+    full = true;          /* an explicit replay always plays the whole thing */
+    replayShown = true;
+    elapsed = 0;
+    if (reduce) { paint(FULL_END); return; }
+    paint(0);
+    play();
+  });
+
+  var demoEl = document.getElementById('demo');
+  if (reduce) {
+    /* No autoplay. Paint the finished state so nothing is missing, and leave
+       the replay control for anyone who wants to watch it run. */
+    full = true;
+    replayShown = true;
+    paint(FULL_END);
+  } else if (demoEl && 'IntersectionObserver' in window) {
+    paint(0);
+    /* Gate on the viewport with no timed fallback. The old fallback fired
+       whether or not the demo was on screen, which is why it had always
+       finished by the time you scrolled to it. */
+    new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) play(); else pause();
+    }, { threshold: 0.25 }).observe(demoEl);
+  } else {
+    /* Nothing to gate on. A demo that plays early beats a panel that is
+       silently blank forever. */
+    paint(0);
+    play();
+  }
 
   /* ---- ask-your-agent: question -> MCP lookup -> a clear answer ---- */
   var askDemo = document.getElementById('askDemo');
