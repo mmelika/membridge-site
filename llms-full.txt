@@ -123,7 +123,7 @@ Invite teammates to a project and every Claude Code and Codex session lands in o
 
 ### Won't Anthropic or OpenAI just build this?
 
-Each can build memory inside its own tool. Neither has a reason to build the bridge across its competitor's, and that neutral spot is exactly where MemBridge lives. The cross-tool provenance it accumulates is the part that compounds.
+Each can build memory inside its own tool. Vendors agreed on the file format. None of them will read a rival's sessions to fill it. The cross-tool provenance MemBridge accumulates is the part that compounds.
 
 ## Links
 
