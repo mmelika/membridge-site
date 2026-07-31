@@ -61,7 +61,7 @@ Local is not a feature; it's the architecture.
 
 Two ways to run it:
 
-**The app (macOS, Apple Silicon)** — menu-bar app plus the `membridge` CLI. Signed and notarized, so it opens on a double-click with no warnings and no terminal. Download it from:
+**The app (macOS, Apple Silicon only)**: menu-bar app plus the `membridge` CLI. Signed and notarized, so it opens on a double-click with no warnings and no terminal. There is no Windows or Intel Mac build of the app yet. On those machines, install the CLI from npm instead, which works today. Download the app from:
 
     https://github.com/MembridgeAi/membridge/releases/latest
 
