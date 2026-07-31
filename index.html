@@ -230,6 +230,10 @@
   h3 { font-size: 1.06rem; font-weight: 640; }
   /* The site's signature: a serif italic phrase inside a sans headline. */
   h1 em, h2 em { font-family: var(--serif); font-style: italic; font-weight: 500; letter-spacing: -0.01em; }
+  /* The hero is the exception: same serif face, but upright and in brand blue
+     so the second line reads as the point rather than as an aside. 6.33:1
+     against --bg. Section h2s keep the italic treatment above. */
+  .hero h1 em { font-style: normal; color: var(--blue); }
   p { margin: 0; }
   .lede { font-size: 1.14rem; color: var(--muted); max-width: 60ch; }
   .eyebrow {
