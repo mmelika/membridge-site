@@ -4,130 +4,111 @@
 
 ## What is MemBridge?
 
-MemBridge is a local memory layer for Claude Code, Codex, and every AI tool you code with. It watches your sessions, syncs the context into `CLAUDE.md` and `AGENTS.md` automatically, and can tell you the prompt behind any line of code. 100% on your machine.
+MemBridge is shared team memory for AI coding agents. It watches every Claude Code and Codex session on a team, distills what each one worked out, and gets it to everyone else's agents: at startup, mid-session, and on demand.
 
-Tagline: **Different tools. One brain.**
+Headline: **Your teammates' agents already know what yours figured out.**
 
-It is a tiny background daemon, not a platform. Free, source-available, zero npm dependencies, Node 18+. Claude Code and Codex adapters are built in.
+It is a background daemon on each developer's machine plus a desktop app for the team view. Free to install with no account, source-available, four small runtime dependencies (libsodium-wrappers, web-tree-sitter, the MCP SDK, zod), no build step, Node 18+. Claude Code and Codex adapters are built in.
 
 ## The problem it solves
 
-Every AI coding session starts from zero. You explain your architecture to Claude Code, close the terminal, open Codex, and explain it all again. Each tool keeps its own notes in its own file, and none of them know what the others did. MemBridge ends the re-explaining: what one tool figures out, the rest already know.
+Every AI coding session starts from zero, and every developer's agents are blind to what their teammates' agents already worked out. We measured how much this costs: across 6,104 real agent sessions from 310 developers, the median developer spends 31% of their tokens re-orienting an agent in code it has already seen. See The Context Ledger: https://membridge.app/context-ledger/
 
-## How it works
+## How it reaches your agents: three moments
 
-1. **Tail the session logs.** The daemon watches the JSONL session logs that Claude Code and Codex already write on your machine. Nothing to remember to run; capture is automatic.
-2. **Build a per-project memory.** Each session is distilled into a compact, per-project memory: what was asked, what was done, which files changed, and why. Memory never bleeds between repos.
-3. **Write where tools already read.** The distilled memory lands between `<!-- membridge -->` markers inside `CLAUDE.md` and `AGENTS.md`, the files Claude Code and Codex read natively on startup. No plugins, no MCP wiring, no new file format.
-
-## Why MemBridge over other AI memory tools
-
-There are a lot of AI memory tools. Most make you do the remembering. MemBridge is different in six ways:
-
-- **No save button to forget.** Capture happens by tailing session logs. There is no memory tool the agent has to remember to call, so nothing is lost when it forgets.
-- **No cloud, no API key.** Runs 100% locally with zero external services. No account, no key to bring, no data leaving your machine.
-- **No cross-project bleed.** Memory is scoped per project. Your work repo never leaks into your side project's context.
-- **The reason, not just the author.** `membridge why file:line` shows the session, prompt, and reasoning behind any line of code: the question `git blame` cannot answer.
-- **One memory, every agent.** The same distilled context reaches Claude Code, Codex, and any other tool you wire up. Different tools, one brain.
-- **It's just markdown.** The memory is plain markdown you can read, diff, and edit. `membridge remove` restores every file byte-for-byte.
-
-## The `membridge why` command
-
-Ask any line of code why it exists. `membridge why src/checkout.js:142` returns the AI session that produced that line: the date, the tool, the user's actual prompt, and a summary of the reasoning. It is provenance for AI-written code, accumulated automatically across every tool you use.
+1. **At startup.** What the team's agents worked out gets written into the instruction files your agents already read (`CLAUDE.md`, `AGENTS.md`), attributed by person. Every session opens briefed. Nobody writes a doc.
+2. **Mid-session.** Your agent opens a file a teammate's agent made a call about, and that call enters the running session. Once, exactly when it matters. No doc, no Slack, no human relaying it.
+3. **On demand.** A ranked search over what every agent on the team has actually done, exposed over MCP so any agent can query it directly. It ranks across the decisions people made, the gotchas they hit, what they were trying to do and the files they touched, filterable by teammate, project, file or date. Ranked by relevance, not recency: the useful answer is usually months old.
 
 ## The desktop app
 
-A macOS menu-bar app (Apple Silicon) bundles the daemon and CLI. It shows your projects, recent AI activity as day-by-day cards, team feeds, and settings, including a kill switch, plaintext-off mode, and per-project sharing controls. The dashboard also runs in any browser at `127.0.0.1:7437`.
+The app shows the team from the outside: every agent session across the team, who can see which project, and where knowledge is concentrated in one person's head.
 
-## Teams: one encrypted feed of every teammate's AI sessions
+- **Today**: who is live right now with the ask each session opened with, plus per-project activity for the week.
+- **Projects**: a who-sees-what grid. Tick a cell to grant or revoke access without opening the project. Private projects cannot be granted until they are shared. Every change lands in the audit trail.
+- **Members**: people, roles, pending invites, and key verification status.
+- **Insights**: activity by person and by tool, and knowledge-concentration warnings when only one person has touched a project.
+- **Settings**: memory delivery (context block, recall on read, session summaries, MCP server), privacy (end-to-end sharing mode, verbatim-prompt sharing, redaction patterns, excluded folders), and the local daemon.
 
-Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. Each teammate's coding agents read the shared memory too, so the whole team's AI tools stay caught up on what everyone shipped.
+## Everything else it does
 
-- End-to-end encrypted before anything leaves each machine (see the encryption spec in the repo)
-- Invite-only, per-project, and off by default
-- Solo use never syncs anything anywhere
+- **Cross-tool memory.** Claude Code and Codex share one store. Switching tools doesn't reset context.
+- **Auto-registers over MCP.** Finds the agents you have installed and wires itself in.
+- **Ask why about any file.** `membridge why file:line` shows which session touched a line, by whom, and the reasoning behind it: the question `git blame` cannot answer.
+- **Per-project access control.** Pick exactly who sees which project, changed in one grid.
+- **One-command onboarding.** A new teammate joins with a single invite link.
+- **Roles and an audit trail.** Owner, admin, member. Every membership and sharing change recorded.
+- **Health at a glance.** Who's syncing, whose keys are verified, and anything that quietly stopped reaching the team.
+- **Runs local.** A daemon on each machine, bound to 127.0.0.1. No agent of ours in your CI, no repo upload.
+- **It's just markdown.** Memory lands between `<!-- membridge -->` markers in `CLAUDE.md` and `AGENTS.md`; your own notes stay untouched, and `membridge remove` restores every file exactly.
 
-## Privacy and architecture
+## Privacy and what actually goes over the network
 
-Local is not a feature; it's the architecture.
-
-- The daemon binds to `127.0.0.1` only
-- Solo use makes zero network calls: no accounts, no telemetry, nothing phoning home
-- Verify it yourself: `lsof -i -P | grep membridge` shows exactly one local listener
-- Team sync is opt-in and end-to-end encrypted
-- No cookies and no analytics on membridge.app either
+- Your sessions, summaries, and code stay on your machine unless you turn on team sync. There are no accounts and no API key to bring.
+- Team sync is end-to-end encrypted, on by default. Keys are generated on each laptop and never leave it, so the backend stores ciphertext it cannot open. The content is what gets encrypted; routing details (author, project, timestamp, tool) stay readable so sync and access control can work.
+- Verbatim prompts stay on your machine by default. Only summaries and file paths sync unless someone opts in, per session or per project.
+- Secrets are stripped before anything is written to disk or synced: built-in patterns for AWS, GitHub, Google, Slack, OpenAI and Anthropic keys, JWTs, PEM blocks, connection strings with inline credentials, and bearer tokens, plus a high-entropy catch-all and your own patterns. Redaction runs at every boundary, including on data arriving back from teammates.
+- Removing a teammate revokes access immediately and mints a new team key sealed only to the people who remain.
+- Separate from your work content, MemBridge sends anonymous usage counters and diagnostics: a random install id, the version, and coarse feature-health signals, never code, file names, paths, or project names. Both turn off with the diagnostics setting (`diagnostics.enabled: false`) or `MEMBRIDGE_NO_DIAGNOSTICS=1`. It also asks GitHub's public releases API about once every six hours whether a newer release exists.
+- The membridge.app site itself sets no cookies and runs no analytics scripts.
 
 ## Install
 
 Two ways to run it:
 
-**The app (macOS, Apple Silicon only)**: menu-bar app plus the `membridge` CLI. Signed and notarized, so it opens on a double-click with no warnings and no terminal. There is no Windows or Intel Mac build of the app yet. On those machines, install the CLI from npm instead, which works today. Download the app from:
-
-    https://github.com/MembridgeAi/membridge/releases/latest
-
-**From source (macOS, Linux, Windows, Node 18+)**: clone it, read it, run it. Zero dependencies, so what you read is what runs:
-
-    git clone https://github.com/MembridgeAi/membridge
-    cd membridge
-    node bin/membridge.js start
-
-Also on npm:
+**npm (macOS, Linux, Windows, Node 18+)**: one command, about two minutes, no account:
 
     npm install -g @membridgeai/membridge
 
+**The app (macOS, Apple Silicon only)**: the desktop app bundles the daemon and CLI. There is no Windows or Intel Mac build of the app yet; on those machines the npm CLI works today. Download:
+
+    https://github.com/MembridgeAi/membridge/releases/latest
+
+Install on one repo and watch a session get distilled. Team sync is a separate, deliberate step. Teams can book a twenty-minute setup call on their own repository: hello@membridge.app.
+
 ## Frequently asked questions
 
-### How do I give Claude Code a persistent memory?
+### Does our code leave the machine?
 
-Run `membridge start`. The daemon watches your Claude Code sessions, distills each one into a per-project memory, and writes it into `CLAUDE.md`, which Claude Code reads on every startup. Your next session starts already knowing what the last one did.
+No. MemBridge reads your agent sessions locally and writes memory to disk on the same machine. Your sessions, summaries and code go nowhere until you turn on team sync, and even then it is only what your sessions concluded: decisions, summaries, and file paths, never your source code. Team sync is end-to-end encrypted, so the backend stores ciphertext it has no key for. Separate from your work content, MemBridge sends anonymous usage counters and diagnostics tied to a random install id (turn them off with the diagnostics setting or MEMBRIDGE_NO_DIAGNOSTICS=1), and it asks GitHub about once every six hours whether a newer release exists.
 
-### How do I stop my AI coding assistant from losing context between sessions?
+### What happens to secrets that show up in a session?
 
-Persist the context somewhere the tool re-reads on startup. That is exactly what MemBridge automates: it distills every session into a per-project memory and syncs it into `CLAUDE.md` and `AGENTS.md`, so a new session, even in a different tool, picks up where the last one left off instead of starting from zero.
+They are stripped before anything is written to disk or sent to your team. MemBridge matches the shapes of AWS, GitHub, Google, Slack, OpenAI and Anthropic keys, JWTs, PEM blocks, connection strings with inline credentials, and bearer tokens, plus a high-entropy catch-all for the ones nobody has a pattern for. Redaction runs at every boundary, including on data arriving back from your teammates.
 
-### How do I share context between Claude Code and Codex?
+### How is this different from maintaining CLAUDE.md ourselves?
 
-The same memory block lands in both `CLAUDE.md` and `AGENTS.md`, the files each tool reads natively. Codex sees what Claude Code did and vice versa, no copy-pasting, no MCP wiring.
+A hand-written context file is the startup half of this, and it only stays useful while somebody keeps editing it. MemBridge writes that file for you from what your sessions actually concluded. The two things it does that a file cannot: deliver a teammate's decision into a session that is already running, and answer a question against months of your team's history that no file would still contain.
 
-### Does MemBridge send my code to the cloud?
+### Which tools does it work with?
 
-No. The daemon binds to `127.0.0.1` and solo use makes zero network calls: no accounts, no telemetry, nothing phoning home. You can verify it yourself with one `lsof` command. Team sync is opt-in and end-to-end encrypted.
+Claude Code and Codex are first class, and they share one memory, so switching tools mid-task doesn't reset anything. It registers itself over MCP with whichever agents it finds installed. Other agents that write session logs can be pointed at with a config entry.
 
-### Will it overwrite my CLAUDE.md or AGENTS.md?
+### What happens when someone leaves the team?
 
-Never. MemBridge only writes between its own `<!-- membridge -->` markers, your notes stay byte-for-byte intact, and `membridge remove` restores every file exactly. It is plain markdown you can read and diff.
+Removing them revokes access to every shared project immediately and mints a new team encryption key sealed only to the people who remain, so their copy stops being able to read anything new. Membership and sharing changes are all recorded in an audit trail.
 
-### What is CLAUDE.md?
+### Can people keep some work private?
 
-`CLAUDE.md` is the markdown file Claude Code automatically reads at the start of every session: a project's standing instructions and memory. MemBridge keeps a distilled, always-current summary of your recent AI sessions inside a marked block in that file, so Claude Code starts each session already caught up.
+Yes, at three levels. Verbatim prompts stay on your machine by default; only summaries and file paths sync unless someone opts in. Any project can be kept private, and shared projects have per-person access. A developer can pause capture entirely for a project without affecting anyone else.
 
-### What is AGENTS.md?
+### Do people have to change how they work?
 
-`AGENTS.md` is an open convention for giving coding agents per-repository instructions. Codex and a growing list of AI tools read it natively. MemBridge writes the same shared memory block there that it writes to `CLAUDE.md`, which is how context crosses between tools.
+No. It watches the sessions your team already runs and writes to the instruction files your agents already read. Nobody writes documentation for it, and nobody has to remember to record anything.
 
-### Does it work with Cursor, Gemini CLI, or other AI coding tools?
+## The Context Ledger
 
-Claude Code and Codex adapters ship built in. Any tool that logs its sessions as JSONL can be wired up with a small config entry, no code required. More first-class adapters are on the roadmap.
+MemBridge's 2026 baseline study of 6,104 real coding-agent sessions from 310 developers, using exact per-request API accounting: https://membridge.app/context-ledger/
 
-### How is MemBridge different from Mem0, claude-mem, and other AI memory tools?
-
-Four ways. MemBridge captures automatically by tailing session logs, so there is no save tool for the agent to forget. Memory is per-project, not one global store that bleeds between repos. It runs 100% locally with no API key or cloud service. And `membridge why file:line` answers a question `git blame` cannot: the reasoning behind any line of code.
-
-### Is MemBridge free?
-
-Yes. MemBridge is free and source-available with zero dependencies. There is no API key to bring and no paid tier. Install it and you have all of it.
-
-### How does a team share one AI memory?
-
-Invite teammates to a project and every Claude Code and Codex session lands in one shared feed: plain-English summaries plus the exact prompts. End-to-end encrypted before it leaves each machine, invite-only, off by default.
-
-### Won't Anthropic or OpenAI just build this?
-
-Each can build memory inside its own tool. Vendors agreed on the file format. None of them will read a rival's sessions to fill it. The cross-tool provenance MemBridge accumulates is the part that compounds.
+- The median developer spends 31% of agent tokens on re-orientation: the agent re-reading, re-searching, and re-deriving context in a codebase it has already worked in. At the corpus level, re-orientation is $13,776 of the $56,666 measured, or 24.3% of everything spent.
+- In repos with history, 53% of file reads repeat an earlier session's work.
+- Orientation share stays stubbornly high with repo experience; agents do not learn their way around a codebase on their own.
+- Shared memory recovers an estimated 6 to 8% of total agent spend, net of its own cost.
 
 ## Links
 
 - Website: https://membridge.app/
+- The Context Ledger: https://membridge.app/context-ledger/
 - GitHub: https://github.com/MembridgeAi/membridge
 - README / docs: https://github.com/MembridgeAi/membridge#readme
 - User guide: https://github.com/MembridgeAi/membridge/blob/master/docs/guide.md
@@ -135,3 +116,4 @@ Each can build memory inside its own tool. Vendors agreed on the file format. No
 - License: https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md
 - Encryption spec: https://github.com/MembridgeAi/membridge/blob/master/docs/ENCRYPTION-SPEC.md
 - npm: https://www.npmjs.com/package/@membridgeai/membridge
+- Contact: hello@membridge.app
