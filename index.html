@@ -35,13 +35,13 @@
   "@id": "https://membridge.app/#software",
   "name": "MemBridge",
   "applicationCategory": "DeveloperApplication",
-  "operatingSystem": "macOS, Linux, Windows",
+  "operatingSystem": "macOS (Apple Silicon desktop app); macOS, Linux, Windows (CLI via npm)",
   "description": "A local-first daemon that syncs memory across Claude Code, Codex, and other AI coding tools by distilling session activity into the context files each tool already reads (CLAUDE.md, AGENTS.md).",
   "url": "https://membridge.app/",
   "image": "https://membridge.app/og.png",
   "downloadUrl": "https://github.com/MembridgeAi/membridge",
   "installUrl": "https://membridge.app/#get",
-  "softwareVersion": "0.1.2",
+  "softwareVersion": "0.2.2",
   "releaseNotes": "https://github.com/MembridgeAi/membridge/blob/master/CHANGELOG.md",
   "softwareHelp": { "@type": "CreativeWork", "url": "https://github.com/MembridgeAi/membridge#readme" },
   "license": "https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md",
@@ -51,7 +51,7 @@
     "Automatic memory capture from Claude Code and Codex session logs",
     "Per-project memory synced into CLAUDE.md and AGENTS.md",
     "membridge why file:line: the prompt and reasoning behind any line of code",
-    "100% local: binds to 127.0.0.1, no accounts, no telemetry, no API key",
+    "Local-first: binds to 127.0.0.1, no accounts, no API key; sessions and code stay on your machine unless you share them with your team",
     "Opt-in team feed of every teammate's AI sessions, end-to-end encrypted",
     "Plain-markdown memory; membridge remove restores every file exactly"
   ],
@@ -115,7 +115,7 @@
       "name": "Does our code leave the machine?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. MemBridge reads your agent sessions locally and writes memory to disk on the same machine. Nothing is sent anywhere until you turn on team sync, and even then it is what your sessions concluded \u2014 decisions, summaries, file paths \u2014 never your source code. Team sync is end-to-end encrypted, so the backend stores ciphertext it has no key for."
+        "text": "No. MemBridge reads your agent sessions locally and writes memory to disk on the same machine. Your sessions, summaries and code go nowhere until you turn on team sync, and even then it is only what your sessions concluded: decisions, summaries, and file paths, never your source code. Team sync is end-to-end encrypted, so the backend stores ciphertext it has no key for. Separate from your work content, MemBridge sends anonymous usage counters and diagnostics tied to a random install id (turn them off with the diagnostics setting or MEMBRIDGE_NO_DIAGNOSTICS=1), and it asks GitHub about once every six hours whether a newer release exists."
       }
     },
     {
@@ -155,7 +155,7 @@
       "name": "Can people keep some work private?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, at three levels. Verbatim prompts stay on your machine by default \u2014 only summaries and file paths sync unless someone opts in. Any project can be kept private, and shared projects have per-person access. A developer can pause capture entirely for a project without affecting anyone else."
+        "text": "Yes, at three levels. Verbatim prompts stay on your machine by default; only summaries and file paths sync unless someone opts in. Any project can be kept private, and shared projects have per-person access. A developer can pause capture entirely for a project without affecting anyone else."
       }
     },
     {
@@ -1004,8 +1004,8 @@
           <div class="a-view on" data-view="today">
             <div class="a-stats">
               <div class="a-stat"><b>2</b><span>live now</span></div>
-              <div class="a-stat"><b>23</b><span>sessions today</span></div>
-              <div class="a-stat"><b>18</b><span>updates shared</span></div>
+              <div class="a-stat"><b>7</b><span>sessions today</span></div>
+              <div class="a-stat"><b>6</b><span>updates shared</span></div>
               <div class="a-stat"><b>4/4</b><span>members synced</span></div>
             </div>
             <div class="a-sect">Happening now</div>
@@ -1033,6 +1033,17 @@
               <div class="a-pright">
                 <div class="a-mline"><span class="a-metric">14 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
                 <div class="a-spark"><i style="height:5px"></i><i style="height:9px"></i><i style="height:6px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:11px"></i><i style="height:7px"></i></div>
+              </div>
+            </div>
+            <div class="a-pitem">
+              <div class="a-pleft">
+                <div class="a-prow"><span class="nm">web</span><span class="a-tag">Shared</span>
+                  <span class="a-faces"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus Bell"><use href="#avM"/></svg></span><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span></span></div>
+                <div class="a-brow">Cut checkout load time by lazy-loading the editor <span class="by">· Marcus, yesterday</span></div>
+              </div>
+              <div class="a-pright">
+                <div class="a-mline"><span class="a-metric">9 sessions · last 7 days</span><span class="a-chip ok">✓ up to date</span></div>
+                <div class="a-spark"><i style="height:4px"></i><i style="height:7px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:9px"></i><i style="height:5px"></i><i style="height:8px"></i></div>
               </div>
             </div>
             <div class="a-pitem">
@@ -1078,7 +1089,7 @@
                   <tr><td>web</td><td class="a-metric">9</td><td><span class="a-chip ok">✓ up to date</span></td>
                       <td class="c a-yes">✓</td><td class="c a-yes">✓</td><td class="c a-yes">✓</td><td class="c a-no">·</td></tr>
                   <tr><td>billing</td><td class="a-metric">6</td><td><span class="a-chip ok">✓ up to date</span></td>
-                      <td class="c a-no">·</td><td class="c a-no">·</td><td class="c a-yes">✓</td><td class="c a-no">·</td></tr>
+                      <td class="c a-no">·</td><td class="c a-no">·</td><td class="c a-yes">✓</td><td class="c a-yes">✓</td></tr>
                   <tr><td>infra-secrets <span class="a-tag">Private</span></td><td class="a-metric">4</td><td><span class="a-chip mut">not shared</span></td>
                       <td class="c a-dis">–</td><td class="c a-dis">–</td><td class="c a-dis">–</td><td class="c a-dis">–</td></tr>
                 </tbody>
@@ -1099,16 +1110,16 @@
             </div>
             <div class="a-sect">Members · 4 people</div>
             <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Priya Raman"><use href="#avP"/></svg></span></span>
-              <span><span class="a-nm">Priya Raman</span><span class="a-proj">owner · 4 projects</span></span>
+              <span><span class="a-nm">Priya Raman</span><span class="a-proj">owner · 3 projects</span></span>
               <span class="a-chip ok">✓ key verified</span></div>
             <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Marcus Bell"><use href="#avM"/></svg></span></span>
-              <span><span class="a-nm">Marcus Bell</span><span class="a-proj">admin · 3 projects</span></span>
+              <span><span class="a-nm">Marcus Bell</span><span class="a-proj">admin · 2 projects</span></span>
               <span class="a-chip ok">✓ key verified</span></div>
             <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Jules Okafor"><use href="#avJ"/></svg></span></span>
               <span><span class="a-nm">Jules Okafor</span><span class="a-proj">member · 3 projects</span></span>
               <span class="a-chip ok">✓ key verified</span></div>
             <div class="a-entry"><span class="a-av-wrap"><span class="a-av"><svg viewBox="0 0 40 40" role="img" aria-label="Sam Ortiz"><use href="#avS"/></svg></span></span>
-              <span><span class="a-nm">Sam Ortiz</span><span class="a-proj">member · 1 project</span></span>
+              <span><span class="a-nm">Sam Ortiz</span><span class="a-proj">member · 2 projects</span></span>
               <span class="a-chip ok">✓ key verified</span></div>
             <div class="a-sect">Audit · last 30 days</div>
             <div class="a-prob"><span class="a-chip mut">Jul 28</span><span style="flex:1"><div class="a-ph">Marcus granted Jules access to billing</div></span></div>
@@ -1185,7 +1196,7 @@
 
             <div class="a-sect">Privacy</div>
             <div class="a-srow hi">
-              <span class="a-slab"><b>Share plaintext with team</b><i>Off means teammates' apps decrypt locally; nothing readable is stored on the server</i></span>
+              <span class="a-slab"><b>Share plaintext with team</b><i>Off means teammates' apps decrypt locally; the server stores your content only as ciphertext</i></span>
               <span class="a-sval"><span class="a-chip ok">✓ end-to-end</span></span>
             </div>
             <div class="a-srow hi">
@@ -1194,7 +1205,7 @@
             </div>
             <div class="a-srow hi">
               <span class="a-slab"><b>Redaction patterns</b><i>Built-in key, token and credential shapes, plus your own</i></span>
-              <span class="a-sval"><span class="a-mono">34 built-in · 2 custom</span><button type="button" class="a-sbtn">Edit</button></span>
+              <span class="a-sval"><span class="a-mono">23 built-in · 2 custom</span><button type="button" class="a-sbtn">Edit</button></span>
             </div>
             <div class="a-srow hi">
               <span class="a-slab"><b>Excluded folders</b><i>Never watched, never synced</i></span>
@@ -1204,17 +1215,18 @@
             <div class="a-sect">Daemon</div>
             <div class="a-srow">
               <span class="a-slab"><b>Running</b><i>Local only, bound to 127.0.0.1</i></span>
-              <span class="a-sval"><span class="a-mono">v0.1.7 · port 7437</span><span class="a-chip ok">✓ running</span></span>
+              <span class="a-sval"><span class="a-mono">v0.2.2 · port 7437</span><span class="a-chip ok">✓ running</span></span>
             </div>
-            <p class="a-note">Nothing leaves this machine except what you have explicitly shared with your team, encrypted.</p>
+            <p class="a-note">Your sessions, summaries and code leave this machine only as what you have explicitly shared with your team, encrypted.</p>
           </div>
         </div>
       </div>
     </div>
 
     <p class="hero-note" style="margin-top:14px">
-      Click through the sidebar. This is the shipped interface, not a rendering of one. Live
-      rows show the ask a session opened with, never a guess at what it is doing.
+      Click through the sidebar. A faithful mock of the shipped interface, filled with sample
+      data. In the real app, live rows show the ask a session opened with, never a guess at
+      what it is doing.
     </p>
   </div>
 </section>
@@ -1245,7 +1257,7 @@
     <div class="trust">
       <div class="tcard">
         <h3>End-to-end encrypted</h3>
-        <p>Team sync is encrypted on by default. Keys are generated on each laptop and never leave it, so the backend stores ciphertext it cannot open.</p>
+        <p>Team sync is encrypted on by default. Keys are generated on each laptop and never leave it, so the backend stores ciphertext it cannot open. The content is what gets encrypted; routing details (author, project, timestamp, tool) stay readable so sync and access control can work.</p>
       </div>
       <div class="tcard">
         <h3>Prompts stay local</h3>
@@ -1283,9 +1295,13 @@
       <details open>
         <summary>Does our code leave the machine?</summary>
         <p>No. MemBridge reads your agent sessions locally and writes memory to disk on the same
-        machine. Nothing is sent anywhere until you turn on team sync, and even then it is only
-        what your sessions concluded: decisions, summaries, and file paths, never your source code.
-        Team sync is end-to-end encrypted, so the backend stores ciphertext it has no key for.</p>
+        machine. Your sessions, summaries and code go nowhere until you turn on team sync, and
+        even then it is only what your sessions concluded: decisions, summaries, and file paths,
+        never your source code. Team sync is end-to-end encrypted, so the backend stores
+        ciphertext it has no key for. Separate from your work content, MemBridge sends anonymous
+        usage counters and diagnostics tied to a random install id (turn them off with the
+        diagnostics setting or MEMBRIDGE_NO_DIAGNOSTICS=1), and it asks GitHub about once every
+        six hours whether a newer release exists.</p>
       </details>
       <details>
         <summary>What happens to secrets that show up in a session?</summary>
