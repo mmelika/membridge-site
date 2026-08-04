@@ -5,8 +5,8 @@
 #   curl -fsSL https://membridge.app/install.sh | sh -s -- --dry-run
 set -eu
 
-VERSION="0.2.4"
-SHA256="2221760a02266f908f2e4e2193e3ee9be3a3c61f44e4c89a4a4d7d77dd28b8ad"
+VERSION="0.2.5"
+SHA256="c747a4dc6c62a8903bc1392bf101d1f2951afc9fc6b3ccf283c73770ba11ab5a"
 REPO="MembridgeAi/membridge"
 APP_NAME="MemBridge"
 APP_DEST="/Applications/${APP_NAME}.app"
@@ -88,6 +88,16 @@ APP="${APP_DEST}"
 exec env ELECTRON_RUN_AS_NODE=1 "\$APP/Contents/MacOS/${APP_NAME}" "\$APP/Contents/Resources/app.asar/bin/membridge.js" "\$@"
 EOF
   chmod +x "$WRAPPER"
+  # Delete the destination before writing it. `cp` FOLLOWS a symlink at the
+  # destination and writes through to its target, and `membridge` is very
+  # often a symlink: `npm link` (the standard dev setup, and how anyone
+  # working on MemBridge has it) points /opt/homebrew/bin/membridge at
+  # lib/node_modules/membridge, which points at the developer's own checkout.
+  # Without this rm, installing overwrites bin/membridge.js IN THEIR REPO
+  # with this 3-line shim -- silently, since cp succeeds. Observed on a real
+  # machine: 1191 lines of CLI replaced, and the only symptom was an
+  # unrelated-looking wave of test failures.
+  rm -f "$CLI_DEST"
   if cp "$WRAPPER" "$CLI_DEST" && chmod +x "$CLI_DEST"; then
     say "CLI installed at ${CLI_DEST}"
     case ":$PATH:" in
