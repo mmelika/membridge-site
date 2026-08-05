@@ -884,15 +884,15 @@
           <span style="margin-left:6px">your session · Thursday 09:41</span>
         </div>
         <div class="demo-body" id="demoBody">
-          <div class="who">Claude Code · api-gateway</div>
+          <div class="who">Claude Code · payments-api</div>
           <div class="line"><span class="caret">›</span><span id="ask" class="typed"></span></div>
-          <div class="line dim" id="readLine" hidden><span class="caret">·</span><span>Read services/auth/rotate.ts</span></div>
+          <div class="line dim" id="readLine" hidden><span class="caret">·</span><span>Read services/payments/webhook.ts</span></div>
           <div class="inject" id="inject" hidden>
             <div class="inject-head"><span>◆ teammate decision</span></div>
-            <div class="inject-body">JWT rotation happens in vault, never in app config. The app path was tried in March and reverted.</div>
-            <div class="inject-from">Priya · Codex · Tuesday · services/auth/rotate.ts</div>
+            <div class="inject-body">Stripe already retries failed webhooks for three days. Ours double-charged customers in March, so we reverted it.</div>
+            <div class="inject-from">Priya · Codex · Tuesday · services/payments/webhook.ts</div>
           </div>
-          <div class="line dim" id="afterLine" hidden><span class="caret">·</span><span>Continuing with the vault path.</span></div>
+          <div class="line dim" id="afterLine" hidden><span class="caret">·</span><span>Leaving retries to Stripe.</span></div>
           <button class="replay" id="replay" hidden>replay</button>
         </div>
       </div>
@@ -1486,7 +1486,7 @@
   }
 
   /* ---- the live hand-off sequence ---- */
-  var ASK = 'rotate the vault credentials for tenant onboarding';
+  var ASK = 'add retry logic to the payment webhook';
   var ask = document.getElementById('ask');
   var readLine = document.getElementById('readLine');
   var inject = document.getElementById('inject');
