@@ -884,7 +884,7 @@
           <span style="margin-left:6px">your session · Thursday 09:41</span>
         </div>
         <div class="demo-body" id="demoBody">
-          <div class="who">Claude Code · payments-api</div>
+          <div class="who">Sam · Claude Code · payments-api</div>
           <div class="line"><span class="caret">›</span><span id="ask" class="typed"></span></div>
           <div class="line dim" id="readLine" hidden><span class="caret">·</span><span>Read services/payments/webhook.ts</span></div>
           <div class="inject" id="inject" hidden>
@@ -1506,8 +1506,13 @@
     { t: TYPED_END + 2500, el: afterLine }
   ];
   var REPLAY_AT  = TYPED_END + 3000;
-  var TEASER_END = TYPED_END + 840;   /* through 'Read services/auth/rotate.ts' */
-  var FULL_END   = TYPED_END + 4500;  /* through the last line, then a beat to read it */
+  var TEASER_END = TYPED_END + 840;   /* through 'Read services/payments/webhook.ts' */
+  /* One turn of the loop is a flat 10s. The beats above finish around 5.5s,
+     so the rest is the finished state held on screen: the teammate decision
+     is the only thing worth reading here and it needs longer than the beat
+     that paints it. paint() is idempotent, so holding is just not wrapping
+     yet. Keep this comfortably above the last beat or the decision flashes. */
+  var FULL_END   = 10000;
   /* Exactly ONE teaser pass, then the full sequence for as long as it stays in
      view. This was 40000, which is about 19 teaser loops: the prompt typed and
      a file read, over and over, with the teammate hand-off held back. Anyone
