@@ -126,7 +126,7 @@
   </form>
 
   <p class="foot">Your work stays on your machine. This is the one place we ask, and only because you chose to open it.<br>
-    Trouble sending? Email <a href="mailto:hello@membridge.app">hello@membridge.app</a>.</p>
+    Trouble sending? Email <a href="mailto:marco@membridge.me">marco@membridge.me</a>.</p>
 </div>
 
 <script>
@@ -160,7 +160,7 @@
       if (res.status === 201) { form.reset(); note.className='note ok'; note.textContent='Thanks. Your feedback shapes what we build next.'; }
       else { showError(); }
     }).catch(showError).then(function (){ btn.disabled=false; btn.textContent=prev; });
-    function showError(){ note.className='note err'; note.innerHTML='Something went wrong sending that. Please email <a href="mailto:hello@membridge.app">hello@membridge.app</a> instead.'; }
+    function showError(){ note.className='note err'; note.innerHTML='Something went wrong sending that. Please email <a href="mailto:marco@membridge.me">marco@membridge.me</a> instead.'; }
   });
 </script>
 </body>

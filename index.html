@@ -228,12 +228,12 @@
   h1 { font-size: clamp(2.1rem, 5.2vw, 3.4rem); line-height: 1.08; font-weight: 680; }
   h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.15; font-weight: 660; }
   h3 { font-size: 1.06rem; font-weight: 640; }
-  /* The site's signature: a serif italic phrase inside a sans headline. */
-  h1 em, h2 em { font-family: var(--serif); font-style: italic; font-weight: 500; letter-spacing: -0.01em; }
-  /* The hero is the exception: same serif face, but upright and in brand blue
-     so the second line reads as the point rather than as an aside. 6.33:1
-     against --bg. Section h2s keep the italic treatment above. */
-  .hero h1 em { font-style: normal; color: var(--blue); }
+  /* Emphasis inside a headline is the same face, size and weight as the rest
+     of the line, lifted in brand blue. It reads as the point of the sentence
+     rather than as an aside, which a serif italic clause did not. Blue on --bg
+     is 6.33:1, so the emphasis carries at any size without relying on colour
+     alone: the phrase still parses as part of the sentence if colour is lost. */
+  h1 em, h2 em { font-style: normal; color: var(--blue); }
   p { margin: 0; }
   .lede { font-size: 1.14rem; color: var(--muted); max-width: 60ch; }
   .eyebrow {
@@ -870,8 +870,8 @@
           and on demand.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#get">Get MemBridge</a>
-          <a class="btn btn-ghost" href="#live">See the hand-off</a>
+          <a class="btn btn-primary" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-arm64.dmg">Download for macOS</a>
+          <a class="btn btn-ghost" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-win.zip">Download for Windows</a>
         </div>
         <p class="hero-note">
           One command, about two minutes, no account. <code>npm i -g @membridgeai/membridge</code>
@@ -1421,7 +1421,7 @@
       afterwards if it isn't for you.
     </p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="mailto:hello@membridge.app?subject=MemBridge%20for%20our%20team&amp;body=Team%20size%3A%0AAgents%20we%20run%3A%0ARepos%20on%20GitHub%3F%3A%0A">Email us to set it up</a>
+      <a class="btn btn-primary" href="mailto:andrew@membridge.me?subject=MemBridge%20for%20our%20team&amp;body=Team%20size%3A%0AAgents%20we%20run%3A%0ARepos%20on%20GitHub%3F%3A%0A">Email us to set it up</a>
       <a class="btn btn-ghost" href="/security/">Read the security overview</a>
     </div>
     <p class="hero-note">
