@@ -41,7 +41,7 @@
   "image": "https://membridge.app/og.png",
   "downloadUrl": "https://github.com/MembridgeAi/membridge",
   "installUrl": "https://membridge.app/#get",
-  "softwareVersion": "0.2.7",
+  "softwareVersion": "0.3.2",
   "releaseNotes": "https://github.com/MembridgeAi/membridge/blob/master/CHANGELOG.md",
   "softwareHelp": { "@type": "CreativeWork", "url": "https://github.com/MembridgeAi/membridge#readme" },
   "license": "https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md",
@@ -139,7 +139,7 @@
       "name": "Which tools does it work with?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Claude Code and Codex are first class, and they share one memory, so switching tools mid-task doesn't reset anything. It registers itself over MCP with whichever agents it finds installed. Other agents that write session logs can be pointed at with a config entry."
+        "text": "Claude Code and Codex are first class. Their sessions are what MemBridge reads, and they share one memory, so switching between them mid-task doesn't reset anything. Cursor is different: MemBridge registers itself over MCP with Cursor so Cursor can query everything the team knows, but it does not read Cursor's sessions yet, so work done in Cursor does not feed back into the shared memory. Cursor consumes, it does not yet contribute."
       }
     },
     {
@@ -228,12 +228,12 @@
   h1 { font-size: clamp(2.1rem, 5.2vw, 3.4rem); line-height: 1.08; font-weight: 680; }
   h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.15; font-weight: 660; }
   h3 { font-size: 1.06rem; font-weight: 640; }
-  /* The site's signature: a serif italic phrase inside a sans headline. */
-  h1 em, h2 em { font-family: var(--serif); font-style: italic; font-weight: 500; letter-spacing: -0.01em; }
-  /* The hero is the exception: same serif face, but upright and in brand blue
-     so the second line reads as the point rather than as an aside. 6.33:1
-     against --bg. Section h2s keep the italic treatment above. */
-  .hero h1 em { font-style: normal; color: var(--blue); }
+  /* Emphasis inside a headline is the same face, size and weight as the rest
+     of the line, lifted in brand blue. It reads as the point of the sentence
+     rather than as an aside, which a serif italic clause did not. Blue on --bg
+     is 6.33:1, so the emphasis carries at any size without relying on colour
+     alone: the phrase still parses as part of the sentence if colour is lost. */
+  h1 em, h2 em { font-style: normal; color: var(--blue); }
   p { margin: 0; }
   .lede { font-size: 1.14rem; color: var(--muted); max-width: 60ch; }
   .eyebrow {
@@ -727,6 +727,32 @@
   .copy:hover { background: rgba(255,255,255,.17); }
 
   /* ---------- faq ---------- */
+  .mock-label {
+    margin-top: 10px; font-size: .92rem; color: var(--muted); max-width: 72ch;
+    border-left: 2px solid var(--border-strong); padding-left: 12px;
+  }
+
+  .machine-block {
+    margin-top: 26px; border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 18px 20px; background: var(--panel);
+  }
+  .machine-h { font-size: 1.02rem; font-weight: 640; }
+  .pricing-note { margin-top: 20px; max-width: 68ch; }
+  .pricing-note p { color: var(--muted); font-size: .93rem; }
+  .pricing-note p + p { margin-top: 6px; }
+  .pricing-note b { color: var(--ink); font-weight: 620; }
+  .machine-block ul { margin-top: 11px; display: flex; flex-direction: column; gap: 9px; list-style: none; }
+  .machine-block li {
+    color: var(--muted); font-size: .93rem; max-width: 72ch;
+    padding-left: 15px; position: relative;
+  }
+  .machine-block li::before {
+    content: ''; position: absolute; left: 0; top: .62em;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--faint);
+  }
+  .machine-block strong { color: var(--ink); font-weight: 620; }
+  .machine-block code { font-family: var(--mono); font-size: .86em; }
+
   .faq { margin-top: 24px; display: flex; flex-direction: column; }
   .faq details { border-bottom: 1px solid var(--border); padding: 15px 0; }
   .faq summary {
@@ -825,6 +851,7 @@
       <a href="#search">Team search</a>
       <a href="#app">The app</a>
       <a href="#trust">Privacy</a>
+      <a href="/security/">Security</a>
       <a href="/context-ledger/">Research</a>
       <a href="#get">Get it</a>
     </div>
@@ -838,12 +865,13 @@
       <div class="stack">
         <h1>Your teammates' agents already know <em>what yours figured out.</em></h1>
         <p class="lede">
-          MemBridge watches every Claude Code and Codex session on your team, distills what each one
-          worked out, and gets it to everyone else's agents. At startup, mid-session, and on demand.
+          MemBridge reads the session logs your Claude Code and Codex agents already write, distills
+          what each one worked out, and gets it to everyone else's agents. At startup, mid-session,
+          and on demand.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#get">Get MemBridge</a>
-          <a class="btn btn-ghost" href="#live">See the hand-off</a>
+          <a class="btn btn-primary" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-arm64.dmg">Download for macOS</a>
+          <a class="btn btn-ghost" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-win.zip">Download for Windows</a>
         </div>
         <p class="hero-note">
           One command, about two minutes, no account. <code>npm i -g @membridgeai/membridge</code>
@@ -899,7 +927,7 @@
 
       <div class="moment lead">
         <span class="when">Mid-session</span>
-        <span class="tag">Nobody else does this</span>
+        <span class="tag">What a context file cannot do</span>
         <h3>A teammate's decision lands while you work</h3>
         <p>
           Your agent opens a file a teammate's agent made a call about, and that call enters the
@@ -972,6 +1000,10 @@
     <p class="lede">
       Every agent session across your team, who can see which project, and where knowledge is
       concentrated in one person's head.
+    </p>
+    <p class="mock-label">
+      Everything below is a mock of the shipped app, filled with sample data. The numbers are
+      illustrative, not measured. Every screen in the sidebar is in the app today. Click through it.
     </p>
 
     <div class="a-app" id="aApp">
@@ -1215,7 +1247,7 @@
             <div class="a-sect">Daemon</div>
             <div class="a-srow">
               <span class="a-slab"><b>Running</b><i>Local only, bound to 127.0.0.1</i></span>
-              <span class="a-sval"><span class="a-mono">v0.2.6 · port 7437</span><span class="a-chip ok">✓ running</span></span>
+              <span class="a-sval"><span class="a-mono">v0.3.2 · port 7437</span><span class="a-chip ok">✓ running</span></span>
             </div>
             <p class="a-note">Your sessions, summaries and code leave this machine only as what you have explicitly shared with your team, encrypted.</p>
           </div>
@@ -1224,9 +1256,8 @@
     </div>
 
     <p class="hero-note" style="margin-top:14px">
-      Click through the sidebar. A faithful mock of the shipped interface, filled with sample
-      data. In the real app, live rows show the ask a session opened with, never a guess at
-      what it is doing.
+      In the real app, live rows show the ask a session opened with, never a guess at what it
+      is doing.
     </p>
   </div>
 </section>
@@ -1235,7 +1266,7 @@
 <section class="section">
   <div class="wrap stack rv">
     <span class="eyebrow">What your team gets</span>
-    <h2>Everything else it does <em>while nobody is watching.</em></h2>
+    <h2>Everything else it does <em>without anyone maintaining it.</em></h2>
     <div class="feats">
       <div class="feat"><span class="ck">✓</span><p><b>Cross-tool memory.</b> Claude Code and Codex share one store. Switching tools doesn't reset context.</p></div>
       <div class="feat"><span class="ck">✓</span><p><b>Auto-registers over MCP.</b> Finds the agents you have installed and wires itself in.</p></div>
@@ -1277,6 +1308,8 @@
     <span class="eyebrow">Get it</span>
     <h2>Two minutes, <em>no account.</em></h2>
     <p class="lede">Install on one repo and watch a session get distilled. Team sync is a separate, deliberate step.</p>
+    <p class="lede">Desktop app for macOS (Apple Silicon) and Windows. On Linux or an Intel Mac, the
+    npm command runs the same daemon and serves the same dashboard in your browser.</p>
     <div class="install">
       <span class="sig">$</span>
       <span class="cmd" id="cmd">npm install -g @membridgeai/membridge</span>
@@ -1284,14 +1317,41 @@
     </div>
     <div class="hero-cta" style="margin-top:6px">
       <a class="btn btn-primary" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-arm64.dmg">Download for macOS (Apple Silicon)</a>
+      <a class="btn btn-ghost" href="https://github.com/MembridgeAi/membridge/releases/latest/download/MemBridge-win.zip">Download for Windows</a>
     </div>
     <p class="hero-note">
-      The desktop app is macOS on Apple Silicon only. The Windows app is not out yet, and the
-      npm command above works on Windows today. It is also how to run MemBridge on Linux or an
-      Intel Mac.
+      Node 18 or newer. The desktop app adds a menu bar or system tray icon and start at login.
+      Everything else it does, the CLI does too.
     </p>
 
-    <div class="faq">
+    <div class="pricing-note" id="pricing">
+      <p><b>Free while we're early.</b> No account, no card, through v1.0. When we charge it will
+      be per seat for team sync. Individual use stays free.</p>
+      <p>MemBridge is early. If you want to see what breaks before you standardise on it, you are
+      exactly who we want to hear from.</p>
+    </div>
+
+    <div class="machine-block">
+      <h3 class="machine-h">What it does to your machine</h3>
+      <ul>
+        <li><strong>Your files stay yours.</strong> Memory lands between its own
+        <code>&lt;!-- membridge --&gt;</code> markers in CLAUDE.md and AGENTS.md. Your own notes are
+        never touched, and <code>membridge remove</code> restores every file exactly.</li>
+        <li><strong>It registers as an MCP server</strong> with the agents it finds installed, so
+        they can query team memory directly.</li>
+        <li><strong>It starts at login</strong> when you install the desktop app, so the daemon is
+        running when your agents are. Turn it off from the tray menu or in Settings.</li>
+        <li><strong>Four small runtime dependencies</strong>, no build step, and the source is
+        available to read under the
+        <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md">Functional Source
+        License 1.1 (FSL-1.1-ALv2)</a>.</li>
+        <li><strong>The macOS app is signed and notarized</strong> by Apple, with the ticket
+        stapled into the download, so it opens without a Gatekeeper prompt. The installer also
+        verifies a pinned SHA-256 and refuses to install on a mismatch.</li>
+      </ul>
+    </div>
+
+    <div class="faq" id="faq">
       <details open>
         <summary>Does our code leave the machine?</summary>
         <p>No. MemBridge reads your agent sessions locally and writes memory to disk on the same
@@ -1321,10 +1381,12 @@
       </details>
       <details>
         <summary>Which tools does it work with?</summary>
-        <p>Claude Code and Codex are first class, and they share one memory, so switching tools
-        mid-task doesn't reset anything. It registers itself over MCP with whichever agents it
-        finds installed. Other agents that write session logs can be pointed at with a config
-        entry.</p>
+        <p>Claude Code and Codex are first class. Their sessions are what MemBridge reads, and
+        they share one memory, so switching between them mid-task doesn't reset anything.</p>
+        <p><b>Cursor is different, and the distinction matters if your team is split.</b>
+        MemBridge registers itself over MCP with Cursor, so Cursor can query everything the team
+        knows. It does not read Cursor's sessions yet, so work done in Cursor does not feed back
+        into the shared memory. Cursor consumes, it does not yet contribute.</p>
       </details>
       <details>
         <summary>What happens when someone leaves the team?</summary>
@@ -1354,13 +1416,13 @@
     <span class="eyebrow">Talk to us</span>
     <h2>Or see it on <em>your own code.</em></h2>
     <p class="lede">
-      Book twenty minutes and we'll set it up on a repository your team actually works in, then
+      Send us a note and we'll set it up on a repository your team actually works in, then
       show the hand-off firing between two real sessions. No slides, and nothing to uninstall
       afterwards if it isn't for you.
     </p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="mailto:hello@membridge.app?subject=MemBridge%20for%20our%20team&amp;body=Team%20size%3A%0AAgents%20we%20run%3A%0ARepos%20on%20GitHub%3F%3A%0A">Book 20 minutes</a>
-      <a class="btn btn-ghost" href="mailto:hello@membridge.app">Email us instead</a>
+      <a class="btn btn-primary" href="mailto:andrew@membridge.me?subject=MemBridge%20for%20our%20team&amp;body=Team%20size%3A%0AAgents%20we%20run%3A%0ARepos%20on%20GitHub%3F%3A%0A">Email us to set it up</a>
+      <a class="btn btn-ghost" href="/security/">Read the security overview</a>
     </div>
     <p class="hero-note">
       Useful to know beforehand: how many engineers, which agents they run, and whether your
@@ -1375,9 +1437,8 @@
       <a href="/context-ledger/">The Context Ledger</a>
       <a href="https://github.com/MembridgeAi/membridge">GitHub</a>
       <a href="https://github.com/MembridgeAi/membridge#readme">Docs</a>
-      <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md">License</a>
-      <a href="/llms.txt">llms.txt</a>
-      <a href="/llms-full.txt">llms-full.txt</a>
+      <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md">License (FSL-1.1-ALv2)</a>
+      <a href="/security/">Security</a>
       <a href="/feedback/">Feedback</a>
     </div>
     MemBridge · shared memory for teams running AI coding agents

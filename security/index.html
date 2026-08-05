@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security and data handling | MemBridge</title>
+<meta name="description" content="Where MemBridge runs, what leaves your machine, what the server can and cannot read, how team keys work, and what we do not have yet. No gate, no sales call.">
+<link rel="canonical" href="https://membridge.app/security/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#2F4FE0">
+<meta name="author" content="MemBridge">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://membridge.app/security/">
+<meta property="og:site_name" content="MemBridge">
+<meta property="og:title" content="Security and data handling">
+<meta property="og:description" content="Where MemBridge runs, what leaves your machine, what the server can and cannot read, and what we do not have yet.">
+<meta property="og:image" content="https://membridge.app/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root {
+  --blue: #2F4FE0;
+  --blue-dark: #2440C4;
+  --ink: #10182B;
+  --muted: #5D6B85;
+  --faint: #8A96AC;
+  --bg: #FFFFFF;
+  --bg-alt: #F7F9FE;
+  --tint: #EDF1FD;
+  --tint-border: #D9E2FA;
+  --border: #E6EAF3;
+  --green: #1D8A5F;
+  --green-tint: #F2FBF7;
+  --green-border: #BFE3D2;
+  --green-mid: #A9DCC7;
+  --green-soft: #DFF3EA;
+  --orange: #C97A1E;
+  --amber-tint: #FBF3E3;
+  --amber-border: #EBD7AE;
+  --amber-mid: #F3DFAE;
+  --dark: #0E1526;
+  --dark-border: #1D2740;
+  --term-bg: #0E1526;
+  --term-border: #1D2740;
+  --term-text: #D7E0F2;
+  --term-muted: #6B7A99;
+  --term-blue: #7FA3FF;
+  --radius: 14px;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.65 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+.narrow { max-width: 860px; }
+
+/* ---------- shared bits ---------- */
+.mono-label {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--faint);
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  font: 600 15px/1 var(--sans); border-radius: 12px; padding: 13px 22px;
+  border: 1px solid transparent; transition: background .15s ease, border-color .15s ease;
+  text-decoration: none;
+}
+.btn:hover { text-decoration: none; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-dark); }
+.btn-secondary { background: #fff; color: var(--ink); border-color: var(--border); }
+.btn-secondary:hover { border-color: var(--faint); }
+.btn svg { flex: none; }
+h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; }
+h2 { font-size: clamp(24px, 3.6vw, 31px); line-height: 1.25; margin: 0 0 14px; }
+h3 { font-size: 16.5px; font-weight: 650; margin: 30px 0 8px; }
+.section { padding: 76px 0 64px; }
+p { max-width: 68ch; margin: 0 0 14px; color: var(--muted); font-size: 16px; }
+p b, p strong { color: var(--ink); }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.n-waste { color: var(--orange); }
+.n-save { color: var(--green); }
+code {
+  font-family: var(--mono); font-size: .88em; background: var(--tint);
+  border: 1px solid var(--tint-border); border-radius: 5px; padding: 1px 5px;
+  color: var(--ink); white-space: nowrap;
+}
+.note { font-size: 13.5px; color: var(--faint); max-width: 72ch; }
+
+/* evidence tags */
+.tag {
+  display: inline-block; font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; padding: 2px 8px;
+  border-radius: 999px; vertical-align: 3px; margin-left: 9px; white-space: nowrap;
+}
+.t-meas { background: var(--green-tint); color: var(--green); border: 1px solid var(--green-border); }
+.t-assm { background: var(--amber-tint); color: var(--orange); border: 1px solid var(--amber-border); }
+
+/* ---------- nav ---------- */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255, 255, 255, .88); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 650; font-size: 17px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.m-tile { width: 28px; height: 28px; border-radius: 8px; display: block; }
+.nav-links { display: flex; gap: 24px; flex: 1; }
+.nav-links a { color: var(--muted); font-size: 14.5px; font-weight: 500; }
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+.nav-cta { display: flex; gap: 10px; }
+.nav-cta .btn { padding: 9px 16px; font-size: 14px; }
+
+/* ---------- hero ---------- */
+.hero { padding: 72px 0 56px; }
+.hero .mono-label { display: block; margin-bottom: 18px; color: var(--blue); }
+.hero h1 {
+  font-size: clamp(32px, 5vw, 50px); line-height: 1.14; margin: 0 0 22px;
+  max-width: 660px;
+}
+.hero .sub { font-size: 17.5px; max-width: 640px; margin: 0 0 28px; }
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.cmd {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 14px;
+  background: var(--term-bg); border: 1px solid var(--term-border);
+  color: var(--term-text); padding: 13px 18px; border-radius: 12px;
+}
+.cmd b { color: var(--term-blue); font-weight: 500; }
+.cmd-steps { flex-direction: column; align-items: flex-start; gap: 7px; }
+.hero-note { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .04em; margin-top: 14px; }
+
+/* ---------- stat cards ---------- */
+.statgrid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 40px;
+}
+.stat { border: 1px solid var(--border); border-radius: 12px; padding: 15px 17px 13px; background: #fff; }
+.stat b { display: block; font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.stat span { display: block; margin-top: 4px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+
+/* ---------- distribution strip ---------- */
+.strip-chart { position: relative; height: 84px; margin: 34px 0 4px; border-bottom: 1.5px solid var(--ink); max-width: 760px; }
+.smark { position: absolute; bottom: 0; width: 2px; background: var(--faint); height: 22px; }
+.smark i {
+  position: absolute; bottom: 26px; left: -1px; transform: translateX(-50%);
+  font-style: normal; font-family: var(--mono); font-size: 11.5px;
+  white-space: nowrap; color: var(--faint);
+}
+.smark.hero-m { background: var(--orange); height: 46px; }
+.smark.hero-m i { color: var(--orange); font-weight: 600; bottom: 50px; }
+.smark.you { background: var(--green); height: 32px; }
+.smark.you i { color: var(--green); bottom: 36px; }
+.axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 6px; max-width: 760px; }
+
+/* ---------- session-order bars ---------- */
+.fam { display: flex; align-items: flex-end; gap: 12px; height: 150px; margin: 30px 0 6px; max-width: 520px; }
+.fam > div { flex: 1; text-align: center; }
+.fam .col { background: var(--amber-tint); border: 1px solid var(--amber-border); border-bottom: 2px solid var(--orange); border-radius: 4px 4px 0 0; }
+.fam b { display: block; font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--orange); margin-bottom: 5px; }
+.fam span { display: block; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 7px; }
+
+/* ---------- savings section ---------- */
+#savings { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.bar-outer { margin: 34px 0 8px; max-width: 760px; }
+.bar { position: relative; height: 54px; background: #EFF2FA; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg { position: absolute; top: 0; bottom: 0; }
+.brk { position: relative; height: 36px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
+.brk span { position: absolute; top: 10px; white-space: nowrap; }
+.tick { position: absolute; top: 0; height: 8px; border-left: 1px solid var(--faint); }
+
+table { border-collapse: collapse; width: 100%; margin: 24px 0 10px; font-size: 14.5px; background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+table { border-style: hidden; box-shadow: 0 0 0 1px var(--border); }
+th {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 500; color: var(--faint); text-align: left; padding: 11px 16px;
+  border-bottom: 1px solid var(--border); background: #F3F6FD;
+}
+td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--muted); }
+td.n, th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.n { font-family: var(--mono); font-size: 13.5px; color: var(--ink); }
+tr.band td { background: var(--green-tint); }
+tr:last-child td { border-bottom: none; }
+
+.callout {
+  background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--green);
+  border-radius: 12px; padding: 20px 24px; margin: 28px 0; max-width: 74ch;
+}
+.callout p { margin: 0; font-size: 15px; }
+.callout strong { color: var(--ink); }
+
+/* ---------- method ---------- */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.two h2 { font-size: 22px; }
+.two p { font-size: 15px; }
+
+/* ---------- final cta ---------- */
+.finalcta { background: var(--dark); border-top: 1px solid var(--dark-border); }
+.finalcta .wrap { padding-top: 72px; padding-bottom: 76px; }
+.finalcta h2 { color: #fff; font-size: clamp(26px, 4vw, 34px); }
+.finalcta p { color: #9AA8C2; font-size: 17px; max-width: 60ch; }
+.finalcta .cmd { background: rgba(255,255,255,.05); }
+.finalcta .btn-secondary { background: transparent; color: #D7E0F2; border-color: #33405C; }
+.finalcta .btn-secondary:hover { border-color: var(--term-muted); }
+
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--border); padding: 36px 0 44px; }
+.foot-inner { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.foot-inner .brand { font-size: 15px; }
+.foot-inner .m-tile { width: 22px; height: 22px; border-radius: 6px; }
+.foot-links { display: flex; gap: 20px; flex: 1; }
+.foot-links a { color: var(--muted); font-size: 13.5px; }
+.foot-note { font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: .04em; }
+.foot-blurb { margin-top: 26px; color: var(--faint); font-size: 13px; line-height: 1.7; max-width: 780px; }
+.foot-blurb code { background: none; border: none; padding: 0; font-size: .9em; color: var(--muted); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .section { padding: 56px 0 48px; }
+  .nav-links { display: none; }
+  .statgrid { grid-template-columns: repeat(2, 1fr); }
+  .two { grid-template-columns: 1fr; gap: 8px; }
+  .foot-links { flex-wrap: wrap; gap: 12px 18px; }
+}
+@media (max-width: 640px) {
+  .brk { height: 58px; }
+  .brk span.row2 { top: 32px; }
+}
+@media (max-width: 520px) {
+  .hero { padding: 52px 0 44px; }
+  .statgrid { grid-template-columns: 1fr 1fr; }
+  .cmd { font-size: 12.5px; padding: 12px 14px; }
+  .brk span { font-size: 10.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+  .todo { background: #FFF3CD; border: 1px solid #E0A800; border-radius: 8px;
+    padding: 10px 13px; margin: 12px 0; font-size: .9rem; color: #6B4E00; }
+  .todo b { color: #4A3600; }
+  .qa { margin-top: 26px; }
+  .qa h3 { font-size: 1.06rem; margin-bottom: 6px; }
+  .qa p { color: var(--muted); margin-bottom: 10px; }
+  .qa ul { margin: 8px 0 12px 0; padding-left: 18px; color: var(--muted); }
+  .qa li { margin-bottom: 6px; }
+  .nothave { border-left: 3px solid var(--faint); padding-left: 14px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="mgrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3E63F0"/><stop offset="1" stop-color="#16219B"/>
+    </linearGradient>
+    <symbol id="mlogo" viewBox="0 0 32 32">
+      <rect x="1" y="1" width="30" height="30" rx="8.5" fill="url(#mgrad)" stroke="#4A78FF" stroke-width="1.6"/>
+      <path d="M9 22.5 V11 L16 18 L23 11 V22.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5 16.5 H27" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">
+      <svg class="m-tile" viewBox="0 0 32 32" aria-hidden="true"><use href="#mlogo"/></svg>
+      MemBridge
+    </a>
+    <div class="nav-links">
+      <a href="/#app">The app</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/context-ledger/">Research</a>
+      <a href="/#get">Get MemBridge</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap narrow">
+    <span class="mono-label">Security &amp; data handling</span>
+    <h1>Where it runs, what leaves, and what we cannot read.</h1>
+    <p class="sub">Written so you can evaluate MemBridge without booking a call, and so you can forward
+    this page to whoever has to sign off. Current, including what we do not
+    have yet.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap narrow">
+
+    <div class="qa">
+      <h3>Where it runs</h3>
+      <p>MemBridge is a daemon on each developer's machine. It binds to <code>127.0.0.1</code> and is not
+      reachable from your network. The desktop app is an Electron window pointed at that local daemon,
+      so the app and the CLI show you the same thing running in the same place.</p>
+      <ul>
+        <li><b>Desktop app:</b> macOS on Apple Silicon, and Windows.</li>
+        <li><b>CLI:</b> macOS, Linux and Windows, on Node 18 or newer. Same daemon, same dashboard.</li>
+        <li><b>The Windows build is not code-signed yet,</b> so Windows will show a SmartScreen prompt
+        on first run. The macOS build is signed, notarized and stapled.</li>
+      </ul>
+    </div>
+
+    <div class="qa">
+      <h3>What it reads</h3>
+      <p>The session transcripts your agents already write to disk, for the projects you have added.
+      MemBridge does not instrument your editor, does not proxy your agent's traffic, and does not read
+      your source tree looking for content to upload.</p>
+      <p>Secrets are stripped before anything is written to disk or sent to your team. That runs at every
+      boundary, including on data arriving back from teammates, so a secret one person's redaction missed
+      does not land on everyone else's machine.</p>
+    </div>
+
+    <div class="qa">
+      <h3>What leaves the machine, and when</h3>
+      <p>Nothing about your work leaves until you turn on team sync. That is a separate, deliberate step
+      after install, not a default.</p>
+      <p>Once it is on, what syncs is what your sessions concluded: summaries, decisions and file paths.
+      Not your source code. Two things are unrelated to your work content and happen regardless: anonymous
+      usage counters tied to a random install id, which you can turn off with the diagnostics setting or
+      <code>MEMBRIDGE_NO_DIAGNOSTICS=1</code>, and a check with GitHub about every six hours for a newer
+      release.</p>
+    </div>
+
+    <div class="qa">
+      <h3>What the server can and cannot read</h3>
+      <p>Team sync stores data in Supabase, hosted Postgres that we operate, running in AWS
+      <code>us-west-2</code> (Oregon). Content is encrypted on your machine before it is sent, using
+      libsodium.</p>
+      <ul>
+        <li>Each summary is encrypted once with a random symmetric <b>team key</b>
+        (<code>crypto_secretbox</code>).</li>
+        <li>That team key is distributed by sealing it to each member's public key
+        (<code>crypto_box_seal</code>). Members unseal it locally with their private key.</li>
+        <li><b>The server never holds a key that can decrypt content.</b> Neither can we as the operators.</li>
+      </ul>
+      <p><b>What is deliberately not encrypted:</b> routing metadata. Project, author, timestamp, tool and
+      session id stay readable, because sync and access control cannot work without them. So the server
+      can see that a person worked on a project at a time, using a tool. It cannot see what they concluded.
+      "End to end encrypted" covers the content, not the fact that you were working.</p>
+    </div>
+
+    <div class="qa">
+      <h3>People joining and leaving</h3>
+      <p>Removing someone mints a new team encryption key, sealed only to the people who remain. They keep
+      whatever they already decrypted locally, which is unavoidable for anything already delivered, but they
+      cannot read anything shared after that point.</p>
+      <p>Access is per project. You choose which projects are shared with the team and which stay private
+      to your machine, and the app shows the full grid of who can see what.</p>
+    </div>
+
+    <div class="qa">
+      <h3>Who controls the sharing settings</h3>
+      <p>Sharing settings are per-machine, and the person at that machine controls them. An
+      administrator cannot enforce them org-wide today, and changing one is not recorded in the audit
+      trail. The audit trail covers membership and invite events: join, invite, revoke invite, role
+      change, member removal and team rename.</p>
+      <p>If central policy enforcement is a requirement where you work, tell us before you pilot.</p>
+      <p>Sharing your verbatim prompts defaults to <b>on</b> for fresh installs. It is deliberately not a global default: anyone who
+      installed while it was off stays off, and their setting is never flipped for them by an upgrade.
+      You can turn it off at any time in Settings.</p>
+    </div>
+
+    <div class="qa">
+      <h3>Retention, export and deletion</h3>
+      <p>Synced team data is <b>retained indefinitely today</b>, and there is no self-serve way to delete
+      it from the backend or export it yourself.</p>
+      <p><code>membridge remove</code> is a local operation. It strips the injected blocks, restores
+      your files exactly, and deletes the local history on that machine. It does not reach the server.
+      If you want your team's synced data removed, email <a href="mailto:marco@membridge.me">marco@membridge.me</a> and we will do it by hand.</p>
+    </div>
+
+    <div class="qa nothave">
+      <h3>What we do not have yet</h3>
+      <p>As things stand today:</p>
+      <ul>
+        <li><b>No SOC 2 and no ISO 27001.</b> We have not been audited.</li>
+        <li><b>No SSO and no SCIM.</b> Team membership is invite-based today.</li>
+        <li><b>No formal support SLA.</b> We are early and we answer email quickly, but that is a practice,
+        not a contract.</li>
+        <li><b>No org-wide policy enforcement, and no data retention limit.</b> Both covered above.</li>
+        <li><b>The Windows desktop build is unsigned.</b> Covered above.</li>
+      </ul>
+      <p>If any of these is the thing standing between you and a pilot, tell us. Knowing which one blocks
+      real teams is how we decide what to build next.</p>
+    </div>
+
+    <div class="qa">
+      <h3>Reporting something</h3>
+      <p>If you find a vulnerability, email <a href="mailto:marco@membridge.me">marco@membridge.me</a> and we will respond. The source is available to read under the
+      <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md">Functional Source License
+      1.1 (FSL-1.1-ALv2)</a>, so you can check any of this yourself.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-links">
+      <a href="/">MemBridge</a>
+      <a href="/context-ledger/">The Context Ledger</a>
+      <a href="https://github.com/MembridgeAi/membridge">GitHub</a>
+      <a href="https://github.com/MembridgeAi/membridge/blob/master/LICENSE.md">License</a>
+      <a href="/feedback/">Feedback</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
