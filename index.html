@@ -258,10 +258,14 @@
   .nav-links a:hover { color: var(--ink); }
   .nav-gh {
     display: inline-flex; align-items: center; gap: 7px; flex: none;
-    color: var(--muted); text-decoration: none; font-size: .93rem;
+    padding: 6px 13px; border-radius: 999px;
+    border: 1px solid var(--border-strong); background: var(--panel);
+    color: var(--ink); text-decoration: none; font-size: .88rem; font-weight: 560;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
   }
-  .nav-gh:hover { color: var(--ink); }
-  .nav-gh svg { width: 16px; height: 16px; display: block; }
+  .nav-gh:hover { border-color: var(--blue); color: var(--blue); }
+  .nav-gh:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .nav-gh svg { width: 15px; height: 15px; display: block; }
   @media (max-width: 720px) { .nav-links { display: none; } }
 
   /* ---------- buttons ---------- */
